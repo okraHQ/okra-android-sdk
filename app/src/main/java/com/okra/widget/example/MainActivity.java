@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.okra.widget.Starter;
+import com.okra.widget.Okra;
 import com.okra.widget.models.Enums;
 import com.okra.widget.utils.OkraOptions;
 
@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void openOkraWidget(){
         OkraOptions okraOptions = new OkraOptions(true, "","", new ArrayList<String>(), Enums.Environment.dev,"Bassey");
-        Starter starter = new Starter(MainActivity.this, okraOptions);
-        starter.OpenOkraWidget();
+        Okra.create(MainActivity.this, okraOptions);
     }
 }
