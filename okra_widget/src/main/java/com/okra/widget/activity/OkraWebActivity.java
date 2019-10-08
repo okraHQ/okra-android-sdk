@@ -10,10 +10,12 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.okra.widget.R;
 import com.okra.widget.utils.OkraOptions;
+import com.okra.widget.utils.WebInterface;
 
 import java.util.HashMap;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 
 public class OkraWebActivity extends AppCompatActivity {
 
@@ -22,8 +24,6 @@ public class OkraWebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         OkraOptions okraOptions = (OkraOptions) getIntent().getSerializableExtra("okraOptions");
-
-
         // Initialize Link
         HashMap<String, Object> linkInitializeOptions = new HashMap<>();
         linkInitializeOptions.put("isWebview", okraOptions.isWebview());
@@ -34,7 +34,7 @@ public class OkraWebActivity extends AppCompatActivity {
         linkInitializeOptions.put("clientName", okraOptions.getClientName());
         linkInitializeOptions.put("webhook", "http://requestb.in");
         linkInitializeOptions.put("baseUrl", "https://cdn.plaid.com/link/v2/stable/link.html");
-      
+
 
         String c = generateLinkInitializationUrl(linkInitializeOptions).toString();
 
@@ -43,12 +43,13 @@ public class OkraWebActivity extends AppCompatActivity {
 
         // Modify Webview settings - all of these settings may not be applicable
         // or necessary for your integration.
-        final WebView okraLinkWebview =  findViewById(R.id.ok_webview);
+        final WebView okraLinkWebview = findViewById(R.id.ok_webview);
         WebSettings webSettings = okraLinkWebview.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         okraLinkWebview.setWebContentsDebuggingEnabled(true);
+        okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
 
         okraLinkWebview.loadUrl("file:///android_res/raw/okra.html");
@@ -118,7 +119,7 @@ public class OkraWebActivity extends AppCompatActivity {
     }
 
     // Generate a Link initialization URL based on a set of configuration options
-    public Uri generateLinkInitializationUrl(HashMap<String,Object> linkOptions) {
+    public Uri generateLinkInitializationUrl(HashMap<String, Object> linkOptions) {
         Uri.Builder builder = Uri.parse(linkOptions.get("baseUrl").toString())
                 .buildUpon()
                 .appendQueryParameter("isWebview", "true")
@@ -132,12 +133,17 @@ public class OkraWebActivity extends AppCompatActivity {
     }
 
     // Parse a Link redirect URL querystring into a HashMap for easy manipulation and access
-    public HashMap<String,String> parseLinkUriData(Uri linkUri) {
-        HashMap<String,String> linkData = new HashMap<String,String>();
-        for(String key : linkUri.getQueryParameterNames()) {
+    public HashMap<String, String> parseLinkUriData(Uri linkUri) {
+        HashMap<String, String> linkData = new HashMap<String, String>();
+        for (String key : linkUri.getQueryParameterNames()) {
             linkData.put(key, linkUri.getQueryParameter(key));
         }
         return linkData;
     }
-}
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
+}
