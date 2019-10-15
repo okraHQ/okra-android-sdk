@@ -9,9 +9,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.okra.widget.R;
+import com.okra.widget.models.Enums;
 import com.okra.widget.utils.OkraOptions;
 import com.okra.widget.utils.WebInterface;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,11 +31,13 @@ public class OkraWebActivity extends AppCompatActivity {
         linkInitializeOptions.put("isWebview", okraOptions.isWebview());
         linkInitializeOptions.put("key", okraOptions.getKey());
         linkInitializeOptions.put("token", okraOptions.getToken());
-        linkInitializeOptions.put("products", okraOptions.getProducts());
+        linkInitializeOptions.put("products", convertArrayListToString(okraOptions.getProducts()));
         linkInitializeOptions.put("env", okraOptions.getEnv().toString());
         linkInitializeOptions.put("clientName", okraOptions.getClientName());
         linkInitializeOptions.put("webhook", "http://requestb.in");
-        linkInitializeOptions.put("baseUrl", "https://cdn.plaid.com/link/v2/stable/link.html");
+
+        //https://demo-dev.okra.ng/link.html?isWebview=true&key=c81f3e05-7a5c-5727-8d33-1113a3c7a5e4&token=5d8a35224d8113507c7521ac&products=[%22auth%22,%22transactions%22,%22balance%22]&env=dev&clientName=Spinach
+        linkInitializeOptions.put("baseUrl", "https://demo-dev.okra.ng/link.html");
 
 
         String c = generateLinkInitializationUrl(linkInitializeOptions).toString();
@@ -52,8 +56,8 @@ public class OkraWebActivity extends AppCompatActivity {
         okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
 
-        okraLinkWebview.loadUrl("file:///android_res/raw/okra.html");
-        //okraLinkWebview.loadUrl(linkInitializationUrl.toString());
+        //okraLinkWebview.loadUrl("file:///android_res/raw/okra.html");
+        okraLinkWebview.loadUrl(linkInitializationUrl.toString());
 
         // Override the Webview's handler for redirects
         // Link communicates success and failure (analogous to the web's onSuccess and onExit
@@ -126,6 +130,7 @@ public class OkraWebActivity extends AppCompatActivity {
                 .appendQueryParameter("isMobile", "true");
         for (String key : linkOptions.keySet()) {
             if (!key.equals("baseUrl")) {
+                String p = linkOptions.get(key).toString();
                 builder.appendQueryParameter(key, linkOptions.get(key).toString());
             }
         }
@@ -145,5 +150,21 @@ public class OkraWebActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
+
+    public String convertArrayListToString(ArrayList<Enums.Product> productList){
+
+        StringBuilder formattedArray = new StringBuilder("[");
+
+        for (int index = 0; index < productList.size(); index++){
+            if(index == (productList.size() - 1)){
+                formattedArray.append(String.format("\"%s\"", productList.get(index)));
+            }else {
+                formattedArray.append(String.format("\"%s\",", productList.get(index)));
+            }
+        }
+
+        formattedArray.append("]");
+        return formattedArray.toString();
     }
 }

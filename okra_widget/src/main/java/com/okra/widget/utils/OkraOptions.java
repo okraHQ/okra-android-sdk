@@ -5,9 +5,12 @@ import com.okra.widget.models.Enums;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class OkraOptions implements Serializable {
+public class
+OkraOptions implements Serializable {
 
-    public OkraOptions(boolean isWebview, String key, String token, ArrayList<String> products, Enums.Environment environment, String clientName){
+    public OkraOptions(){}
+
+    public OkraOptions(boolean isWebview, String key, String token, ArrayList<Enums.Product> products, Enums.Environment environment, String clientName){
       this.isWebview = isWebview;
       this.key = key;
       this.token = token;
@@ -16,12 +19,23 @@ public class OkraOptions implements Serializable {
       this.clientName = clientName;
     }
 
-    boolean isWebview;
-    String key;
-    String token;
-    ArrayList<String> products = new ArrayList<>();
-    Enums.Environment env;
-    String clientName;
+    public OkraOptions(boolean isWebview, String key, String token, ArrayList<Enums.Product> products, Enums.Environment environment, String clientName, String webhook){
+        this.isWebview = isWebview;
+        this.key = key;
+        this.token = token;
+        this.products = products;
+        this.env = environment;
+        this.clientName = clientName;
+        this.webhook = webhook;
+    }
+
+    private boolean isWebview;
+    private String key;
+    private String token;
+    private ArrayList<Enums.Product> products = new ArrayList<>();
+    private Enums.Environment env;
+    private String clientName;
+    private String webhook;
 
     public boolean isWebview() {
         return isWebview;
@@ -47,11 +61,11 @@ public class OkraOptions implements Serializable {
         this.token = token;
     }
 
-    public ArrayList<String> getProducts() {
+    public ArrayList<Enums.Product> getProducts() {
         return products;
     }
 
-    public void setProducts(ArrayList<String> products) {
+    public void setProducts(ArrayList<Enums.Product> products) {
         this.products = products;
     }
 
@@ -69,6 +83,14 @@ public class OkraOptions implements Serializable {
 
     public void setClientName(String clientName) {
         this.clientName = clientName;
+    }
+
+    public String getWebhook() {
+        return webhook;
+    }
+
+    public void setWebhook(String webhook) {
+        this.webhook = webhook;
     }
 }
 
