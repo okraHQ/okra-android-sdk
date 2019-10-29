@@ -9,10 +9,10 @@ This library would help you add Okra widget to you native android app in no time
 
 ```
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+  repositories {
+   ...
+   maven { url 'https://jitpack.io' }
+  }
+}
 
 ```
