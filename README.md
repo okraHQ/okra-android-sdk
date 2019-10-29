@@ -26,18 +26,11 @@ dependencies {
 ```
 
 ### Usage
-```html
-<!-- The text attribute can also take custom html, but does not compile directives yet-->
-<!-- The beforepopup attribute is not required. But, if it's added then it must return true for the payment dialog to open-->
-<paystack-pay-button
-        class="yellow"
-        text="<small><b>Pay</b> Me Now!</small>"
-        email="$scope.email"
-        amount="$scope.amount"
-        reference="$scope.reference"
-        beforepopup="$scope.beforePopUp"
-        metadata="$scope.metadata"
-        callback="$scope.callback"
-        close="$scope.close">
-</paystack-pay-button>
+```
+<!--Okra.create() static method takes in a context parameter and also and OkraOption parameter-->
+ArrayList products = new ArrayList<Enums.Product>();
+products.add(Enums.Product.auth);
+products.add(Enums.Product.transactions);
+OkraOptions okraOptions = new OkraOptions(true, "c81f3e05-7a5c-5727-8d33-1113a3c7a5e4","5d8a35224d8113507c7521ac", products, Enums.Environment.sandbox,"Bassey");
+Okra.create(MainActivity.this, okraOptions);
 ```
