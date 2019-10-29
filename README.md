@@ -7,7 +7,7 @@ This library would help you add Okra widget to you native android app in no time
 
 1. Add it in your root build.gradle at the end of repositories:
 
-```
+``` gradle
 allprojects {
   repositories {
    ...
@@ -26,8 +26,8 @@ dependencies {
 ```
 
 ### Usage
-```
-<!--Okra.create() static method takes in a context parameter and also and OkraOption parameter-->
+``` java
+//Okra.create() static method takes in a context parameter and also and OkraOption parameter
 ArrayList products = new ArrayList<Enums.Product>();
 products.add(Enums.Product.auth);
 products.add(Enums.Product.transactions);
