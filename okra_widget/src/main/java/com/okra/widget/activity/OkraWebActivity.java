@@ -34,6 +34,7 @@ public class OkraWebActivity extends AppCompatActivity {
         linkInitializeOptions.put("products", convertArrayListToString(okraOptions.getProducts()));
         linkInitializeOptions.put("env", okraOptions.getEnv().toString());
         linkInitializeOptions.put("clientName", okraOptions.getClientName());
+        linkInitializeOptions.put("source", "android");
         linkInitializeOptions.put("webhook", "http://requestb.in");
 
         //https://demo-dev.okra.ng/link.html?isWebview=true&key=c81f3e05-7a5c-5727-8d33-1113a3c7a5e4&token=5d8a35224d8113507c7521ac&products=[%22auth%22,%22transactions%22,%22balance%22]&env=dev&clientName=Spinach
