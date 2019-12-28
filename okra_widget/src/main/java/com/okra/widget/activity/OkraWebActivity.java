@@ -8,6 +8,8 @@ import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.okra.widget.Okra;
 import com.okra.widget.R;
 import com.okra.widget.models.Enums;
 import com.okra.widget.utils.OkraOptions;
@@ -70,56 +72,18 @@ public class OkraWebActivity extends AppCompatActivity {
                 // for a standard URL (typically a forgotten password or account not setup link).
                 // Handle Plaid Link redirects and open traditional pages directly in the  user's
                 // preferred browser.
-                Uri parsedUri = Uri.parse(url);
-                if (parsedUri.getScheme().equals("plaidlink")) {
-                    String action = parsedUri.getHost();
+                    Uri parsedUri = Uri.parse(url);
                     HashMap<String, String> linkData = parseLinkUriData(parsedUri);
-
-                    if (action.equals("connected")) {
-                        // User successfully linked
-                        Log.d("Public token: ", linkData.get("public_token"));
-                        Log.d("Account ID: ", linkData.get("account_id"));
-                        Log.d("Account name: ", linkData.get("account_name"));
-                        Log.d("Institution id: ", linkData.get("institution_id"));
-                        Log.d("Institution name: ", linkData.get("institution_name"));
-
-                        // Reload Link in the Webview
-                        // You will likely want to transition the view at this point.
-                        okraLinkWebview.loadUrl(linkInitializationUrl.toString());
-                    } else if (action.equals("exit")) {
-                        // User exited
-                        // linkData may contain information about the user's status in the Link flow,
-                        // the institution selected, information about any error encountered,
-                        // and relevant API request IDs.
-                        Log.d("User status in flow: ", linkData.get("status"));
-                        // The request ID keys may or may not exist depending on when the user exited
-                        // the Link flow.
-                        Log.d("Link request ID: ", linkData.get("link_request_id"));
-                        Log.d("API request ID: ", linkData.get("plaid_api_request_id"));
-
-                        // Reload Link in the Webview
-                        // You will likely want to transition the view at this point.
-                        okraLinkWebview.loadUrl(linkInitializationUrl.toString());
-                    } else if (action.equals("event")) {
-                        // The event action is fired as the user moves through the Link flow
-                        Log.d("Event name: ", linkData.get("event_name"));
-                    } else {
-                        Log.d("Link action detected: ", action);
+                    Boolean shouldClose = Boolean.valueOf(linkData.get("shouldClose"));
+                    if(shouldClose){
+                        Intent intent = new Intent(OkraWebActivity.this, Okra.baseContext.getClass());
+                        startActivity(intent);
+                    }else{
+                        return false;
                     }
-                    // Override URL loading
                     return true;
-                } else if (parsedUri.getScheme().equals("https") ||
-                        parsedUri.getScheme().equals("http")) {
-                    // Open in browser - this is most  typically for 'account locked' or
-                    // 'forgotten password' redirects
-                    view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-                    // Override URL loading
-                    return true;
-                } else {
-                    // Unknown case - do not override URL loading
-                    return false;
                 }
-            }
+
         });
     }
 
