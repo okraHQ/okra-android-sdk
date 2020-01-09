@@ -141,13 +141,10 @@ public class OkraWebActivity extends AppCompatActivity {
 
     public String getIMEI(Activity activity) {
         TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
-
         if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            return "";
+            return "null";
         }
-
-        if(telephonyManager == null) return "";
-
-        return telephonyManager.getDeviceId() == null ? "" : telephonyManager.getDeviceId();
+        if(telephonyManager == null) return "null";
+        return telephonyManager.getDeviceId() == "null" ? "" : telephonyManager.getDeviceId();
     }
 }
