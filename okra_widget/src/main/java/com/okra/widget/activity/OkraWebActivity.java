@@ -2,6 +2,7 @@ package com.okra.widget.activity;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 
 public class OkraWebActivity extends AppCompatActivity {
@@ -32,7 +33,7 @@ public class OkraWebActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-        TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         OkraOptions okraOptions = (OkraOptions) getIntent().getSerializableExtra("okraOptions");
         // Initialize Link
         HashMap<String, Object> linkInitializeOptions = new HashMap<>();
@@ -42,11 +43,13 @@ public class OkraWebActivity extends AppCompatActivity {
         linkInitializeOptions.put("products", convertArrayListToString(okraOptions.getProducts()));
         linkInitializeOptions.put("env", okraOptions.getEnv().toString());
         linkInitializeOptions.put("clientName", okraOptions.getClientName());
-        linkInitializeOptions.put("uuid", Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID));
+        linkInitializeOptions.put("uuid", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
         linkInitializeOptions.put("source", "android");
+        linkInitializeOptions.put("imei", getIMEI(this));
         linkInitializeOptions.put("webhook", "http://requestb.in");
 
-        System.out.println("this is the uuid " + linkInitializeOptions.get("uuid"));
+        //System.out.println("this is the uuid " + linkInitializeOptions.get("uuid"));
+        //System.out.println("this is the imei " + linkInitializeOptions.get("imei"));
 
         //https://demo-dev.okra.ng/link.html?isWebview=true&key=c81f3e05-7a5c-5727-8d33-1113a3c7a5e4&token=5d8a35224d8113507c7521ac&products=[%22auth%22,%22transactions%22,%22balance%22]&env=dev&clientName=Spinach
         linkInitializeOptions.put("baseUrl", "https://demo-dev.okra.ng/link.html");
@@ -78,17 +81,17 @@ public class OkraWebActivity extends AppCompatActivity {
                 // for a standard URL (typically a forgotten password or account not setup link).
                 // Handle Plaid Link redirects and open traditional pages directly in the  user's
                 // preferred browser.
-                    Uri parsedUri = Uri.parse(url);
-                    HashMap<String, String> linkData = parseLinkUriData(parsedUri);
-                    Boolean shouldClose = Boolean.valueOf(linkData.get("shouldClose"));
-                    if(shouldClose){
-                        Intent intent = new Intent(OkraWebActivity.this, Okra.baseContext.getClass());
-                        startActivity(intent);
-                    }else{
-                        return false;
-                    }
-                    return true;
+                Uri parsedUri = Uri.parse(url);
+                HashMap<String, String> linkData = parseLinkUriData(parsedUri);
+                Boolean shouldClose = Boolean.valueOf(linkData.get("shouldClose"));
+                if (shouldClose) {
+                    Intent intent = new Intent(OkraWebActivity.this, Okra.baseContext.getClass());
+                    startActivity(intent);
+                } else {
+                    return false;
                 }
+                return true;
+            }
 
         });
     }
@@ -123,19 +126,28 @@ public class OkraWebActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
-    public String convertArrayListToString(ArrayList<Enums.Product> productList){
-
+    public String convertArrayListToString(ArrayList<Enums.Product> productList) {
         StringBuilder formattedArray = new StringBuilder("[");
-
-        for (int index = 0; index < productList.size(); index++){
-            if(index == (productList.size() - 1)){
+        for (int index = 0; index < productList.size(); index++) {
+            if (index == (productList.size() - 1)) {
                 formattedArray.append(String.format("\"%s\"", productList.get(index)));
-            }else {
+            } else {
                 formattedArray.append(String.format("\"%s\",", productList.get(index)));
             }
         }
-
         formattedArray.append("]");
         return formattedArray.toString();
+    }
+
+    public String getIMEI(Activity activity) {
+        TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
+
+        if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            return "";
+        }
+
+        if(telephonyManager == null) return "";
+
+        return telephonyManager.getDeviceId() == null ? "" : telephonyManager.getDeviceId();
     }
 }
