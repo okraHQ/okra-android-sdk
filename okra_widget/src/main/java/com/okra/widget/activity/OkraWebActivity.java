@@ -52,7 +52,7 @@ public class OkraWebActivity extends AppCompatActivity {
         //System.out.println("this is the imei " + linkInitializeOptions.get("imei"));
 
         //https://demo-dev.okra.ng/link.html?isWebview=true&key=c81f3e05-7a5c-5727-8d33-1113a3c7a5e4&token=5d8a35224d8113507c7521ac&products=[%22auth%22,%22transactions%22,%22balance%22]&env=dev&clientName=Spinach
-        linkInitializeOptions.put("baseUrl", "https://demo-dev.okra.ng/link.html");
+        linkInitializeOptions.put("baseUrl", "https://app.okra.ng/");
 
         // Generate the Link initialization URL based off of the configuration options.
         final Uri linkInitializationUrl = generateLinkInitializationUrl(linkInitializeOptions);
