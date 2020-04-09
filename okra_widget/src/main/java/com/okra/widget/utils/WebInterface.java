@@ -19,4 +19,14 @@ public class WebInterface {
         Intent intent = new Intent(mContext, Okra.baseContext.getClass());
         mContext.startActivity(intent);
     }
+
+    @JavascriptInterface
+    public String onSuccess(String json) {
+        return json;
+    }
+
+    @JavascriptInterface
+    public String onError(String json) {
+        return json;
+    }
 }
