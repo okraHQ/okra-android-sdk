@@ -16,6 +16,7 @@ import android.webkit.WebViewClient;
 
 import com.okra.widget.Okra;
 import com.okra.widget.R;
+import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.models.Enums;
 import com.okra.widget.utils.OkraOptions;
 import com.okra.widget.utils.WebInterface;
@@ -65,7 +66,7 @@ public class OkraWebActivity extends AppCompatActivity {
         webSettings.setDomStorageEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         okraLinkWebview.setWebContentsDebuggingEnabled(true);
-        okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
+        okraLinkWebview.addJavascriptInterface(new WebInterface(this, okraOptions), "Android");
 
 
         //okraLinkWebview.loadUrl("file:///android_res/raw/okra.html");
@@ -86,6 +87,7 @@ public class OkraWebActivity extends AppCompatActivity {
                 Boolean shouldClose = Boolean.valueOf(linkData.get("shouldClose"));
                 if (shouldClose) {
                     Intent intent = new Intent(OkraWebActivity.this, Okra.baseContext.getClass());
+                    intent.putExtra("okraHandler", new OkraHandler());
                     startActivity(intent);
                 } else {
                     return false;

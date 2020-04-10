@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.okra.widget.Okra;
+import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.models.Enums;
 import com.okra.widget.utils.OkraOptions;
 
@@ -19,7 +20,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        OkraHandler okraHandler = (OkraHandler) getIntent().getSerializableExtra("okraHandler");
+        String okraData = "";
+        if(okraHandler != null){
+            okraData = okraHandler.getData();
+        }
         button = findViewById(R.id.okra_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,8 +37,9 @@ public class MainActivity extends AppCompatActivity {
     public void openOkraWidget(){
         ArrayList  products = new ArrayList<Enums.Product>();
         products.add(Enums.Product.auth);
+        products.add(Enums.Product.balance);
         products.add(Enums.Product.transactions);
-        OkraOptions okraOptions = new OkraOptions(true, "c81f3e05-7a5c-5727-8d33-1113a3c7a5e4","5d8a35224d8113507c7521ac", products, Enums.Environment.sandbox,"Bassey");
+        OkraOptions okraOptions = new OkraOptions(true, "101ee499-beed-53ef-b9e4-1846790792a5","5da6358130a943486f33dced", products, Enums.Environment.production,"Bassey");
         Okra.create(MainActivity.this, okraOptions);
     }
 }

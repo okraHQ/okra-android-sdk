@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.webkit.JavascriptInterface;
 
 import com.okra.widget.Okra;
+import com.okra.widget.handlers.OkraHandler;
 
 public class WebInterface {
     Context mContext;
+    OkraOptions okraOptions;
 
     // Instantiate the interface and set the context
-    public WebInterface(Context c) {
+    public WebInterface(Context c, OkraOptions okraOptions) {
         mContext = c;
+        this.okraOptions = okraOptions;
     }
 
     @JavascriptInterface
@@ -21,12 +24,19 @@ public class WebInterface {
     }
 
     @JavascriptInterface
-    public String onSuccess(String json) {
-        return json;
+    public void onSuccess(String json) {
+        OkraHandler.data = json;
+        OkraHandler.isSuccessful = true;
+        OkraHandler.isDone = true;
     }
 
     @JavascriptInterface
-    public String onError(String json) {
-        return json;
+    public void onError(String json) {
+        OkraHandler.data = json;
+        OkraHandler.hasError = true;
+        OkraHandler.isDone = true;
     }
+
+    @JavascriptInterface
+    public void onClose(String json) {}
 }
