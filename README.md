@@ -34,7 +34,7 @@ products.add(Enums.Product.transactions);
 OkraOptions okraOptions = new OkraOptions(true, "c81f3e05-7a5c-5727-8d33-1113a3c7a5e4","5d8a35224d8113507c7521ac", products, Enums.Environment.sandbox,"Bassey");
 Okra.create(MainActivity.this, okraOptions);
 ```
-## OkraOptions
+#### OkraOptions
 
 |Name                   | Type           | Required            | Default Value       | Description         |
 |-----------------------|----------------|---------------------|---------------------|---------------------|
@@ -64,7 +64,7 @@ Okra gives provision to access the response data on the mobile device. Okra wrap
     }
 ```
 
-## OkraHandler
+#### OkraHandler
 
 |Name                   | Type           | Default Value   | Description         |
 |-----------------------|----------------|-----------------|---------------------|
