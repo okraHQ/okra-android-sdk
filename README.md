@@ -28,29 +28,12 @@ dependencies {
 
 ### Usage
 ``` java
-//Okra.create() static method takes in a context parameter and also and OkraOption parameter
 ArrayList products = new ArrayList<Enums.Product>();
 products.add(Enums.Product.auth);
 products.add(Enums.Product.transactions);
 OkraOptions okraOptions = new OkraOptions(true, "c81f3e05-7a5c-5727-8d33-1113a3c7a5e4","5d8a35224d8113507c7521ac", products, Enums.Environment.sandbox,"Bassey");
 Okra.create(MainActivity.this, okraOptions);
 ```
-### Getting the okra onSuccess and onError response.
-We are aware that most clients want to access Okra's response data on the mobile device. Okra gives provision for this. Okra passes t response back to the View which called it. 
-
-``` java
-@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        OkraHandler okraHandler = (OkraHandler) getIntent().getSerializableExtra("okraHandler");
-        String okraData = "";
-        if(okraHandler != null){
-            okraData = okraHandler.getData();
-        }
-    }
-```
-
 ## OkraOptions
 
 |Name                   | Type           | Required            | Default Value       | Description         |
@@ -62,3 +45,31 @@ We are aware that most clients want to access Okra's response data on the mobile
 |  `env`                | `Enums.Environment`| true            |  undefined          | 
 |  `clientName`         | `String`       | true                |  undefined          | Name of the customer using the widget on the application
 |  `webhook`            | `String`       | true                |  undefined          | The Url that Okra send the client's data to.
+
+### Getting the okra onSuccess and onError response.
+Okra gives provision to access the response data on the mobile device. Okra wraps the response in the `OkraHandler` object and passes it back to the View which called it. 
+
+``` java
+@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        OkraHandler okraHandler = (OkraHandler) getIntent().getSerializableExtra("okraHandler");
+        String okraData = "";
+        if(okraHandler != null){
+            if(okraHandler.getIsDone() && (okraHandler.getIsSuccessful() || okraHandler.getHasError()) ) {
+                okraData = okraHandler.getData();
+            }
+        }
+    }
+```
+
+## OkraHandler
+
+|Name                   | Type           | Default Value   | Description         |
+|-----------------------|----------------|-----------------|---------------------|
+|  `isDone `            | `boolean`      |  false          | flag indicates if the okra process has finished
+|  `isSuccessful `      | `boolean`      |  false          | flag indicates if the okra process was successful.
+|  `hasError`           | `boolean`      |  false          | flag indicates if the okra process has an error.
+|  `Data`               | `Json`         |  null           | this is the response that okra provides.
+
