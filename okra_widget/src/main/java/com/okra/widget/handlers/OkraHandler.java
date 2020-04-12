@@ -32,19 +32,19 @@ public class OkraHandler implements Serializable {
         this.hasError = hasError;
     }
 
-    public static Boolean getIsSuccessful() {
+    public Boolean getIsSuccessful() {
         return isSuccessful;
     }
 
-    public static void setIsSuccessful(Boolean isSuccessful) {
+    public void setIsSuccessful(Boolean isSuccessful) {
         OkraHandler.isSuccessful = isSuccessful;
     }
 
-    public static Boolean getIsDone() {
+    public Boolean getIsDone() {
         return isDone;
     }
 
-    public static void setIsDone(Boolean isDone) {
+    public void setIsDone(Boolean isDone) {
         OkraHandler.isDone = isDone;
     }
 }
