@@ -22,7 +22,7 @@ allprojects {
 ```
 dependencies {
   implementation 'com.github.okraHQ:okra-android-sdk:Tag'
-  //e.g implementation 'com.github.okraHQ:okra-android-sdk:v0.1-alpha'
+  //e.g implementation 'com.github.okraHQ:okra-android-sdk:v0.5-alpha'
  }
 ```
 
@@ -34,6 +34,21 @@ products.add(Enums.Product.auth);
 products.add(Enums.Product.transactions);
 OkraOptions okraOptions = new OkraOptions(true, "c81f3e05-7a5c-5727-8d33-1113a3c7a5e4","5d8a35224d8113507c7521ac", products, Enums.Environment.sandbox,"Bassey");
 Okra.create(MainActivity.this, okraOptions);
+```
+### Getting the okra onSuccess and onError response.
+We are aware that most clients want to access Okra's response data on the mobile device. Okra gives provision for this. Okra passes t response back to the View which called it. 
+
+``` java
+@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        OkraHandler okraHandler = (OkraHandler) getIntent().getSerializableExtra("okraHandler");
+        String okraData = "";
+        if(okraHandler != null){
+            okraData = okraHandler.getData();
+        }
+    }
 ```
 
 ## OkraOptions
