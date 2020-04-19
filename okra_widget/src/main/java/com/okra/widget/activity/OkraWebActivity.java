@@ -86,7 +86,6 @@ public class OkraWebActivity extends AppCompatActivity {
         });
     }
 
-    // Generate a Link initialization URL based on a set of configuration options
     public Uri generateLinkInitializationUrl(HashMap<String, Object> linkOptions) {
         Uri.Builder builder = Uri.parse(linkOptions.get("baseUrl").toString())
                 .buildUpon()
@@ -101,7 +100,6 @@ public class OkraWebActivity extends AppCompatActivity {
         return builder.build();
     }
 
-    // Parse a Link redirect URL querystring into a HashMap for easy manipulation and access
     public HashMap<String, String> parseLinkUriData(Uri linkUri) {
         HashMap<String, String> linkData = new HashMap<String, String>();
         for (String key : linkUri.getQueryParameterNames()) {
