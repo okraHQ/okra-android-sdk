@@ -49,39 +49,27 @@ public class OkraWebActivity extends AppCompatActivity {
         linkInitializeOptions.put("imei", getIMEI(this));
         linkInitializeOptions.put("webhook", "http://requestb.in");
 
-        //System.out.println("this is the uuid " + linkInitializeOptions.get("uuid"));
-        //System.out.println("this is the imei " + linkInitializeOptions.get("imei"));
 
-        //https://demo-dev.okra.ng/link.html?isWebview=true&key=c81f3e05-7a5c-5727-8d33-1113a3c7a5e4&token=5d8a35224d8113507c7521ac&products=[%22auth%22,%22transactions%22,%22balance%22]&env=dev&clientName=Spinach
         linkInitializeOptions.put("baseUrl", "https://app.okra.ng/");
 
-        // Generate the Link initialization URL based off of the configuration options.
+
         final Uri linkInitializationUrl = generateLinkInitializationUrl(linkInitializeOptions);
 
-        // Modify Webview settings - all of these settings may not be applicable
-        // or necessary for your integration.
+
         final WebView okraLinkWebview = findViewById(R.id.ok_webview);
         WebSettings webSettings = okraLinkWebview.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        okraLinkWebview.setWebContentsDebuggingEnabled(true);
         okraLinkWebview.addJavascriptInterface(new WebInterface(this, okraOptions), "Android");
 
 
-        //okraLinkWebview.loadUrl("file:///android_res/raw/okra.html");
         okraLinkWebview.loadUrl(linkInitializationUrl.toString());
 
-        // Override the Webview's handler for redirects
-        // Link communicates success and failure (analogous to the web's onSuccess and onExit
-        // callbacks) via redirects.
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // Parse the URL to determine if it's a special Plaid Link redirect or a request
-                // for a standard URL (typically a forgotten password or account not setup link).
-                // Handle Plaid Link redirects and open traditional pages directly in the  user's
-                // preferred browser.
+
                 Uri parsedUri = Uri.parse(url);
                 HashMap<String, String> linkData = parseLinkUriData(parsedUri);
                 Boolean shouldClose = Boolean.valueOf(linkData.get("shouldClose"));
@@ -142,11 +130,16 @@ public class OkraWebActivity extends AppCompatActivity {
     }
 
     public String getIMEI(Activity activity) {
-        TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
-        if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            return "null";
-        }
-        if(telephonyManager == null) return "null";
-        return telephonyManager.getDeviceId() == "null" ? "" : telephonyManager.getDeviceId();
+       try{
+           TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
+           if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+               return "null";
+           }else {
+               if (telephonyManager == null) return "null";
+               return telephonyManager.getDeviceId() == "null" ? "" : telephonyManager.getDeviceId();
+           }
+       }catch (Exception exception){
+           return "";
+       }
     }
 }
