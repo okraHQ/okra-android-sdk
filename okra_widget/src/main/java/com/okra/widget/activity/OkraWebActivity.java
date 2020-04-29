@@ -18,6 +18,7 @@ import com.okra.widget.Okra;
 import com.okra.widget.R;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.models.Enums;
+import com.okra.widget.models.Guarantor;
 import com.okra.widget.utils.OkraOptions;
 import com.okra.widget.utils.WebInterface;
 
@@ -48,6 +49,20 @@ public class OkraWebActivity extends AppCompatActivity {
         linkInitializeOptions.put("source", "android");
         linkInitializeOptions.put("imei", getIMEI(this));
         linkInitializeOptions.put("webhook", "http://requestb.in");
+        linkInitializeOptions.put("color", okraOptions.getColor());
+        linkInitializeOptions.put("limit", okraOptions.getLimit());
+        linkInitializeOptions.put("corporate", okraOptions.isCorporate());
+        linkInitializeOptions.put("connectMessage", okraOptions.getConnectMessage());
+        linkInitializeOptions.put("guarantors", okraOptions.getGuarantors().toString());
+        linkInitializeOptions.put("callback_url", okraOptions.getCallback_url());
+        linkInitializeOptions.put("redirect_url", okraOptions.getRedirect_url());
+        linkInitializeOptions.put("logo", okraOptions.getLogo());
+        linkInitializeOptions.put("filter", "");
+        linkInitializeOptions.put("widget_success", okraOptions.getWidget_success());
+        linkInitializeOptions.put("currency", okraOptions.getCurrency());
+        linkInitializeOptions.put("exp", okraOptions.getExp());
+        linkInitializeOptions.put("success_title", okraOptions.getSuccess_title());
+        linkInitializeOptions.put("success_message ", okraOptions.getSuccess_message());
 
 
         linkInitializeOptions.put("baseUrl", "https://app.okra.ng/");
@@ -64,6 +79,9 @@ public class OkraWebActivity extends AppCompatActivity {
         okraLinkWebview.addJavascriptInterface(new WebInterface(this, okraOptions), "Android");
 
 
+        //okraLinkWebview.loadUrl("file:///android_res/raw/okra.html");
+        System.out.println("linkInitializationUrl.toString() " + linkInitializationUrl.toString());
+        System.out.println("new Guarantor " + new Guarantor(true, "", 3).toString());
         okraLinkWebview.loadUrl(linkInitializationUrl.toString());
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
