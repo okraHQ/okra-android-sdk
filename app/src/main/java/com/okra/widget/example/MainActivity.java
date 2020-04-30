@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         products.add(Enums.Product.auth);
         products.add(Enums.Product.balance);
         products.add(Enums.Product.transactions);
-        OkraOptions okraOptions = new OkraOptions(true, "key","token", products, Enums.Environment.production,"Bassey");
-        okraOptions.setColor("#3AB795");
+        OkraOptions okraOptions = new OkraOptions(true, "101ee499-beed-53ef-b9e4","5da6358130a943486f33dced", products, Enums.Environment.production,"Chris");
+        okraOptions.setColor("#953ab7");
         okraOptions.setLimit("24");
         okraOptions.setCorporate(false);
         okraOptions.setConnectMessage("Which account do you want to connect with?");

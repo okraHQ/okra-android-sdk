@@ -14,6 +14,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.gson.Gson;
 import com.okra.widget.Okra;
 import com.okra.widget.R;
 import com.okra.widget.handlers.OkraHandler;
@@ -36,7 +37,7 @@ public class OkraWebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        OkraOptions okraOptions = (OkraOptions) getIntent().getSerializableExtra("okraOptions");
+        final OkraOptions okraOptions = (OkraOptions) getIntent().getSerializableExtra("okraOptions");
         // Initialize Link
         HashMap<String, Object> linkInitializeOptions = new HashMap<>();
         linkInitializeOptions.put("isWebview", okraOptions.isWebview());
@@ -79,10 +80,11 @@ public class OkraWebActivity extends AppCompatActivity {
         okraLinkWebview.addJavascriptInterface(new WebInterface(this, okraOptions), "Android");
 
 
-        //okraLinkWebview.loadUrl("file:///android_res/raw/okra.html");
-        System.out.println("linkInitializationUrl.toString() " + linkInitializationUrl.toString());
-        System.out.println("new Guarantor " + new Guarantor(true, "", 3).toString());
-        okraLinkWebview.loadUrl(linkInitializationUrl.toString());
+        okraLinkWebview.loadUrl("http://e630adb5.ngrok.io/mobile.html");
+//        //okraLinkWebview.loadUrl("file:///android_res/raw/okra.html");
+//        System.out.println("linkInitializationUrl.toString() " + linkInitializationUrl.toString());
+//        System.out.println("new Guarantor " + new Guarantor(true, "", 3).toString());
+//        okraLinkWebview.loadUrl(linkInitializationUrl.toString());
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -101,6 +103,19 @@ public class OkraWebActivity extends AppCompatActivity {
                 return true;
             }
 
+        });
+
+
+        okraLinkWebview.setWebViewClient(new WebViewClient(){
+            public void onPageFinished(WebView view, String weburl){
+                System.out.println(new Gson().toJson(okraOptions));
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                    okraLinkWebview.evaluateJavascript("openOkraWidget("+"'"+new Gson().toJson(okraOptions)+"'"+");", null);
+                } else {
+                    okraLinkWebview.loadUrl("openOkraWidget("+"'"+new Gson().toJson(okraOptions)+"'"+");");
+                }
+
+            }
         });
     }
 

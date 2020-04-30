@@ -45,7 +45,7 @@ OkraOptions implements Serializable {
 
 
     private String limit;
-    private boolean corporate;
+    private boolean isCorporate;
     private String connectMessage;
     private Guarantor guarantors;
     private String callback_url;
@@ -130,12 +130,20 @@ OkraOptions implements Serializable {
         this.limit = limit;
     }
 
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
     public boolean isCorporate() {
-        return corporate;
+        return isCorporate;
     }
 
     public void setCorporate(boolean corporate) {
-        this.corporate = corporate;
+        isCorporate = corporate;
     }
 
     public String getConnectMessage() {
