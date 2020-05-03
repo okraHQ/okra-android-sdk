@@ -40,7 +40,7 @@ Okra.create(MainActivity.this, okraOptions);
 |-----------------------|----------------|---------------------|---------------------|---------------------|
 |  `isWebview `         | `boolean`      | true                |  true               | 
 |  `key `               | `String`       | true                |  undefined          | Your public key from Okra.
-|  `token`              | `String`       | true                |  undefined          | Your pubic Key from okra. Use test key for test mode and live key for live mode
+|  `token`              | `String`       | true                |  undefined          | Your client token from okra.
 |  `products`           | `ArrayList<Enums.Product>`| true     |  undefined          | The Okra products you want to use with the widget.
 |  `env`                | `Enums.Environment`| true            |  undefined          | 
 |  `clientName`         | `String`       | true                |  undefined          | Name of the customer using the widget on the application
