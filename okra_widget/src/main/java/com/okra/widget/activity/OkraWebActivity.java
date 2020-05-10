@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,7 +18,6 @@ import com.okra.widget.Okra;
 import com.okra.widget.R;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.models.Enums;
-import com.okra.widget.models.Guarantor;
 import com.okra.widget.utils.OkraOptions;
 import com.okra.widget.utils.WebInterface;
 
@@ -38,39 +36,7 @@ public class OkraWebActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web);
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         final OkraOptions okraOptions = (OkraOptions) getIntent().getSerializableExtra("okraOptions");
-        // Initialize Link
-//        HashMap<String, Object> linkInitializeOptions = new HashMap<>();
-//        linkInitializeOptions.put("isWebview", okraOptions.isWebview());
-//        linkInitializeOptions.put("key", okraOptions.getKey());
-//        linkInitializeOptions.put("token", okraOptions.getToken());
-//        linkInitializeOptions.put("products", convertArrayListToString(okraOptions.getProducts()));
-//        linkInitializeOptions.put("env", okraOptions.getEnv().toString());
-//        linkInitializeOptions.put("clientName", okraOptions.getClientName());
-//        linkInitializeOptions.put("uuid", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
-//        linkInitializeOptions.put("source", "android");
-//        linkInitializeOptions.put("imei", getIMEI(this));
-//        linkInitializeOptions.put("webhook", "http://requestb.in");
-//        linkInitializeOptions.put("color", okraOptions.getColor());
-//        linkInitializeOptions.put("limit", okraOptions.getLimit());
-//        linkInitializeOptions.put("corporate", okraOptions.isCorporate());
-//        linkInitializeOptions.put("connectMessage", okraOptions.getConnectMessage());
-//        linkInitializeOptions.put("guarantors", okraOptions.getGuarantors().toString());
-//        linkInitializeOptions.put("callback_url", okraOptions.getCallback_url());
-//        linkInitializeOptions.put("redirect_url", okraOptions.getRedirect_url());
-//        linkInitializeOptions.put("logo", okraOptions.getLogo());
-//        linkInitializeOptions.put("filter", "");
-//        linkInitializeOptions.put("widget_success", okraOptions.getWidget_success());
-//        linkInitializeOptions.put("currency", okraOptions.getCurrency());
-//        linkInitializeOptions.put("exp", okraOptions.getExp());
-//        linkInitializeOptions.put("success_title", okraOptions.getSuccess_title());
-//        linkInitializeOptions.put("success_message ", okraOptions.getSuccess_message());
-//
-//
-//        linkInitializeOptions.put("baseUrl", "https://app.okra.ng/");
-//
-//
-//        final Uri linkInitializationUrl = generateLinkInitializationUrl(linkInitializeOptions);
-
+        okraOptions.setImei(getIMEI(this));
 
         final WebView okraLinkWebview = findViewById(R.id.ok_webview);
         WebSettings webSettings = okraLinkWebview.getSettings();
@@ -80,7 +46,7 @@ public class OkraWebActivity extends AppCompatActivity {
         okraLinkWebview.addJavascriptInterface(new WebInterface(this, okraOptions), "Android");
 
 
-        okraLinkWebview.loadUrl("https://app.okra.ng/mobile.html"); //http://e630adb5.ngrok.io/mobile.html
+        okraLinkWebview.loadUrl("https://mobile.okra.ng");
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override

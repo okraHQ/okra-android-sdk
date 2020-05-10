@@ -1,6 +1,7 @@
 package com.okra.widget.utils;
 
 import com.okra.widget.models.Enums;
+import com.okra.widget.models.Filter;
 import com.okra.widget.models.Guarantor;
 
 import java.io.Serializable;
@@ -11,7 +12,7 @@ OkraOptions implements Serializable {
 
     public OkraOptions(){}
 
-    public OkraOptions(boolean isWebview, String key, String token, ArrayList<Enums.Product> products, Enums.Environment environment, String clientName){
+    public OkraOptions(boolean isWebview, String key, String token, ArrayList<Enums.Product> products, String environment, String clientName){
       this.isWebview = isWebview;
       this.key = key;
       this.token = token;
@@ -20,7 +21,7 @@ OkraOptions implements Serializable {
       this.clientName = clientName;
     }
 
-    public OkraOptions(boolean isWebview, String key, String token, ArrayList<Enums.Product> products, Enums.Environment environment, String clientName, String webhook){
+    public OkraOptions(boolean isWebview, String key, String token, ArrayList<Enums.Product> products, String environment, String clientName, String webhook){
         this.isWebview = isWebview;
         this.key = key;
         this.token = token;
@@ -34,16 +35,11 @@ OkraOptions implements Serializable {
     private String key;
     private String token;
     private ArrayList<Enums.Product> products = new ArrayList<>();
-    private Enums.Environment env;
+    private String env;
     private String clientName;
     private String webhook;
     private String source = "android";
     private String color;
-
-
-
-
-
     private String limit;
     private boolean isCorporate;
     private String connectMessage;
@@ -51,179 +47,219 @@ OkraOptions implements Serializable {
     private String callback_url;
     private String redirect_url;
     private String logo;
-    //filter: ${JSON.stringify(filter)},
+    private Filter filter;
     private String widget_success;
     private String currency;
     private String exp;
     private String success_title;
     private String success_message;
+    private String imei;
 
     public boolean isWebview() {
         return isWebview;
     }
 
-    public void setWebview(boolean webview) {
+    public OkraOptions setWebview(boolean webview) {
         isWebview = webview;
+        return this;
     }
 
     public String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public OkraOptions setKey(String key) {
         this.key = key;
+        return this;
     }
 
     public String getToken() {
         return token;
     }
 
-    public void setToken(String token) {
+    public OkraOptions setToken(String token) {
         this.token = token;
+        return this;
     }
 
     public ArrayList<Enums.Product> getProducts() {
         return products;
     }
 
-    public void setProducts(ArrayList<Enums.Product> products) {
+    public OkraOptions setProducts(ArrayList<Enums.Product> products) {
         this.products = products;
+        return  this;
     }
 
-    public Enums.Environment getEnv() {
+    public String getEnv() {
         return env;
     }
 
-    public void setEnv(Enums.Environment env) {
+    public OkraOptions setEnv(String env) {
         this.env = env;
+        return this;
     }
 
     public String getClientName() {
         return clientName;
     }
 
-    public void setClientName(String clientName) {
+    public OkraOptions setClientName(String clientName) {
         this.clientName = clientName;
+        return this;
     }
 
     public String getWebhook() {
         return webhook;
     }
 
-    public void setWebhook(String webhook) {
+    public OkraOptions setWebhook(String webhook) {
         this.webhook = webhook;
+        return this;
     }
 
     public String getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public OkraOptions setColor(String color) {
         this.color = color;
+        return  this;
     }
 
     public String getLimit() {
         return limit;
     }
 
-    public void setLimit(String limit) {
+    public OkraOptions setLimit(String limit) {
         this.limit = limit;
+        return this;
     }
 
     public String getSource() {
         return source;
     }
 
-    public void setSource(String source) {
+    public OkraOptions setSource(String source) {
         this.source = source;
+        return this;
     }
 
     public boolean isCorporate() {
         return isCorporate;
     }
 
-    public void setCorporate(boolean corporate) {
+    public OkraOptions setCorporate(boolean corporate) {
         isCorporate = corporate;
+        return this;
     }
 
     public String getConnectMessage() {
         return connectMessage;
     }
 
-    public void setConnectMessage(String connectMessage) {
+    public OkraOptions setConnectMessage(String connectMessage) {
         this.connectMessage = connectMessage;
+        return this;
     }
 
     public Guarantor getGuarantors() {
         return guarantors;
     }
 
-    public void setGuarantors(Guarantor guarantors) {
+    public OkraOptions setGuarantors(Guarantor guarantors) {
         this.guarantors = guarantors;
+        return this;
     }
 
     public String getCallback_url() {
         return callback_url;
     }
 
-    public void setCallback_url(String callback_url) {
+    public OkraOptions setCallback_url(String callback_url) {
         this.callback_url = callback_url;
+        return this;
     }
 
     public String getRedirect_url() {
         return redirect_url;
     }
 
-    public void setRedirect_url(String redirect_url) {
+    public OkraOptions setRedirect_url(String redirect_url) {
         this.redirect_url = redirect_url;
+        return this;
     }
 
     public String getLogo() {
         return logo;
     }
 
-    public void setLogo(String logo) {
+    public OkraOptions setLogo(String logo) {
         this.logo = logo;
+        return this;
     }
 
     public String getWidget_success() {
         return widget_success;
     }
 
-    public void setWidget_success(String widget_success) {
+    public OkraOptions setWidget_success(String widget_success) {
         this.widget_success = widget_success;
+        return this;
     }
 
     public String getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public OkraOptions setCurrency(String currency) {
         this.currency = currency;
+        return this;
     }
 
     public String getExp() {
         return exp;
     }
 
-    public void setExp(String exp) {
+    public OkraOptions setExp(String exp) {
         this.exp = exp;
+        return this;
     }
 
     public String getSuccess_title() {
         return success_title;
     }
 
-    public void setSuccess_title(String success_title) {
+    public OkraOptions setSuccess_title(String success_title) {
         this.success_title = success_title;
+        return this;
     }
 
     public String getSuccess_message() {
         return success_message;
     }
 
-    public void setSuccess_message(String success_message) {
+    public OkraOptions setSuccess_message(String success_message) {
         this.success_message = success_message;
+        return this;
+    }
+
+    public String getImei() {
+        return imei;
+    }
+
+    public OkraOptions setImei(String imei) {
+        this.imei = imei;
+        return this;
+    }
+
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public OkraOptions setFilter(Filter filter) {
+        this.filter = filter;
+        return this;
     }
 }
 

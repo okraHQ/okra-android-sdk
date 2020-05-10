@@ -23,5 +23,53 @@ public class Enums {
         }
     }
 
-    public enum Product { auth, transactions, balance, identity}
+    public enum Product { auth, transactions, balance, identity, income}
+
+    public enum IndustryType {
+        all ("all");
+
+        private final String name;
+
+        private IndustryType(String s) {
+            name = s;
+        }
+        public boolean equalsName(String otherName) {
+            // (otherName == null) check is not needed because name.equals(null) returns false
+            return name.equals(otherName);
+        }
+        public String toString() {
+            return this.name;
+        }
+    }
+
+    public enum Banks {
+        EcoBank ("ecobank-nigeria"),
+        FidelityBank ("fidelity-bank"),
+        FirstBankOfNigeria ("first-bank-of-nigeria"),
+        FirstCityMonumentBank ("first-city-monument-bank"),
+        GTB ("guaranty-trust-bank"),
+        PolarisBank ("polaris-bank"),
+        StanbicIBTC ("stanbic-ibtc-bank"),
+        StandardCharteredBank ("standard-chartered-bank"),
+        SterlingBank ("sterling-bank"),
+        UnionBank ("union-bank-of-nigeria"),
+        UBA ("united-bank-for-africa"),
+        WemaBank ("wema-bank"),
+        UnityBank ("unity-bank"),
+        Alat ("alat"),
+        AccessBank ("access-bank");
+
+        private final String name;
+
+        private Banks(String s) {
+            name = s;
+        }
+        public boolean equalsName(String otherName) {
+            // (otherName == null) check is not needed because name.equals(null) returns false
+            return name.equals(otherName);
+        }
+        public String toString() {
+            return this.name;
+        }
+    }
 }
