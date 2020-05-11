@@ -3,10 +3,10 @@ package com.okra.widget.handlers;
 import java.io.Serializable;
 
 public class OkraHandler implements Serializable {
-    public static String data;
-    public static Boolean isSuccessful;
-    public static Boolean hasError;
-    public static Boolean isDone;
+    public static String data = "";
+    public static Boolean isSuccessful = false;
+    public static Boolean hasError = false;
+    public static Boolean isDone = false;
 
     public String getData() {
         return data;
