@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         .setLogo("https://cdn.okra.ng/images/icon.svg")
         .setFilter(new Filter(Enums.IndustryType.all.toString(), banks))
         .setWidget_success("Your account was successfully linked to Okra, Inc")
+        .setWidget_failed("")
         .setCurrency("USD")
         .setExp("2020-08-06")
         .setSuccess_title("it has entered success")

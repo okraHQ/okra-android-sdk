@@ -49,6 +49,7 @@ OkraOptions implements Serializable {
     private String logo;
     private Filter filter;
     private String widget_success;
+    private String widget_failed;
     private String currency;
     private String exp;
     private String success_title;
@@ -205,6 +206,15 @@ OkraOptions implements Serializable {
 
     public OkraOptions setWidget_success(String widget_success) {
         this.widget_success = widget_success;
+        return this;
+    }
+
+    public String getWidget_failed() {
+        return widget_failed;
+    }
+
+    public OkraOptions setWidget_failed(String widget_failed) {
+        this.widget_failed = widget_failed;
         return this;
     }
 
