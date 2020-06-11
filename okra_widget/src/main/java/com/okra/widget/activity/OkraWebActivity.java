@@ -9,8 +9,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -20,7 +18,6 @@ import com.okra.widget.Okra;
 import com.okra.widget.R;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.models.Enums;
-import com.okra.widget.models.Response;
 import com.okra.widget.utils.OkraOptions;
 import com.okra.widget.utils.WebInterface;
 
