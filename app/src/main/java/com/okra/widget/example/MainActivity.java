@@ -1,6 +1,10 @@
 package com.okra.widget.example;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.okra.widget.Okra;
@@ -16,17 +20,18 @@ public class MainActivity extends AppCompatActivity {
 
     Button button;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        OkraHandler okraHandler = (OkraHandler) getIntent().getSerializableExtra("okraHandler");
-        String okraData = "";
-        if(okraHandler != null){
-            if(okraHandler.getIsDone() && (okraHandler.getIsSuccessful() || okraHandler.getHasError()) ) {
-                okraData = okraHandler.getData();
-            }
-        }
+//        OkraHandler okraHandler = (OkraHandler) getIntent().getSerializableExtra("okraHandler");
+//        String okraData = "";
+//        if(okraHandler != null){
+//            if(okraHandler.getIsDone() && (okraHandler.getIsSuccessful() || okraHandler.getHasError()) ) {
+//                okraData = okraHandler.getData();
+//            }
+//        }
         button = findViewById(R.id.okra_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,6 +39,21 @@ public class MainActivity extends AppCompatActivity {
                 openOkraWidget();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                OkraHandler okraHandler = (OkraHandler) data.getSerializableExtra("result");
+                Log.i("okra result ", okraHandler != null ? okraHandler.getData() : "nothing");
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 
     public void openOkraWidget(){
@@ -46,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         products.add(Enums.Product.auth);
         products.add(Enums.Product.balance);
         products.add(Enums.Product.transactions);
-        OkraOptions okraOptions = new OkraOptions(true, "101ee499-beed-53ef-b9e4-1846790792a5","5da6358130a943486f33dced", products, Enums.Environment.production.toString(),"Chris");
+        OkraOptions okraOptions = new OkraOptions(true, "fa85e5ce-0e4e-5a88-883d-9ba9b4357683","5da6358130a943486f33dced", products, Enums.Environment.production.toString(),"Chris");
         okraOptions.setColor("#953ab7")
         .setLimit("24")
         .setCorporate(false)
