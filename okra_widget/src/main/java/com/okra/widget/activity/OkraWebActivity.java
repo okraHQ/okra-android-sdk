@@ -58,7 +58,8 @@ public class OkraWebActivity extends AppCompatActivity {
                 if (shouldClose) {
                     Intent intent = new Intent(OkraWebActivity.this, Okra.baseContext.getClass());
                     intent.putExtra("okraHandler", new OkraHandler());
-                    startActivity(intent);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
                 } else {
                     return false;
                 }

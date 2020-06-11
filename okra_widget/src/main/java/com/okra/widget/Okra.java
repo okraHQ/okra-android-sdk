@@ -25,10 +25,13 @@ public class Okra {
             int REQUEST_READ_PHONE_STATE = 1;
             ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
         }else {
-            baseContext = context;
-            Intent intent = new Intent(context, OkraWebActivity.class);
-            intent.putExtra("okraOptions", okraOptions);
-            context.startActivity(intent);
+            int LAUNCH_SECOND_ACTIVITY = 1;
+            if (context instanceof Activity) {
+                baseContext = context;
+                Intent intent = new Intent(context, OkraWebActivity.class);
+                intent.putExtra("okraOptions", okraOptions);
+                ((Activity) context).startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
+            }
         }
     }
 
