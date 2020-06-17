@@ -67,7 +67,6 @@ public class OkraWebActivity extends AppCompatActivity {
             }
 
             public void onPageFinished(WebView view, String weburl){
-                System.out.println(new Gson().toJson(okraOptions));
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                     okraLinkWebview.evaluateJavascript("openOkraWidget("+"'"+new Gson().toJson(okraOptions)+"'"+");", null);
                 } else {
