@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
-                OkraHandler okraHandler = (OkraHandler) data.getSerializableExtra("result");
-                Log.i("okra result ", okraHandler != null ? okraHandler.getData() : "nothing");
+                OkraHandler okraHandler = (OkraHandler) data.getSerializableExtra("okraHandler");
+                Log.i("okra okraHandler ", okraHandler != null ? okraHandler.getData() : "nothing");
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         .setLimit("24")
         .setCorporate(false)
         .setConnectMessage("Which account do you want to connect with?")
-        .setGuarantors(new Guarantor(true, "this is me", 3))
+        .setGuarantors(new Guarantor(false, "this is me", 3))
         .setCallback_url("")
         .setRedirect_url("redirect")
         .setLogo("https://cdn.okra.ng/images/icon.svg")
