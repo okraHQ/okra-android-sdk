@@ -47,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
-                OkraHandler okraHandler = (OkraHandler) data.getSerializableExtra("result");
-                Log.i("okra result ", okraHandler != null ? okraHandler.getData() : "nothing");
+                OkraHandler okraHandler = (OkraHandler) data.getSerializableExtra("okraHandler");
+                System.out.println("data is here " + okraHandler.getData());
+                //Log.i("okra result ", okraHandler != null ? okraHandler.getData() : "nothing");
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
@@ -65,13 +66,14 @@ public class MainActivity extends AppCompatActivity {
         ArrayList  products = new ArrayList<Enums.Product>();
         products.add(Enums.Product.auth);
         products.add(Enums.Product.balance);
+        products.add(Enums.Product.identity);
         products.add(Enums.Product.transactions);
-        OkraOptions okraOptions = new OkraOptions(true, "d827447b-fb7e-584a-abf1-fa43524134bd","5d9288ea182d3d000cb7c486", products, Enums.Environment.production_sandbox.toString(),"Chris");
+        OkraOptions okraOptions = new OkraOptions(true, "b7704b61-1ce5-58bf-af49-2d805fa8f798","5da6358130a943486f33dced", products, "production-sandbox","Chris");
         okraOptions.setColor("#953ab7")
         .setLimit("24")
         .setCorporate(false)
         .setConnectMessage("Which account do you want to connect with?")
-        .setGuarantors(new Guarantor(true, "this is me", 3))
+        .setGuarantors(new Guarantor(false, "this is me", 3))
         .setCallback_url("")
         .setRedirect_url("redirect")
         .setLogo("https://cdn.okra.ng/images/icon.svg")
