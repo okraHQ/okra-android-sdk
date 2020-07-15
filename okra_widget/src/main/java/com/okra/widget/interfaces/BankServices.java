@@ -1,8 +1,10 @@
 package com.okra.widget.interfaces;
 
+import com.okra.widget.models.HoverStrategy;
+
 public interface BankServices {
-    void getBvn();
-    void getAccounts();
-    void getAccountBalance();
-    void getTransactions();
+    HoverStrategy getBvn() throws Exception;
+    HoverStrategy getAccounts() throws Exception;
+    HoverStrategy getAccountBalance();
+    HoverStrategy getTransactions() throws Exception;
 }
