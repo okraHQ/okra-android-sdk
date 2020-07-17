@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.okra.widget.Okra;
@@ -12,7 +11,7 @@ import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.models.Enums;
 import com.okra.widget.models.Filter;
 import com.okra.widget.models.Guarantor;
-import com.okra.widget.utils.OkraOptions;
+import com.okra.widget.models.OkraOptions;
 
 import java.util.ArrayList;
 

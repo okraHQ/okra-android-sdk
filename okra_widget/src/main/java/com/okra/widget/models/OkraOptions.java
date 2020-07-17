@@ -1,8 +1,4 @@
-package com.okra.widget.utils;
-
-import com.okra.widget.models.Enums;
-import com.okra.widget.models.Filter;
-import com.okra.widget.models.Guarantor;
+package com.okra.widget.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;

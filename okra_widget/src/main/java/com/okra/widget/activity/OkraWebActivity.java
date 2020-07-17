@@ -18,7 +18,7 @@ import com.okra.widget.Okra;
 import com.okra.widget.R;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.models.Enums;
-import com.okra.widget.utils.OkraOptions;
+import com.okra.widget.models.OkraOptions;
 import com.okra.widget.utils.WebInterface;
 
 import java.util.ArrayList;

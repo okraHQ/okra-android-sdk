@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class BankRequest {
     private String recordId;
     private Auth auth;
-    private ArrayList<Balance> balances = new ArrayList<>();
+    private ArrayList<Balance> balance = new ArrayList<>();
     private Identity identity;
     private ArrayList<Transaction> transactions = new ArrayList<>();
 
@@ -26,12 +26,12 @@ public class BankRequest {
         this.auth = auth;
     }
 
-    public ArrayList<Balance> getBalances() {
-        return balances;
+    public ArrayList<Balance> getBalance() {
+        return balance;
     }
 
-    public void setBalances(ArrayList<Balance> balances) {
-        this.balances = balances;
+    public void setBalance(ArrayList<Balance> balance) {
+        this.balance = balance;
     }
 
     public Identity getIdentity() {
