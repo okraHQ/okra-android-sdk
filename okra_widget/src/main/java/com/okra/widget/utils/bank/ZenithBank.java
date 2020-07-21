@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.hover.sdk.api.HoverParameters;
 import com.okra.widget.interfaces.BankServices;
+import com.okra.widget.models.Enums;
 import com.okra.widget.models.HoverStrategy;
 
 public class ZenithBank implements BankServices {
@@ -21,12 +22,17 @@ public class ZenithBank implements BankServices {
 
     @Override
     public HoverStrategy getAccountBalance() {
-        return new HoverStrategy(
+        HoverStrategy hoverStrategy = new HoverStrategy(
                 "11229370",
                 "Zenith Bank",
                 "Fetching account balance",
                 0
         );
+        hoverStrategy.setId("balance");
+        hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
+        hoverStrategy.setFirstAction(true);
+        hoverStrategy.setLastAction(true);
+        return hoverStrategy;
     }
 
     @Override

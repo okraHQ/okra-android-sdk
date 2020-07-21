@@ -25,6 +25,8 @@ public class Enums {
 
     public enum Product { auth, transactions, balance, identity, income}
 
+    public enum BankResponseMethod { ussd, sms}
+
     public enum IndustryType {
         all ("all");
 

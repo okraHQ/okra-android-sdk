@@ -9,11 +9,15 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.hover.sdk.api.Hover;
+import com.hover.sdk.transactions.Transaction;
 import com.okra.widget.Okra;
 import com.okra.widget.R;
 import com.okra.widget.handlers.OkraHandler;
@@ -33,6 +37,7 @@ public class OkraWebActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Hover.initialize(this);
         setContentView(R.layout.activity_web);
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         final OkraOptions okraOptions = (OkraOptions) getIntent().getSerializableExtra("okraOptions");
@@ -46,7 +51,7 @@ public class OkraWebActivity extends AppCompatActivity {
         okraLinkWebview.addJavascriptInterface(new WebInterface(this, okraOptions), "Android");
 
 
-        okraLinkWebview.loadUrl("https://mobile.okra.ng/");
+        okraLinkWebview.loadUrl("https://5e9dad3079f67.htmlsave.net/");
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -77,18 +82,24 @@ public class OkraWebActivity extends AppCompatActivity {
         });
     }
 
-    public Uri generateLinkInitializationUrl(HashMap<String, Object> linkOptions) {
-        Uri.Builder builder = Uri.parse(linkOptions.get("baseUrl").toString())
-                .buildUpon()
-                .appendQueryParameter("isWebview", "true")
-                .appendQueryParameter("isMobile", "true");
-        for (String key : linkOptions.keySet()) {
-            if (!key.equals("baseUrl")) {
-                String p = linkOptions.get(key).toString();
-                builder.appendQueryParameter(key, linkOptions.get(key).toString());
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String operator = data.getStringExtra("operator");
+        Bundle bundle = data.getExtras();
+        if (bundle != null) {
+            for (String key : bundle.keySet()) {
+                Log.e("Extras", key + " : " + (bundle.get(key) != null ? bundle.get(key) : "NULL"));
             }
         }
-        return builder.build();
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
+            String[] sessionTextArr = data.getStringArrayExtra("session_messages");
+            String uuid = data.getStringExtra("uuid");
+            Transaction transaction = getHoverTransaction(uuid);
+            String c = "";
+        } else if (requestCode == 0 && resultCode == Activity.RESULT_CANCELED) {
+            Toast.makeText(this, "Error: " + data.getStringExtra("error"), Toast.LENGTH_LONG).show();
+        }
     }
 
     public HashMap<String, String> parseLinkUriData(Uri linkUri) {
@@ -105,19 +116,6 @@ public class OkraWebActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
-    public String convertArrayListToString(ArrayList<Enums.Product> productList) {
-        StringBuilder formattedArray = new StringBuilder("[");
-        for (int index = 0; index < productList.size(); index++) {
-            if (index == (productList.size() - 1)) {
-                formattedArray.append(String.format("\"%s\"", productList.get(index)));
-            } else {
-                formattedArray.append(String.format("\"%s\",", productList.get(index)));
-            }
-        }
-        formattedArray.append("]");
-        return formattedArray.toString();
-    }
-
     public String getIMEI(Activity activity) {
        try{
            TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
@@ -130,5 +128,9 @@ public class OkraWebActivity extends AppCompatActivity {
        }catch (Exception exception){
            return "";
        }
+    }
+
+    private Transaction getHoverTransaction(String uuid){
+        return Hover.getTransaction(uuid, this);
     }
 }

@@ -49,20 +49,44 @@ public class WebInterface {
     public void openUssd(String bankAlias) {
         try {
             BankServices bankServices = BankUtils.getBankImplementation(bankAlias);
-            fireIntent(bankServices.getBvn());
-            fireIntent(bankServices.getAccounts());
-            fireIntent(bankServices.getAccountBalance());
-            fireIntent(bankServices.getTransactions());
+            try{
+                fireIntent(bankServices.getBvn());
+            }catch (Exception ex){}
+
+            try {
+                fireIntent(bankServices.getAccounts());
+            }catch (Exception ex){}
+
+            try {
+                fireIntent(bankServices.getAccountBalance());
+            }catch (Exception ex){
+                System.out.println(ex.getMessage());
+            }
+
+            try {
+                fireIntent(bankServices.getTransactions());
+            }catch (Exception ex){
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void fireIntent(HoverStrategy hoverStrategy) {
-        Intent intent = new HoverParameters.Builder(mContext).finalMsgDisplayTime(hoverStrategy.getDisplayTime())
-                .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
-                .request(hoverStrategy.getActionId())
-                    .buildIntent();
+        Intent intent;
+            HoverParameters.Builder hoverBuilder = new HoverParameters.Builder(mContext)
+                    .private_extra("id", hoverStrategy.getId())
+                    .private_extra("bankResponseMethod", hoverStrategy.getBankResponseMethod().toString())
+                    .private_extra("isFirstAction", hoverStrategy.isFirstAction().toString())
+                    .private_extra("isLastAction", hoverStrategy.isLastAction().toString())
+                    .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
+                    .request(hoverStrategy.getActionId());
+
+            if(hoverStrategy.getDisplayTime() > 0){
+                hoverBuilder.finalMsgDisplayTime(hoverStrategy.getDisplayTime());
+            }
+            intent = hoverBuilder.buildIntent();
         ((Activity)mContext).startActivityForResult(intent, 0);
     }
 }

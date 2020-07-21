@@ -1,6 +1,7 @@
 package com.okra.widget.utils.bank;
 
 import com.okra.widget.interfaces.BankServices;
+import com.okra.widget.models.Enums;
 import com.okra.widget.models.HoverStrategy;
 
 public class StanbicBank implements BankServices {
@@ -16,12 +17,17 @@ public class StanbicBank implements BankServices {
 
     @Override
     public HoverStrategy getAccountBalance() {
-        return new HoverStrategy(
+        HoverStrategy hoverStrategy =  new HoverStrategy(
                 "f6ccd22e",
                 "Stanbic Bank",
                 "Fetching account balance",
                 0
         );
+        hoverStrategy.setId("balance");
+        hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
+        hoverStrategy.setFirstAction(true);
+        hoverStrategy.setLastAction(true);
+        return hoverStrategy;
     }
 
     @Override

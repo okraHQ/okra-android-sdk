@@ -15,5 +15,9 @@
         <activity android:name=".activity.OkraWebActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <meta-data
+            android:name="com.hover.ApiKey"
+            android:value="df50ba77b445fa4b6dd2165686dbb9a8" />
     </application>
 </manifest>
