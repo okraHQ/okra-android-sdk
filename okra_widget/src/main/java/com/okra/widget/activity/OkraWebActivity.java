@@ -107,6 +107,13 @@ public class OkraWebActivity extends AppCompatActivity {
             Log.e("Extras", "there is somthing inside");
         }
 
+        /**Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            for (String key : bundle.keySet()) {
+                Log.e(TAG, key + " : " + (bundle.get(key) != null ? bundle.get(key) : "NULL"));
+            }
+        }**/
+
 
         String id = "bvn";
         if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
