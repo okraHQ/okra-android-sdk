@@ -1,5 +1,6 @@
 package com.okra.widget.utils;
 
+import com.hover.sdk.sims.SimInfo;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.utils.bank.AccessBank;
 import com.okra.widget.utils.bank.FCMB;
@@ -17,6 +18,8 @@ import com.okra.widget.utils.bank.ZenithBank;
 
 public class BankUtils {
 
+    public static int simSlot;
+    public static SimInfo selectedSim;
     public static BankServices getBankImplementation(String bankAlias) throws Exception {
         switch (bankAlias.toLowerCase())
         {

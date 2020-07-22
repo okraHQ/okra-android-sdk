@@ -5,12 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.webkit.JavascriptInterface;
 
+import com.hover.sdk.api.Hover;
 import com.hover.sdk.api.HoverParameters;
+import com.hover.sdk.sims.SimInfo;
 import com.okra.widget.Okra;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.HoverStrategy;
 import com.okra.widget.models.OkraOptions;
+
+import java.util.List;
 
 public class WebInterface {
     Context mContext;
@@ -83,9 +87,15 @@ public class WebInterface {
                     .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
                     .request(hoverStrategy.getActionId());
 
+            if(!hoverStrategy.isFirstAction()){
+                hoverBuilder.setSim(BankUtils.selectedSim.getImsi());
+            }
+
             if(hoverStrategy.getDisplayTime() > 0){
                 hoverBuilder.finalMsgDisplayTime(hoverStrategy.getDisplayTime());
             }
+
+
             intent = hoverBuilder.buildIntent();
         ((Activity)mContext).startActivityForResult(intent, 0);
     }

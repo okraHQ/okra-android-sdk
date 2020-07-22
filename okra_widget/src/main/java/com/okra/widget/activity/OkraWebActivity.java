@@ -17,16 +17,21 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hover.sdk.api.Hover;
+import com.hover.sdk.sims.SimInfo;
 import com.hover.sdk.transactions.Transaction;
 import com.okra.widget.Okra;
 import com.okra.widget.R;
 import com.okra.widget.handlers.OkraHandler;
+import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.Enums;
 import com.okra.widget.models.OkraOptions;
+import com.okra.widget.models.request.BankRequest;
+import com.okra.widget.utils.BankUtils;
 import com.okra.widget.utils.WebInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -34,6 +39,7 @@ import androidx.core.content.ContextCompat;
 
 public class OkraWebActivity extends AppCompatActivity {
 
+    BankRequest bankRequest = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,18 +91,47 @@ public class OkraWebActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String operator = data.getStringExtra("operator");
-        Bundle bundle = data.getExtras();
-        if (bundle != null) {
-            for (String key : bundle.keySet()) {
-                Log.e("Extras", key + " : " + (bundle.get(key) != null ? bundle.get(key) : "NULL"));
-            }
+
+        if("isFirstAction" == "isFirstAction"){
+            BankUtils.simSlot = data.getIntExtra("SimIdx", -1);
+            List<SimInfo> simInfos = Hover.getPresentSims(this);
+            BankUtils.selectedSim = simInfos.get(BankUtils.simSlot);
         }
+
+        Log.e("Extras", "-------------------------------");
+        Boolean has = data.hasExtra("input_extras");
+        Bundle bundle = data.getBundleExtra("input_extras");
+        Log.e("Extras", has.toString());
+
+        if(bundle !=null){
+            Log.e("Extras", "there is somthing inside");
+        }
+
+
+        String id = "bvn";
         if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
             String[] sessionTextArr = data.getStringArrayExtra("session_messages");
+
             String uuid = data.getStringExtra("uuid");
             Transaction transaction = getHoverTransaction(uuid);
-            String c = "";
+
+            try {
+                BankServices bankServices = BankUtils.getBankImplementation("get bank");
+
+                if(bankRequest == null) bankRequest = new BankRequest();
+                if(id.equals("bvn")){
+                    bankRequest = bankServices.handleGetBvn(transaction, bankRequest);
+                }else if(id.equals("accounts")){
+                    bankRequest = bankServices.handleGetAccounts(transaction, bankRequest);
+                }else if(id.equals("balance")){
+                    bankRequest = bankServices.handleGetAccountBalance(transaction, bankRequest);
+                }else if(id.equals("transactions")){
+                    bankRequest = bankServices.handleGetTransactions(transaction, bankRequest);
+                }
+            } catch (Exception e) {
+                Toast.makeText(this, "Bank not implemented", Toast.LENGTH_LONG).show();
+            }
+
         } else if (requestCode == 0 && resultCode == Activity.RESULT_CANCELED) {
             Toast.makeText(this, "Error: " + data.getStringExtra("error"), Toast.LENGTH_LONG).show();
         }
