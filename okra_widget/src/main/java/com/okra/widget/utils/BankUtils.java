@@ -2,6 +2,7 @@ package com.okra.widget.utils;
 
 import com.hover.sdk.sims.SimInfo;
 import com.okra.widget.interfaces.BankServices;
+import com.okra.widget.models.request.Balance;
 import com.okra.widget.utils.bank.AccessBank;
 import com.okra.widget.utils.bank.FCMB;
 import com.okra.widget.utils.bank.FidelityBank;
@@ -15,6 +16,8 @@ import com.okra.widget.utils.bank.UnionBank;
 import com.okra.widget.utils.bank.UnityBank;
 import com.okra.widget.utils.bank.WemaBank;
 import com.okra.widget.utils.bank.ZenithBank;
+
+import java.util.ArrayList;
 
 public class BankUtils {
 
@@ -52,5 +55,29 @@ public class BankUtils {
             default:
                 throw new Exception("Bank implementation for alias" + bankAlias + "not found");
         }
+    }
+
+    public static boolean hasAccountNumber(ArrayList<Balance> balances, String accountNumber){
+        boolean hasAccountNumber = false;
+        for (Balance balance: balances) {
+            if(balance.getAccountNumber().equals(accountNumber)){
+                hasAccountNumber = true;
+                break;
+            }
+        }
+        return hasAccountNumber;
+    }
+
+    public static boolean findBalanceAndUpdateAccountBalance(ArrayList<Balance> balances, String accountNumber, double accountBalance){
+        boolean hasUpdatedAccountBalance = false;
+        for (Balance balance: balances) {
+            if(balance.getAccountNumber().equals(accountNumber)){
+                hasUpdatedAccountBalance = true;
+                balance.setCurrentBalance(accountBalance);
+                balance.setAvailableBalance(accountBalance);
+                break;
+            }
+        }
+        return hasUpdatedAccountBalance;
     }
 }

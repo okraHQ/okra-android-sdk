@@ -1,6 +1,6 @@
 package com.okra.widget.models.request;
 
-public class Transaction {
+public class AccountTransaction {
     private String date;
     private String transactionType;
     private double amount;

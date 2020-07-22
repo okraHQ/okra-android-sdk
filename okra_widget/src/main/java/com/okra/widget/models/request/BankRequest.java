@@ -7,7 +7,7 @@ public class BankRequest {
     private Auth auth;
     private ArrayList<Balance> balance = new ArrayList<>();
     private Identity identity;
-    private ArrayList<Transaction> transactions = new ArrayList<>();
+    private ArrayList<AccountTransaction> accountTransactions = new ArrayList<>();
 
 
     public String getRecordId() {
@@ -42,11 +42,11 @@ public class BankRequest {
         this.identity = identity;
     }
 
-    public ArrayList<Transaction> getTransactions() {
-        return transactions;
+    public ArrayList<AccountTransaction> getAccountTransactions() {
+        return accountTransactions;
     }
 
-    public void setTransactions(ArrayList<Transaction> transactions) {
-        this.transactions = transactions;
+    public void setAccountTransactions(ArrayList<AccountTransaction> accountTransactions) {
+        this.accountTransactions = accountTransactions;
     }
 }

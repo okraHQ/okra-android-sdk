@@ -128,6 +128,7 @@ public class OkraWebActivity extends AppCompatActivity {
                 }else if(id.equals("transactions")){
                     bankRequest = bankServices.handleGetTransactions(transaction, bankRequest);
                 }
+                if("isLast") bankRequest = null;
             } catch (Exception e) {
                 Toast.makeText(this, "Bank not implemented", Toast.LENGTH_LONG).show();
             }

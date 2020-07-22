@@ -5,6 +5,7 @@ public class Balance {
     private String accountType;
     private double currentBalance;
     private double availableBalance;
+    private String accountName;
 
     public String getAccountNumber() {
         return accountNumber;
@@ -36,5 +37,13 @@ public class Balance {
 
     public void setAvailableBalance(double availableBalance) {
         this.availableBalance = availableBalance;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 }
