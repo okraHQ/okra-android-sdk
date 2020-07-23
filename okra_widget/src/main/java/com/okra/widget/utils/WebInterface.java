@@ -54,21 +54,21 @@ public class WebInterface {
         try {
             BankServices bankServices = BankUtils.getBankImplementation(bankAlias);
             try{
-                fireIntent(bankServices.getBvn());
+                fireIntent(bankServices.getBvn(), bankAlias);
             }catch (Exception ex){}
 
             try {
-                fireIntent(bankServices.getAccounts());
+                fireIntent(bankServices.getAccounts(), bankAlias);
             }catch (Exception ex){}
 
             try {
-                fireIntent(bankServices.getAccountBalance());
+                fireIntent(bankServices.getAccountBalance(), bankAlias);
             }catch (Exception ex){
                 System.out.println(ex.getMessage());
             }
 
             try {
-                fireIntent(bankServices.getTransactions());
+                fireIntent(bankServices.getTransactions(), bankAlias);
             }catch (Exception ex){
 
             }
@@ -77,13 +77,14 @@ public class WebInterface {
         }
     }
 
-    public void fireIntent(HoverStrategy hoverStrategy) {
+    public void fireIntent(HoverStrategy hoverStrategy, String bankAlias) {
         Intent intent;
             HoverParameters.Builder hoverBuilder = new HoverParameters.Builder(mContext)
                     .private_extra("id", hoverStrategy.getId())
                     .private_extra("bankResponseMethod", hoverStrategy.getBankResponseMethod().toString())
                     .private_extra("isFirstAction", hoverStrategy.isFirstAction().toString())
                     .private_extra("isLastAction", hoverStrategy.isLastAction().toString())
+                    .private_extra("bank", bankAlias)
                     .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
                     .request(hoverStrategy.getActionId());
 

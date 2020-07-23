@@ -32,6 +32,7 @@ import com.okra.widget.utils.WebInterface;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -92,50 +93,41 @@ public class OkraWebActivity extends AppCompatActivity {
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if("isFirstAction" == "isFirstAction"){
+        Map<String, String> map = null;
+        Bundle bundle = data.getExtras();
+        if(bundle !=null && data.hasExtra("input_extras")) {
+            map = (Map<String, String>) bundle.get("input_extras");
+        }
+
+        if(map != null && !map.isEmpty() && Boolean.parseBoolean(map.get("isFirstAction"))){
             BankUtils.simSlot = data.getIntExtra("SimIdx", -1);
             List<SimInfo> simInfos = Hover.getPresentSims(this);
             BankUtils.selectedSim = simInfos.get(BankUtils.simSlot);
         }
 
-        Log.e("Extras", "-------------------------------");
-        Boolean has = data.hasExtra("input_extras");
-        Bundle bundle = data.getBundleExtra("input_extras");
-        Log.e("Extras", has.toString());
-
-        if(bundle !=null){
-            Log.e("Extras", "there is somthing inside");
-        }
-
-        /**Bundle bundle = intent.getExtras();
-        if (bundle != null) {
-            for (String key : bundle.keySet()) {
-                Log.e(TAG, key + " : " + (bundle.get(key) != null ? bundle.get(key) : "NULL"));
-            }
-        }**/
-
-
-        String id = "bvn";
         if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
             String[] sessionTextArr = data.getStringArrayExtra("session_messages");
-
             String uuid = data.getStringExtra("uuid");
             Transaction transaction = getHoverTransaction(uuid);
 
             try {
-                BankServices bankServices = BankUtils.getBankImplementation("get bank");
+
+                BankServices bankServices = null;
+                if(map != null && !map.isEmpty() && map.containsKey("bank")){
+                    bankServices = BankUtils.getBankImplementation(map.get("bank"));
+                }
 
                 if(bankRequest == null) bankRequest = new BankRequest();
-                if(id.equals("bvn")){
+                if(map != null && !map.isEmpty() && map.get("id").equals("bvn")){
                     bankRequest = bankServices.handleGetBvn(transaction, bankRequest);
-                }else if(id.equals("accounts")){
+                }else if(map != null && !map.isEmpty() && map.get("id").equals("accounts")){
                     bankRequest = bankServices.handleGetAccounts(transaction, bankRequest);
-                }else if(id.equals("balance")){
+                }else if(map != null && !map.isEmpty() && map.get("id").equals("balance")){
                     bankRequest = bankServices.handleGetAccountBalance(transaction, bankRequest);
-                }else if(id.equals("transactions")){
+                }else if(map != null && !map.isEmpty() && map.get("id").equals("transactions")){
                     bankRequest = bankServices.handleGetTransactions(transaction, bankRequest);
                 }
-                if("isLast") bankRequest = null;
+                if(map != null && !map.isEmpty() && Boolean.parseBoolean(map.get("isLastAction"))) bankRequest = null;
             } catch (Exception e) {
                 Toast.makeText(this, "Bank not implemented", Toast.LENGTH_LONG).show();
             }
@@ -156,7 +148,7 @@ public class OkraWebActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        //overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     public String getIMEI(Activity activity) {
