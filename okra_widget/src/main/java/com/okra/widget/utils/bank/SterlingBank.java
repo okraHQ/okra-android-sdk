@@ -12,6 +12,47 @@ import org.json.JSONException;
 
 public class SterlingBank implements BankServices {
 
+    private static int index = 1;
+
+    @Override
+    public int getActionCount() {
+        return 2;
+    }
+
+    @Override
+    public int getIndex() {
+        return index;
+    }
+
+    @Override
+    public int setIndex(int index) {
+        SterlingBank.index = index;
+        return SterlingBank.index;
+    }
+
+    @Override
+    public HoverStrategy getActionByIndex(int index) {
+        switch (index){
+            case 1:
+                return getAccounts();
+            case 2:
+                return getAccountBalance();
+            default:
+                return getAccounts();
+        }
+    }
+
+    @Override
+    public HoverStrategy getNextAction() throws Exception {
+        if(index >= getActionCount()){index = 0;}
+        return getActionByIndex(index + 1);
+    }
+
+    @Override
+    public boolean hasNext() {
+        return index < getActionCount();
+    }
+
     @Override
     public HoverStrategy getBvn() throws Exception {
         throw new Exception("Not implemented");

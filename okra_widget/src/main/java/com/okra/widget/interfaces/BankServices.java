@@ -5,6 +5,12 @@ import com.okra.widget.models.HoverStrategy;
 import com.okra.widget.models.request.BankRequest;
 
 public interface BankServices {
+    int getActionCount();
+    int getIndex();
+    int setIndex(int index);
+    HoverStrategy getNextAction() throws Exception;
+    boolean hasNext();
+    HoverStrategy getActionByIndex(int index) throws Exception;
     HoverStrategy getBvn() throws Exception;
     HoverStrategy getAccounts() throws Exception;
     HoverStrategy getAccountBalance();

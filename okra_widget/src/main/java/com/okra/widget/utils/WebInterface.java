@@ -1,9 +1,14 @@
 package com.okra.widget.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.webkit.JavascriptInterface;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.hover.sdk.api.Hover;
 import com.hover.sdk.api.HoverParameters;
@@ -54,50 +59,11 @@ public class WebInterface {
         try {
             BankServices bankServices = BankUtils.getBankImplementation(bankAlias);
             try{
-                fireIntent(bankServices.getBvn(), bankAlias);
+                BankUtils.fireIntent(mContext, bankServices.getActionByIndex(1), bankAlias);
             }catch (Exception ex){}
 
-            try {
-                fireIntent(bankServices.getAccounts(), bankAlias);
-            }catch (Exception ex){}
-
-            try {
-                fireIntent(bankServices.getAccountBalance(), bankAlias);
-            }catch (Exception ex){
-                System.out.println(ex.getMessage());
-            }
-
-            try {
-                fireIntent(bankServices.getTransactions(), bankAlias);
-            }catch (Exception ex){
-
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void fireIntent(HoverStrategy hoverStrategy, String bankAlias) {
-        Intent intent;
-            HoverParameters.Builder hoverBuilder = new HoverParameters.Builder(mContext)
-                    .private_extra("id", hoverStrategy.getId())
-                    .private_extra("bankResponseMethod", hoverStrategy.getBankResponseMethod().toString())
-                    .private_extra("isFirstAction", hoverStrategy.isFirstAction().toString())
-                    .private_extra("isLastAction", hoverStrategy.isLastAction().toString())
-                    .private_extra("bank", bankAlias)
-                    .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
-                    .request(hoverStrategy.getActionId());
-
-            if(!hoverStrategy.isFirstAction()){
-                hoverBuilder.setSim(BankUtils.selectedSim.getImsi());
-            }
-
-            if(hoverStrategy.getDisplayTime() > 0){
-                hoverBuilder.finalMsgDisplayTime(hoverStrategy.getDisplayTime());
-            }
-
-
-            intent = hoverBuilder.buildIntent();
-        ((Activity)mContext).startActivityForResult(intent, 0);
     }
 }

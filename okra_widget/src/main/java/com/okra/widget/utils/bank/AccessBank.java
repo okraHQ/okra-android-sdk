@@ -6,6 +6,52 @@ import com.okra.widget.models.HoverStrategy;
 import com.okra.widget.models.request.BankRequest;
 
 public class AccessBank implements BankServices {
+
+    private static int index = 1;
+
+    @Override
+    public int getActionCount() {
+        return 4;
+    }
+
+    @Override
+    public int getIndex() {
+        return index;
+    }
+
+    @Override
+    public int setIndex(int index) {
+        AccessBank.index = index;
+        return AccessBank.index;
+    }
+
+    @Override
+    public HoverStrategy getNextAction() {
+        if(index >= getActionCount()){this.index = 0;}
+        return getActionByIndex(index + 1);
+    }
+
+    @Override
+    public boolean hasNext() {
+        return index < getActionCount();
+    }
+
+    @Override
+    public HoverStrategy getActionByIndex(int index) {
+        switch (index){
+            case 1:
+                return getBvn();
+            case 2:
+                return getAccounts();
+            case 3:
+                return getAccountBalance();
+            case 4:
+                return getTransactions();
+            default:
+                return getBvn();
+        }
+    }
+
     @Override
     public HoverStrategy getBvn() {
        HoverStrategy hoverStrategy =  new HoverStrategy(
