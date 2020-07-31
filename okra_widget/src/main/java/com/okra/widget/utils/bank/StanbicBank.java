@@ -25,8 +25,8 @@ public class StanbicBank implements BankServices {
 
     @Override
     public int setIndex(int index) {
-        this.index = index;
-        return this.index;
+        StanbicBank.index = index;
+        return StanbicBank.index;
     }
 
     @Override

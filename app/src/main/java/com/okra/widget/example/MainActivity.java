@@ -82,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
         .setCurrency("USD")
         .setExp("2020-08-06")
         .setSuccess_title("it has entered success")
-        .setSuccess_message("this is the success message");
+        .setSuccess_message("this is the success message")
+        .setPrivateKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkyODhlYTE4MmQzZDAwMGNiN2M0ODYiLCJpYXQiOjE1OTYwMjI0NTF9.yPogxqMx_kUquRPEZAGLHgiq-wnFk20UtZjVhat4PPc");
         Okra.create(MainActivity.this, okraOptions);
     }
 }

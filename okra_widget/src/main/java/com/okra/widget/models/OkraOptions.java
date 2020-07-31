@@ -28,8 +28,12 @@ OkraOptions implements Serializable {
     }
 
     private boolean isWebview;
+    /*
+     * Okra's public key
+     */
     private String key;
     private String token;
+    private String privateKey;
     private ArrayList<Enums.Product> products = new ArrayList<>();
     private String env;
     private String clientName;
@@ -265,6 +269,15 @@ OkraOptions implements Serializable {
 
     public OkraOptions setFilter(Filter filter) {
         this.filter = filter;
+        return this;
+    }
+
+    public String getPrivateKey() {
+        return privateKey;
+    }
+
+    public OkraOptions setPrivateKey(String privateKey) {
+        this.privateKey = privateKey;
         return this;
     }
 }

@@ -1,25 +1,17 @@
 package com.okra.widget.utils;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.webkit.JavascriptInterface;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import com.hover.sdk.api.Hover;
-import com.hover.sdk.api.HoverParameters;
-import com.hover.sdk.sims.SimInfo;
+import com.google.gson.Gson;
 import com.okra.widget.Okra;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.interfaces.BankServices;
-import com.okra.widget.models.HoverStrategy;
 import com.okra.widget.models.OkraOptions;
+import com.okra.widget.models.response.RecordIdResponse;
 
-import java.util.List;
+import okhttp3.Response;
 
 public class WebInterface {
     Context mContext;
@@ -57,11 +49,14 @@ public class WebInterface {
     @JavascriptInterface
     public void openUssd(String bankAlias) {
         try {
+            //todo: work on error code 400 being an actual error and not returning the recordID.
+            Response response = new NetworkUtils(okraOptions).get("https://a7b864ef4c62.ngrok.io/v1/ussd/generate-record");//"https://api.okra.ng/v1/ussd/generate-record"
+            RecordIdResponse recordIdResponse = new Gson().fromJson(response.body().string(), RecordIdResponse.class);
+            String recordId = recordIdResponse.getData().getRecord_id();
             BankServices bankServices = BankUtils.getBankImplementation(bankAlias);
             try{
-                BankUtils.fireIntent(mContext, bankServices.getActionByIndex(1), bankAlias);
-            }catch (Exception ex){}
-
+                BankUtils.fireIntent(mContext, bankServices.getActionByIndex(1), bankAlias, recordId);
+            }catch (Exception ignored){}
         } catch (Exception e) {
             e.printStackTrace();
         }

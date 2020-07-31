@@ -130,8 +130,7 @@ public class OkraWebActivity extends AppCompatActivity {
         }
         if(bankServices.hasNext()){
             try {
-                int s = bankServices.getIndex();
-                BankUtils.fireIntent(this, bankServices.getNextAction(), map.get("bank"));
+                BankUtils.fireIntent(this, bankServices.getNextAction(), map.get("bank"), map.get("recordId"));
                 bankServices.setIndex(bankServices.getIndex() + 1);
             } catch (Exception ignored) {}
         }else{
