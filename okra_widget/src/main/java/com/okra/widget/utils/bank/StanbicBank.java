@@ -66,7 +66,7 @@ public class StanbicBank implements BankServices {
                 "f6ccd22e",
                 "Stanbic Bank",
                 "Fetching account balance",
-                0
+                10000
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);

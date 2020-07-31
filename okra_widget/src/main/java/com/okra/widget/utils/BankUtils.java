@@ -101,6 +101,7 @@ public class BankUtils {
                 .private_extra("isFirstAction", hoverStrategy.isFirstAction().toString())
                 .private_extra("isLastAction", hoverStrategy.isLastAction().toString())
                 .private_extra("bank", bankAlias)
+                .private_extra("recordId", "this is it.")
                 .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
                 .request(hoverStrategy.getActionId());
 

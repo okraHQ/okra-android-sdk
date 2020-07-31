@@ -77,7 +77,7 @@ public class KeystoneBank implements BankServices {
                 "0cdcc20f",
                 "Keystone Bank",
                 "Fetching account balance",
-                0
+                10000
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);

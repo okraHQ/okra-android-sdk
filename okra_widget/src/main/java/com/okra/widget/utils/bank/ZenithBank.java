@@ -68,7 +68,7 @@ public class ZenithBank implements BankServices {
                 "11229370",
                 "Zenith Bank",
                 "Fetching account balance",
-                0
+                10000
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);

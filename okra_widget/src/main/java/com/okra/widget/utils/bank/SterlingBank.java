@@ -78,7 +78,7 @@ public class SterlingBank implements BankServices {
                 "79a457c7",
                 "Sterling Bank",
                 "Fetching Account balance",
-                0
+                10000
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);

@@ -99,7 +99,7 @@ public class FirstBank implements BankServices {
                 "eb9915fc",
                 "First Bank",
                 "Fetching transaction(s)",
-                0
+                10000
         );
         hoverStrategy.setId("transactions");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.sms);

@@ -66,7 +66,7 @@ public class HeritageBank implements BankServices {
                 "a5090fd2",
                 "Heritage Bank",
                 "Fetching account balance",
-                0
+                10000
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);

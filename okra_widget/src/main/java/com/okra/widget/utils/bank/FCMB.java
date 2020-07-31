@@ -73,6 +73,7 @@ public class FCMB implements BankServices {
                 0
         );
         hoverStrategy.setId("balance");
+        hoverStrategy.setFirstAction(true);
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
         return hoverStrategy;
     }
@@ -83,7 +84,7 @@ public class FCMB implements BankServices {
                 "a755e3ec",
                 "FCMB",
                 "Fetching account transaction",
-                0
+                10000
         );
         hoverStrategy.setId("transactions");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);

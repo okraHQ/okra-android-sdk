@@ -90,7 +90,7 @@ public class FidelityBank implements BankServices {
                 "f6ccd22e",
                 "Fidelity Bank",
                 "Fetching account balance",
-                0
+                10000
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);

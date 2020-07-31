@@ -66,7 +66,7 @@ public class WemaBank implements BankServices {
                 "9d5a306b",
                 "Wema Bank",
                 "Fetching account balance",
-                0
+                10000
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);

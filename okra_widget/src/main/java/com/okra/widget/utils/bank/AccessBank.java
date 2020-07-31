@@ -100,7 +100,7 @@ public class AccessBank implements BankServices {
                 "5584dd8c",
                 "Access Bank",
                 "Fetching your account statement",
-                0
+                10000
         );
         hoverStrategy.setId("transactions");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.sms);

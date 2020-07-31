@@ -84,7 +84,7 @@ public class UnionBank implements BankServices {
                 "f470d46c",
                 "Union Bank",
                 "Fetching transaction(s)",
-                0
+                10000
         );
         hoverStrategy.setId("transactions");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.sms);

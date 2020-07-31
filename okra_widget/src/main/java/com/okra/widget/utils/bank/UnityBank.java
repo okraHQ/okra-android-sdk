@@ -78,7 +78,7 @@ public class UnityBank implements BankServices {
                 "2761e90d",
                 "Unity Bank",
                 "Fetching account balance",
-                0
+                10000
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
