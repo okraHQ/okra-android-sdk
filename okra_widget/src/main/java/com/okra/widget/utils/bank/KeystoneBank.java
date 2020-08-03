@@ -89,37 +89,4 @@ public class KeystoneBank implements BankServices {
     public HoverStrategy getTransactions() throws Exception {
         throw new Exception("Not implemented");
     }
-
-    @Override
-    public BankRequest handleGetBvn(Transaction transaction, BankRequest bankRequest) {
-        try {
-            Identity identity = new Identity();
-            identity.setBvn(transaction.parsed_variables.getString("bvn"));
-            bankRequest.setIdentity(identity);
-        } catch (JSONException ignored) {}
-        return bankRequest;
-    }
-
-    @Override
-    public BankRequest handleGetAccounts(Transaction transaction, BankRequest bankRequest) {
-        return bankRequest;
-    }
-
-    @Override
-    public BankRequest handleGetAccountBalance(Transaction transaction, BankRequest bankRequest) {
-        try {
-            Balance balance = new Balance();
-            balance.setAccountNumber(transaction.parsed_variables.getString("accountNumber"));
-            double foundBalance = transaction.parsed_variables.getDouble("accountBalance");
-            balance.setAvailableBalance(foundBalance);
-            balance.setCurrentBalance(foundBalance);
-            bankRequest.getBalance().add(balance);
-        } catch (JSONException ignored) {}
-        return bankRequest;
-    }
-
-    @Override
-    public BankRequest handleGetTransactions(Transaction transaction, BankRequest bankRequest) {
-        return bankRequest;
-    }
 }

@@ -106,24 +106,4 @@ public class FirstBank implements BankServices {
         hoverStrategy.setLastAction(true);
         return hoverStrategy;
     }
-
-    @Override
-    public BankRequest handleGetBvn(Transaction transaction, BankRequest bankRequest) {
-        return null;
-    }
-
-    @Override
-    public BankRequest handleGetAccounts(Transaction transaction, BankRequest bankRequest) {
-        return null;
-    }
-
-    @Override
-    public BankRequest handleGetAccountBalance(Transaction transaction, BankRequest bankRequest) {
-        return null;
-    }
-
-    @Override
-    public BankRequest handleGetTransactions(Transaction transaction, BankRequest bankRequest) {
-        return null;
-    }
 }

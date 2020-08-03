@@ -80,31 +80,4 @@ public class HeritageBank extends BaseBank implements BankServices {
     public HoverStrategy getTransactions() throws Exception {
         throw new Exception("Not implemented");
     }
-
-    @Override
-    public BankRequest handleGetBvn(Transaction transaction, BankRequest bankRequest) {
-        return bankRequest;
-    }
-
-    @Override
-    public BankRequest handleGetAccounts(Transaction transaction, BankRequest bankRequest) {
-        return bankRequest;
-    }
-
-    @Override
-    public BankRequest handleGetAccountBalance(Transaction transaction, BankRequest bankRequest) {
-        try {
-            Balance balance = new Balance();
-            double foundBalance = transaction.parsed_variables.getDouble("accountBalance");
-            balance.setAvailableBalance(foundBalance);
-            balance.setCurrentBalance(foundBalance);
-            bankRequest.getBalance().add(balance);
-        } catch (JSONException ignored) {}
-        return bankRequest;
-    }
-
-    @Override
-    public BankRequest handleGetTransactions(Transaction transaction, BankRequest bankRequest) {
-        return bankRequest;
-    }
 }

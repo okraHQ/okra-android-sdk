@@ -15,8 +15,4 @@ public interface BankServices {
     HoverStrategy getAccounts() throws Exception;
     HoverStrategy getAccountBalance();
     HoverStrategy getTransactions() throws Exception;
-    BankRequest handleGetBvn(Transaction transaction, BankRequest bankRequest);
-    BankRequest handleGetAccounts(Transaction transaction, BankRequest bankRequest);
-    BankRequest handleGetAccountBalance(Transaction transaction, BankRequest bankRequest);
-    BankRequest handleGetTransactions(Transaction transaction, BankRequest bankRequest);
 }

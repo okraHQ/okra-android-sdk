@@ -82,24 +82,4 @@ public class ZenithBank extends BaseBank implements BankServices {
     public HoverStrategy getTransactions() throws Exception {
         throw new Exception("Not implemented");
     }
-
-    @Override
-    public BankRequest handleGetBvn(Transaction transaction, BankRequest bankRequest) {
-        return null;
-    }
-
-    @Override
-    public BankRequest handleGetAccounts(Transaction transaction, BankRequest bankRequest) {
-        return null;
-    }
-
-    @Override
-    public BankRequest handleGetAccountBalance(Transaction transaction, BankRequest bankRequest) {
-        return null;
-    }
-
-    @Override
-    public BankRequest handleGetTransactions(Transaction transaction, BankRequest bankRequest) {
-        return null;
-    }
 }
