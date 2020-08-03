@@ -10,7 +10,7 @@ import com.okra.widget.models.request.Identity;
 
 import org.json.JSONException;
 
-public class UnityBank implements BankServices {
+public class UnityBank extends BaseBank implements BankServices {
 
     private static int index = 1;
 

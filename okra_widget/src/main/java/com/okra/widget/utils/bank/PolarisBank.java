@@ -6,10 +6,11 @@ import com.okra.widget.models.Enums;
 import com.okra.widget.models.HoverStrategy;
 import com.okra.widget.models.request.Balance;
 import com.okra.widget.models.request.BankRequest;
+import com.okra.widget.models.request.Identity;
 
 import org.json.JSONException;
 
-public class WemaBank extends BaseBank implements BankServices {
+public class PolarisBank extends BaseBank implements BankServices {
 
     private static int index = 1;
 
@@ -37,7 +38,7 @@ public class WemaBank extends BaseBank implements BankServices {
             case 2:
                 return getAccountBalance();
             default:
-                return getAccountBalance();
+                return getBvn();
         }
     }
 
@@ -54,7 +55,7 @@ public class WemaBank extends BaseBank implements BankServices {
 
     @Override
     public HoverStrategy getBvn() throws Exception {
-        return  this.getBvn("Wema Bank");
+        return  this.getBvn("Polaris Bank");
     }
 
     @Override
@@ -65,8 +66,8 @@ public class WemaBank extends BaseBank implements BankServices {
     @Override
     public HoverStrategy getAccountBalance() {
         HoverStrategy hoverStrategy = new HoverStrategy(
-                "9d5a306b",
-                "Wema Bank",
+                "0c493784",
+                "polaris Bank",
                 "Fetching account balance",
                 10000
         );
@@ -83,6 +84,11 @@ public class WemaBank extends BaseBank implements BankServices {
 
     @Override
     public BankRequest handleGetBvn(Transaction transaction, BankRequest bankRequest) {
+        try {
+            Identity identity = new Identity();
+            identity.setBvn(transaction.parsed_variables.getString("bvn"));
+            bankRequest.setIdentity(identity);
+        } catch (JSONException ignored) {}
         return bankRequest;
     }
 

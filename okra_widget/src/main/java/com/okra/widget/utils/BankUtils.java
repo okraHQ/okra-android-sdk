@@ -19,6 +19,7 @@ import com.okra.widget.utils.bank.FirstBank;
 import com.okra.widget.utils.bank.GuaranteeTrustBank;
 import com.okra.widget.utils.bank.HeritageBank;
 import com.okra.widget.utils.bank.KeystoneBank;
+import com.okra.widget.utils.bank.PolarisBank;
 import com.okra.widget.utils.bank.StanbicBank;
 import com.okra.widget.utils.bank.SterlingBank;
 import com.okra.widget.utils.bank.UnionBank;
@@ -52,6 +53,8 @@ public class BankUtils {
                 return new HeritageBank();
             case "keystone bank":
                 return new KeystoneBank();
+            case "polaris bank":
+                return new PolarisBank();
             case "stanbic bank":
                 return new StanbicBank();
             case "sterling bank":

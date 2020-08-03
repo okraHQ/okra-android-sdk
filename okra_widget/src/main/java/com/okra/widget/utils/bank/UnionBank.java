@@ -10,13 +10,13 @@ import com.okra.widget.models.request.BankRequest;
 
 import org.json.JSONException;
 
-public class UnionBank implements BankServices {
+public class UnionBank extends BaseBank implements BankServices {
 
     private static int index = 1;
 
     @Override
     public int getActionCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -34,8 +34,10 @@ public class UnionBank implements BankServices {
     public HoverStrategy getActionByIndex(int index) throws Exception {
         switch (index){
             case 1:
-                return getAccountBalance();
+                return getBvn();
             case 2:
+                return getAccountBalance();
+            case 3:
                 return getTransactions();
             default:
                 return getAccountBalance();
@@ -56,7 +58,7 @@ public class UnionBank implements BankServices {
 
     @Override
     public HoverStrategy getBvn() throws Exception {
-        throw new Exception("Not implemented");
+        return this.getBvn("Union Bank");
     }
 
     @Override
@@ -74,7 +76,6 @@ public class UnionBank implements BankServices {
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-        hoverStrategy.setFirstAction(true);
         return hoverStrategy;
     }
 

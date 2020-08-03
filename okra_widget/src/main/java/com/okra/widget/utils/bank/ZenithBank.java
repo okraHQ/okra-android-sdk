@@ -11,13 +11,13 @@ import com.okra.widget.models.Enums;
 import com.okra.widget.models.HoverStrategy;
 import com.okra.widget.models.request.BankRequest;
 
-public class ZenithBank implements BankServices {
+public class ZenithBank extends BaseBank implements BankServices {
 
     private static int index = 1;
 
     @Override
     public int getActionCount() {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -46,6 +46,8 @@ public class ZenithBank implements BankServices {
     public HoverStrategy getActionByIndex(int index) throws Exception {
         switch (index){
             case 1:
+                return getBvn();
+            case 2:
                 return getAccountBalance();
             default:
                 return getAccountBalance();
@@ -54,7 +56,7 @@ public class ZenithBank implements BankServices {
 
     @Override
     public HoverStrategy getBvn() throws Exception {
-        throw new Exception("Not implemented");
+        return this.getBvn("Zenith Bank");
     }
 
     @Override
@@ -72,7 +74,6 @@ public class ZenithBank implements BankServices {
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-        hoverStrategy.setFirstAction(true);
         hoverStrategy.setLastAction(true);
         return hoverStrategy;
     }

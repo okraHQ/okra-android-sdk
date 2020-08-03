@@ -25,8 +25,8 @@ public class KeystoneBank implements BankServices {
 
     @Override
     public int setIndex(int index) {
-        this.index = index;
-        return this.index;
+        KeystoneBank.index = index;
+        return KeystoneBank.index;
     }
 
     @Override

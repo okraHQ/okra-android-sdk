@@ -10,13 +10,13 @@ import com.okra.widget.models.request.BankRequest;
 
 import org.json.JSONException;
 
-public class FCMB implements BankServices {
+public class FCMB extends BaseBank implements BankServices {
 
     private static int index = 1;
 
     @Override
     public int getActionCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -31,11 +31,13 @@ public class FCMB implements BankServices {
     }
 
     @Override
-    public HoverStrategy getActionByIndex(int index) {
+    public HoverStrategy getActionByIndex(int index) throws Exception {
         switch (index){
             case 1:
-                return getAccountBalance();
+                return getBvn();
             case 2:
+                return getAccountBalance();
+            case 3:
                 return getTransactions();
             default:
                 return getAccountBalance();
@@ -43,7 +45,7 @@ public class FCMB implements BankServices {
     }
 
     @Override
-    public HoverStrategy getNextAction() {
+    public HoverStrategy getNextAction() throws Exception {
         if(index >= getActionCount()){this.index = 0;}
         return getActionByIndex(index + 1);
     }
@@ -56,7 +58,7 @@ public class FCMB implements BankServices {
 
     @Override
     public HoverStrategy getBvn() throws Exception {
-        throw new Exception("Not implemented");
+        return this.getBvn("FCMB");
     }
 
     @Override
@@ -73,7 +75,6 @@ public class FCMB implements BankServices {
                 0
         );
         hoverStrategy.setId("balance");
-        hoverStrategy.setFirstAction(true);
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
         return hoverStrategy;
     }

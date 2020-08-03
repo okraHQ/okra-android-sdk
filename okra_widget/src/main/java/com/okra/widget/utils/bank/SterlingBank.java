@@ -10,13 +10,13 @@ import com.okra.widget.utils.BankUtils;
 
 import org.json.JSONException;
 
-public class SterlingBank implements BankServices {
+public class SterlingBank extends BaseBank implements BankServices {
 
     private static int index = 1;
 
     @Override
     public int getActionCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -31,11 +31,13 @@ public class SterlingBank implements BankServices {
     }
 
     @Override
-    public HoverStrategy getActionByIndex(int index) {
+    public HoverStrategy getActionByIndex(int index) throws Exception {
         switch (index){
             case 1:
-                return getAccounts();
+                return getBvn();
             case 2:
+                return getAccounts();
+            case 3:
                 return getAccountBalance();
             default:
                 return getAccounts();
@@ -68,7 +70,6 @@ public class SterlingBank implements BankServices {
         );
         hoverStrategy.setId("accounts");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-        hoverStrategy.setFirstAction(true);
         return hoverStrategy;
     }
 

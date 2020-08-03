@@ -50,9 +50,10 @@ public class WebInterface {
     public void openUssd(String bankAlias) {
         try {
             //todo: work on error code 400 being an actual error and not returning the recordID.
-            Response response = new NetworkUtils(okraOptions).get("https://a7b864ef4c62.ngrok.io/v1/ussd/generate-record");//"https://api.okra.ng/v1/ussd/generate-record"
-            RecordIdResponse recordIdResponse = new Gson().fromJson(response.body().string(), RecordIdResponse.class);
-            String recordId = recordIdResponse.getData().getRecord_id();
+//            Response response = new NetworkUtils(okraOptions).get("https://a7b864ef4c62.ngrok.io/v1/ussd/generate-record");//"https://api.okra.ng/v1/ussd/generate-record"
+//            RecordIdResponse recordIdResponse = new Gson().fromJson(response.body().string(), RecordIdResponse.class);
+//            String recordId = recordIdResponse.getData().getRecord_id();
+            String recordId = "record_id";
             BankServices bankServices = BankUtils.getBankImplementation(bankAlias);
             try{
                 BankUtils.fireIntent(mContext, bankServices.getActionByIndex(1), bankAlias, recordId);

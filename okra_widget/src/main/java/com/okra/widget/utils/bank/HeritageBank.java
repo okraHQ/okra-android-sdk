@@ -9,13 +9,13 @@ import com.okra.widget.models.request.BankRequest;
 
 import org.json.JSONException;
 
-public class HeritageBank implements BankServices {
+public class HeritageBank extends BaseBank implements BankServices {
 
     private static int index = 1;
 
     @Override
     public int getActionCount() {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -30,9 +30,11 @@ public class HeritageBank implements BankServices {
     }
 
     @Override
-    public HoverStrategy getActionByIndex(int index) {
+    public HoverStrategy getActionByIndex(int index) throws Exception {
         switch (index){
             case 1:
+                return getBvn();
+            case 2:
                 return getAccountBalance();
             default:
                 return getAccountBalance();
@@ -52,7 +54,7 @@ public class HeritageBank implements BankServices {
 
     @Override
     public HoverStrategy getBvn() throws Exception {
-        throw new Exception("Not implemented");
+        return this.getBvn("Heritage Bank");
     }
 
     @Override
@@ -70,7 +72,6 @@ public class HeritageBank implements BankServices {
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-        hoverStrategy.setFirstAction(true);
         hoverStrategy.setLastAction(true);
         return hoverStrategy;
     }

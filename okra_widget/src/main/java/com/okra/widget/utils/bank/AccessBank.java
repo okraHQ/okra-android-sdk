@@ -5,7 +5,7 @@ import com.okra.widget.models.Enums;
 import com.okra.widget.models.HoverStrategy;
 import com.okra.widget.models.request.BankRequest;
 
-public class AccessBank implements BankServices {
+public class AccessBank extends BaseBank implements BankServices {
 
     private static int index = 1;
 
