@@ -111,13 +111,12 @@ public class OkraWebActivity extends AppCompatActivity {
             try {
                 if(bankRequest == null) bankRequest = new BankRequest();
                 if(map != null && !map.isEmpty() && map.get("id").equals("bvn")){
-                    bankRequest = bankServices.handleGetBvn(transaction, bankRequest);
+
                 }else if(map != null && !map.isEmpty() && map.get("id").equals("accounts")){
-                    bankRequest = bankServices.handleGetAccounts(transaction, bankRequest);
+
                 }else if(map != null && !map.isEmpty() && map.get("id").equals("balance")){
-                    bankRequest = bankServices.handleGetAccountBalance(transaction, bankRequest);
+
                 }else if(map != null && !map.isEmpty() && map.get("id").equals("transactions")){
-                    bankRequest = bankServices.handleGetTransactions(transaction, bankRequest);
                 }
                 if(map != null && !map.isEmpty() && Boolean.parseBoolean(map.get("isLastAction"))) bankRequest = null;
 
