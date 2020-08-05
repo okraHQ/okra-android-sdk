@@ -20,7 +20,15 @@ allprojects {
         jcenter()
         maven {
             url "https://maven.google.com"
-            maven { url "http://maven.usehover.com/snapshots" }
+            maven {
+                url 'https://pro.maven.usehover.com/releases'
+                credentials {
+                    username project.HoverUsername
+                    password project.HoverPassword
+                }
+                authentication { basic(BasicAuthentication) }
+                content { includeGroup "com.hover" }
+            }
         }
     }
 }

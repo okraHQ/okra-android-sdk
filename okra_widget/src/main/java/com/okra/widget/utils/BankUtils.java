@@ -106,6 +106,7 @@ public class BankUtils {
                 .private_extra("bank", bankAlias)
                 .private_extra("recordId", recordId)
                 .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
+                .extra("pin", "1759")
                 .request(hoverStrategy.getActionId());
 
         if(!hoverStrategy.isFirstAction()){
