@@ -12,8 +12,7 @@ OkraOptions implements Serializable {
 
     public OkraOptions(){}
 
-    public OkraOptions(boolean isWebview, String key, String token, ArrayList<Enums.Product> products, String environment, String clientName){
-      this.isWebview = isWebview;
+    public OkraOptions(String key, String token, ArrayList<Enums.Product> products, String environment, String clientName){
       this.key = key;
       this.token = token;
       this.products = products;
@@ -21,8 +20,7 @@ OkraOptions implements Serializable {
       this.clientName = clientName;
     }
 
-    public OkraOptions(boolean isWebview, String key, String token, ArrayList<Enums.Product> products, String environment, String clientName, String webhook){
-        this.isWebview = isWebview;
+    public OkraOptions(String key, String token, ArrayList<Enums.Product> products, String environment, String clientName, String webhook){
         this.key = key;
         this.token = token;
         this.products = products;
@@ -31,7 +29,7 @@ OkraOptions implements Serializable {
         this.webhook = webhook;
     }
 
-    private boolean isWebview;
+    private boolean isWebview = true;
     private String key;
     private String token;
     private ArrayList<Enums.Product> products = new ArrayList<>();
