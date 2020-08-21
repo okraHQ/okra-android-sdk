@@ -31,7 +31,7 @@ dependencies {
 ArrayList products = new ArrayList<Enums.Product>();
 products.add(Enums.Product.auth);
 products.add(Enums.Product.transactions);
-OkraOptions okraOptions = new OkraOptions(true, "c81f3e05-7a5c-5727-8d33-1113a3c7a5e4","5d8a35224d8113507c7521ac", products, Enums.Environment.sandbox,"Bassey");
+OkraOptions okraOptions = new OkraOptions(true, "c81f3e05-7a5c-5727-8d33-1113a3c7a5e4","5d8a35224d8113507c7521ac", products, "production-sandbox","Bassey");
 Okra.create(MainActivity.this, okraOptions);
 ```
 #### OkraOptions
@@ -42,7 +42,7 @@ Okra.create(MainActivity.this, okraOptions);
 |  `key `               | `String`       | true                |  undefined          | Your public key from Okra.
 |  `token`              | `String`       | true                |  undefined          | Your client token from okra.
 |  `products`           | `ArrayList<Enums.Product>`| true     |  undefined          | The Okra products you want to use with the widget.
-|  `env`                | `Enums.Environment`| true            |  undefined          | 
+|  `env`                | `String`| true            |  undefined          | `production-sandbox` or `production`
 |  `clientName`         | `String`       | true                |  undefined          | Name of the customer using the widget on the application
 |  `webhook`            | `String`       | true                |  undefined          | The Url that Okra send the client's data to.
 
