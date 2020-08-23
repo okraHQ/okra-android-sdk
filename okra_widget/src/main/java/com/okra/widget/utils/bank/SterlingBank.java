@@ -57,7 +57,7 @@ public class SterlingBank extends BaseBank implements BankServices {
 
     @Override
     public HoverStrategy getBvn() throws Exception {
-        throw new Exception("Not implemented");
+        return  this.getBvn("Sterling Bank");
     }
 
     @Override

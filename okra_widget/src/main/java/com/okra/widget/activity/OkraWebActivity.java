@@ -29,6 +29,7 @@ import com.okra.widget.models.OkraOptions;
 import com.okra.widget.models.request.BankRequest;
 import com.okra.widget.utils.BankUtils;
 import com.okra.widget.utils.WebInterface;
+import com.okra.widget.utils.bank.AccessBank;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +60,7 @@ public class OkraWebActivity extends AppCompatActivity {
         okraLinkWebview.addJavascriptInterface(new WebInterface(this, okraOptions), "Android");
 
 
-        okraLinkWebview.loadUrl("https://5e9dad3079f67.htmlsave.net/");
+        okraLinkWebview.loadUrl("https://e2272434a630.ngrok.io/?ref=Xb05dn1X");
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -104,36 +105,11 @@ public class OkraWebActivity extends AppCompatActivity {
             BankUtils.selectedSim = BankUtils.getSelectedSim(this, data);
         }
 
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
-            HoverResponse hoverResponse = BankUtils.getHoverResponse(data);
-            Transaction transaction = getHoverTransaction(hoverResponse.getUuid());
-
-            try {
-                if(bankRequest == null) bankRequest = new BankRequest();
-                if(map != null && !map.isEmpty() && map.get("id").equals("bvn")){
-
-                }else if(map != null && !map.isEmpty() && map.get("id").equals("accounts")){
-
-                }else if(map != null && !map.isEmpty() && map.get("id").equals("balance")){
-
-                }else if(map != null && !map.isEmpty() && map.get("id").equals("transactions")){
-                }
-                if(map != null && !map.isEmpty() && Boolean.parseBoolean(map.get("isLastAction"))) bankRequest = null;
-
-            } catch (Exception e) {
-                Toast.makeText(this, "Bank not implemented", Toast.LENGTH_LONG).show();
-            }
-
-        } else if (requestCode == 0 && resultCode == Activity.RESULT_CANCELED) {
-            Toast.makeText(this, "Error: " + data.getStringExtra("error"), Toast.LENGTH_LONG).show();
-        }
         if(bankServices.hasNext()){
             try {
                 BankUtils.fireIntent(this, bankServices.getNextAction(), map.get("bank"), map.get("recordId"));
                 bankServices.setIndex(bankServices.getIndex() + 1);
             } catch (Exception ignored) {}
-        }else{
-            Toast.makeText(this, "Doesnt have next", Toast.LENGTH_LONG).show();
         }
     }
 

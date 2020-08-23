@@ -7,7 +7,7 @@ import com.okra.widget.models.request.BankRequest;
 
 public class AccessBank extends BaseBank implements BankServices {
 
-    private static int index = 1;
+    public static int index = 1;
 
     @Override
     public int getActionCount() {
@@ -33,7 +33,7 @@ public class AccessBank extends BaseBank implements BankServices {
 
     @Override
     public boolean hasNext() {
-        return index < getActionCount();
+        return AccessBank.index < getActionCount();
     }
 
     @Override

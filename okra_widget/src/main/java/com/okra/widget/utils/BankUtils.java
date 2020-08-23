@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.hover.sdk.api.Hover;
 import com.hover.sdk.api.HoverParameters;
@@ -31,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static android.content.ContentValues.TAG;
+
 public class BankUtils {
 
     public static int simSlot;
@@ -38,34 +41,34 @@ public class BankUtils {
     public static BankServices getBankImplementation(String bankAlias){
         switch (bankAlias.toLowerCase())
         {
-            case "access bank":
+            case "access-bank":
                 return new AccessBank();
-            case "fcmb":
+            case "first-city-monument-bank":
                 System.out.println("this is it");
                 return new FCMB();
-            case "fidelity bank":
+            case "fidelity-bank":
                 return new FidelityBank();
-            case "first bank":
+            case "first-bank-of-nigeria":
                 return new FirstBank();
-            case "gt bank":
+            case "guaranty-trust-bank":
                 return new GuaranteeTrustBank();
-            case "heritage bank":
+            case "heritage-bank":
                 return new HeritageBank();
-            case "keystone bank":
+            case "keystone-bank":
                 return new KeystoneBank();
-            case "polaris bank":
+            case "polaris-bank":
                 return new PolarisBank();
-            case "stanbic bank":
+            case "stanbic-ibtc-bank":
                 return new StanbicBank();
-            case "sterling bank":
+            case "sterling-bank":
                 return new SterlingBank();
-            case "union bank":
+            case "union-bank-of-nigeria":
                 return new UnionBank();
-            case "unity bank":
+            case "unity-bank":
                 return new UnityBank();
-            case "wema bank":
+            case "wema-bank":
                 return new WemaBank();
-            case "zenith bank":
+            case "zenith-bank":
                 return new ZenithBank();
             default:
                 return new AccessBank();
@@ -106,7 +109,7 @@ public class BankUtils {
                 .private_extra("bank", bankAlias)
                 .private_extra("recordId", recordId)
                 .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
-                .extra("pin", "1759")
+                //.extra("pin", "1759")
                 .request(hoverStrategy.getActionId());
 
         if(!hoverStrategy.isFirstAction()){
@@ -143,7 +146,7 @@ public class BankUtils {
 
     public static SimInfo getSelectedSim(Context context, Intent intent){
         try {
-            BankUtils.simSlot = intent.getIntExtra("SimIdx", -1);
+            BankUtils.simSlot = intent.getIntExtra("slot_idx", -1);
             return Hover.getPresentSims(context).get(BankUtils.simSlot);
         }catch (Exception exception){
             return null;
