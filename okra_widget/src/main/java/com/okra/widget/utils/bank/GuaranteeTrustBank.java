@@ -47,7 +47,7 @@ public class GuaranteeTrustBank implements BankServices {
 
     @Override
     public boolean hasNext() {
-        return this.index < getActionCount();
+        return GuaranteeTrustBank.index < getActionCount();
     }
 
     @Override

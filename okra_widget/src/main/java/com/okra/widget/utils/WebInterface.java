@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.okra.widget.Okra;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.interfaces.BankServices;
+import com.okra.widget.models.IntentData;
 import com.okra.widget.models.OkraOptions;
 import com.okra.widget.models.response.RecordIdResponse;
 
@@ -47,6 +48,11 @@ public class WebInterface {
     }
 
     @JavascriptInterface
+    public String getCustomer(){
+        return "08098516969";
+    }
+
+    @JavascriptInterface
     public void onClose(String json) {}
 
     @JavascriptInterface
@@ -54,15 +60,11 @@ public class WebInterface {
         try {
             JSONObject jsonObject = new JSONObject(json);
             String bankSlug = jsonObject.getJSONObject("bank").getString("slug");
-            String cc = json;
-            //todo: work on error code 400 being an actual error and not returning the recordID.
-//            Response response = new NetworkUtils(okraOptions).get("https://a7b864ef4c62.ngrok.io/v1/ussd/generate-record");//"https://api.okra.ng/v1/ussd/generate-record"
-//            RecordIdResponse recordIdResponse = new Gson().fromJson(response.body().string(), RecordIdResponse.class);
-//            String recordId = recordIdResponse.getData().getRecord_id();
-            String recordId = "5f3bf5a929fd26f72a0cafbb";
+            String pin = jsonObject.has("pin") ? jsonObject.getString("pin") : "0000";
+            String recordId = jsonObject.has("record") ? jsonObject.getString("record") : "";
             BankServices bankServices = BankUtils.getBankImplementation(bankSlug);
             try{
-                BankUtils.fireIntent(mContext, bankServices.getActionByIndex(1), bankSlug, recordId);
+                BankUtils.fireIntent(mContext, bankServices.getActionByIndex(1), new IntentData(bankSlug, recordId, pin, json));
             }catch (Exception ignored){}
         } catch (Exception e) {
             e.printStackTrace();

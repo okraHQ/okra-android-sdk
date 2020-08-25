@@ -25,6 +25,7 @@ import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.Enums;
 import com.okra.widget.models.HoverResponse;
+import com.okra.widget.models.IntentData;
 import com.okra.widget.models.OkraOptions;
 import com.okra.widget.models.request.BankRequest;
 import com.okra.widget.utils.BankUtils;
@@ -60,7 +61,7 @@ public class OkraWebActivity extends AppCompatActivity {
         okraLinkWebview.addJavascriptInterface(new WebInterface(this, okraOptions), "Android");
 
 
-        okraLinkWebview.loadUrl("https://e2272434a630.ngrok.io/?ref=Xb05dn1X");
+        okraLinkWebview.loadUrl("https://02a0490b1ac6.ngrok.io/?ref=Orux8KvR");
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -68,7 +69,7 @@ public class OkraWebActivity extends AppCompatActivity {
 
                 Uri parsedUri = Uri.parse(url);
                 HashMap<String, String> linkData = parseLinkUriData(parsedUri);
-                Boolean shouldClose = Boolean.valueOf(linkData.get("shouldClose"));
+                boolean shouldClose = Boolean.parseBoolean(linkData.get("shouldClose"));
                 if (shouldClose) {
                     Intent intent = new Intent(OkraWebActivity.this, Okra.baseContext.getClass());
                     intent.putExtra("okraHandler", new OkraHandler());
@@ -86,7 +87,6 @@ public class OkraWebActivity extends AppCompatActivity {
                 } else {
                     okraLinkWebview.loadUrl("openOkraWidget("+"'"+new Gson().toJson(okraOptions)+"'"+");");
                 }
-
             }
         });
     }
@@ -107,7 +107,7 @@ public class OkraWebActivity extends AppCompatActivity {
 
         if(bankServices.hasNext()){
             try {
-                BankUtils.fireIntent(this, bankServices.getNextAction(), map.get("bank"), map.get("recordId"));
+                BankUtils.fireIntent(this, bankServices.getNextAction(), new IntentData(map.get("bank"), map.get("recordId"), map.containsKey("pin") ? map.get("pin") : "", map.get("miscellaneous") ));
                 bankServices.setIndex(bankServices.getIndex() + 1);
             } catch (Exception ignored) {}
         }

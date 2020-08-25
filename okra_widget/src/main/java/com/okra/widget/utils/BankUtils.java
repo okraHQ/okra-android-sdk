@@ -12,6 +12,7 @@ import com.hover.sdk.sims.SimInfo;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.HoverResponse;
 import com.okra.widget.models.HoverStrategy;
+import com.okra.widget.models.IntentData;
 import com.okra.widget.models.request.Balance;
 import com.okra.widget.utils.bank.AccessBank;
 import com.okra.widget.utils.bank.FCMB;
@@ -99,18 +100,22 @@ public class BankUtils {
         return hasUpdatedAccountBalance;
     }
 
-    public static void fireIntent(Context mContext, HoverStrategy hoverStrategy, String bankAlias, String recordId) {
+    public static void fireIntent(Context mContext, HoverStrategy hoverStrategy, IntentData intentData) {
         Intent intent;
         HoverParameters.Builder hoverBuilder = new HoverParameters.Builder(mContext)
                 .private_extra("id", hoverStrategy.getId())
                 .private_extra("bankResponseMethod", hoverStrategy.getBankResponseMethod().toString())
                 .private_extra("isFirstAction", hoverStrategy.isFirstAction().toString())
                 .private_extra("isLastAction", hoverStrategy.isLastAction().toString())
-                .private_extra("bank", bankAlias)
-                .private_extra("recordId", recordId)
+                .private_extra("bank", intentData.getBankSlug())
+                .private_extra("recordId", intentData.getRecordId())
+                .private_extra("miscellaneous", intentData.getExtra())
                 .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
-                //.extra("pin", "1759")
                 .request(hoverStrategy.getActionId());
+
+        if(!intentData.getPin().isEmpty()){
+            hoverBuilder.extra("pin", intentData.getPin());
+        }
 
         if(!hoverStrategy.isFirstAction()){
             hoverBuilder.setSim(BankUtils.selectedSim.getOSReportedHni());
