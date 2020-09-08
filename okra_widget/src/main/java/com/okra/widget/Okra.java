@@ -2,6 +2,7 @@ package com.okra.widget;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +16,11 @@ import androidx.core.content.ContextCompat;
 
 public class Okra {
 
+    @SuppressLint("StaticFieldLeak")
     public static Context baseContext;
 
     public static void create(Context context, OkraOptions okraOptions){
+
 
         int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE);
 

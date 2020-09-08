@@ -72,7 +72,7 @@ public class FCMB extends BaseBank implements BankServices {
                 "39bd69bb",
                 "FCMB",
                 "Fetching account balance",
-                0
+                5000
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);

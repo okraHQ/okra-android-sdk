@@ -25,8 +25,8 @@ public class HeritageBank extends BaseBank implements BankServices {
 
     @Override
     public int setIndex(int index) {
-        this.index = index;
-        return this.index;
+        HeritageBank.index = index;
+        return HeritageBank.index;
     }
 
     @Override
@@ -43,13 +43,13 @@ public class HeritageBank extends BaseBank implements BankServices {
 
     @Override
     public HoverStrategy getNextAction() throws Exception {
-        if(index >= getActionCount()){this.index = 0;}
+        if(index >= getActionCount()){HeritageBank.index = 0;}
         return getActionByIndex(index + 1);
     }
 
     @Override
     public boolean hasNext() {
-        return this.index < getActionCount();
+        return HeritageBank.index < getActionCount();
     }
 
     @Override

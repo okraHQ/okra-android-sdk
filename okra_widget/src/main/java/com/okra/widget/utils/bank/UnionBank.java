@@ -26,8 +26,8 @@ public class UnionBank extends BaseBank implements BankServices {
 
     @Override
     public int setIndex(int index) {
-        this.index = index;
-        return this.index;
+        UnionBank.index = index;
+        return UnionBank.index;
     }
 
     @Override
@@ -46,13 +46,13 @@ public class UnionBank extends BaseBank implements BankServices {
 
     @Override
     public HoverStrategy getNextAction() throws Exception {
-        if(index >= getActionCount()){this.index = 0;}
+        if(index >= getActionCount()){UnionBank.index = 0;}
         return getActionByIndex(index + 1);
     }
 
     @Override
     public boolean hasNext() {
-        return this.index < getActionCount();
+        return UnionBank.index < getActionCount();
     }
 
 

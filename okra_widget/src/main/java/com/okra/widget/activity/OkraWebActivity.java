@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.webkit.WebSettings;
@@ -61,7 +62,7 @@ public class OkraWebActivity extends AppCompatActivity {
         okraLinkWebview.addJavascriptInterface(new WebInterface(this, okraOptions), "Android");
 
 
-        okraLinkWebview.loadUrl("https://02a0490b1ac6.ngrok.io/?ref=Orux8KvR");
+        okraLinkWebview.loadUrl("https://1c5772dfabaf.ngrok.io/?ref=zlFtQTuvN");
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -94,22 +95,36 @@ public class OkraWebActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            final Map<String, String> map = BankUtils.getInputExtras(data);
+            final BankServices bankServices = BankUtils.getBankImplementation(map.get("bank"));
+//            if (map != null && !map.isEmpty() && map.containsKey("bank")) {
+//                bankServices = BankUtils.getBankImplementation(map.get("bank"));
+//            }
 
-        Map<String, String> map = BankUtils.getInputExtras(data);
-        BankServices bankServices = null;
-        if(map != null && !map.isEmpty() && map.containsKey("bank")){
-            bankServices = BankUtils.getBankImplementation(map.get("bank"));
-        }
-        
-        if(BankUtils.isFirstAction(map)){
-            BankUtils.selectedSim = BankUtils.getSelectedSim(this, data);
-        }
+            if (BankUtils.isFirstAction(map)) {
+                BankUtils.selectedSim = BankUtils.getSelectedSim(this, data);
+            }
 
-        if(bankServices.hasNext()){
-            try {
-                BankUtils.fireIntent(this, bankServices.getNextAction(), new IntentData(map.get("bank"), map.get("recordId"), map.containsKey("pin") ? map.get("pin") : "", map.get("miscellaneous") ));
-                bankServices.setIndex(bankServices.getIndex() + 1);
-            } catch (Exception ignored) {}
+            if (bankServices.hasNext()) {
+                try {
+                     final Context context = this;
+                    new CountDownTimer(5000, 1000) {
+                        public void onFinish() {
+                            try {
+                                BankUtils.fireIntent(context, bankServices.getNextAction(), new IntentData(map.get("bank"), map.get("recordId"), map.containsKey("pin") ? map.get("pin") : "", map.get("miscellaneous")));
+                                bankServices.setIndex(bankServices.getIndex() + 1);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        public void onTick(long millisUntilFinished) {
+                            // millisUntilFinished    The amount of time until finished.
+                        }
+                    }.start();
+                } catch (Exception ignored) {
+                }
+            }
         }
     }
 

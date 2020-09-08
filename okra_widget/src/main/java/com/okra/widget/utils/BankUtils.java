@@ -113,7 +113,7 @@ public class BankUtils {
                 .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
                 .request(hoverStrategy.getActionId());
 
-        if(!intentData.getPin().isEmpty()){
+        if(!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()){
             hoverBuilder.extra("pin", intentData.getPin());
         }
 

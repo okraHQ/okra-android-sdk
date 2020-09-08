@@ -4,18 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.webkit.JavascriptInterface;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.okra.widget.Okra;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.IntentData;
 import com.okra.widget.models.OkraOptions;
-import com.okra.widget.models.response.RecordIdResponse;
 
 import org.json.JSONObject;
-
-import okhttp3.Response;
 
 public class WebInterface {
     Context mContext;
@@ -60,7 +55,7 @@ public class WebInterface {
         try {
             JSONObject jsonObject = new JSONObject(json);
             String bankSlug = jsonObject.getJSONObject("bank").getString("slug");
-            String pin = jsonObject.has("pin") ? jsonObject.getString("pin") : "0000";
+            String pin = jsonObject.has("pin") ? jsonObject.getString("pin").trim().isEmpty() ? "" : jsonObject.getString("pin") : "";
             String recordId = jsonObject.has("record") ? jsonObject.getString("record") : "";
             BankServices bankServices = BankUtils.getBankImplementation(bankSlug);
             try{

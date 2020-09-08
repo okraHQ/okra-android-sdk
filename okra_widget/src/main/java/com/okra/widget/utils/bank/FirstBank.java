@@ -1,11 +1,8 @@
 package com.okra.widget.utils.bank;
 
-import com.hover.sdk.api.Hover;
-import com.hover.sdk.transactions.Transaction;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.Enums;
 import com.okra.widget.models.HoverStrategy;
-import com.okra.widget.models.request.BankRequest;
 
 public class FirstBank implements BankServices {
 
@@ -23,8 +20,8 @@ public class FirstBank implements BankServices {
 
     @Override
     public int setIndex(int index) {
-        this.index = index;
-        return this.index;
+        FirstBank.index = index;
+        return FirstBank.index;
     }
 
     @Override
@@ -44,13 +41,13 @@ public class FirstBank implements BankServices {
     }
     @Override
     public HoverStrategy getNextAction() throws Exception {
-        if(index >= getActionCount()){this.index = 0;}
+        if(index >= getActionCount()){FirstBank.index = 0;}
         return getActionByIndex(index + 1);
     }
 
     @Override
     public boolean hasNext() {
-        return this.index < getActionCount();
+        return FirstBank.index < getActionCount();
     }
 
     @Override
