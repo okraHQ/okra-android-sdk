@@ -53,6 +53,7 @@ OkraOptions implements Serializable {
     private String success_title;
     private String success_message;
     private String imei;
+    private DeviceInfo deviceInfo = new DeviceInfo();
 
     public boolean isWebview() {
         return isWebview;
@@ -268,6 +269,14 @@ OkraOptions implements Serializable {
     public OkraOptions setFilter(Filter filter) {
         this.filter = filter;
         return this;
+    }
+
+    public DeviceInfo getDeviceInfo() {
+        return deviceInfo;
+    }
+
+    public void setDeviceInfo(DeviceInfo deviceInfo) {
+        this.deviceInfo = deviceInfo;
     }
 }
 

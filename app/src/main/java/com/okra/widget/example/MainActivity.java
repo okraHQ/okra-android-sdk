@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         products.add(Enums.Product.balance);
         products.add(Enums.Product.identity);
         products.add(Enums.Product.transactions);
-        OkraOptions okraOptions = new OkraOptions("key","token", products, Enums.Environment.production.toString(),"Chris");
+        OkraOptions okraOptions = new OkraOptions("d4bec6d7-f055-55e3-8ad8-42df0a1e9c5d","5f21e3d9268c7008d6ee79d4", products, Enums.Environment.production_sandbox.toString(),"Chris");
         okraOptions.setColor("#953ab7")
         .setLimit("24")
         .setCorporate(false)

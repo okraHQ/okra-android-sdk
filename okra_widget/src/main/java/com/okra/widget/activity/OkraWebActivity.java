@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.View;
@@ -38,7 +39,12 @@ public class OkraWebActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web);
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         final OkraOptions okraOptions = (OkraOptions) getIntent().getSerializableExtra("okraOptions");
-        okraOptions.setImei(getIMEI(this));
+        if(okraOptions != null) {
+            okraOptions.getDeviceInfo().setDeviceModel(android.os.Build.MODEL);
+            okraOptions.getDeviceInfo().setDeviceName(Build.BRAND);
+            okraOptions.getDeviceInfo().setPlatform("android");
+            okraOptions.setImei(getIMEI(this));
+        }
 
         final WebView okraLinkWebview = findViewById(R.id.ok_webview);
         final ProgressBar progressBar = findViewById(R.id.progressBar);
@@ -57,7 +63,7 @@ public class OkraWebActivity extends AppCompatActivity {
 
                 Uri parsedUri = Uri.parse(url);
                 HashMap<String, String> linkData = parseLinkUriData(parsedUri);
-                Boolean shouldClose = Boolean.valueOf(linkData.get("shouldClose"));
+                boolean shouldClose = Boolean.parseBoolean(linkData.get("shouldClose"));
                 if (shouldClose) {
                     Intent intent = new Intent(OkraWebActivity.this, Okra.baseContext.getClass());
                     intent.putExtra("okraHandler", new OkraHandler());
