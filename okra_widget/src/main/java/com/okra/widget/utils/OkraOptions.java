@@ -46,6 +46,7 @@ OkraOptions implements Serializable {
     private String redirect_url;
     private String logo;
     private Filter filter;
+    private boolean manual;
     private String widget_success;
     private String widget_failed;
     private String currency;
@@ -53,6 +54,7 @@ OkraOptions implements Serializable {
     private String success_title;
     private String success_message;
     private String imei;
+    private String uuid;
     private DeviceInfo deviceInfo = new DeviceInfo();
 
     public boolean isWebview() {
@@ -271,12 +273,30 @@ OkraOptions implements Serializable {
         return this;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public OkraOptions setUuid(String uuid) {
+        this.uuid = uuid;
+        return this;
+    }
+
     public DeviceInfo getDeviceInfo() {
         return deviceInfo;
     }
 
     public void setDeviceInfo(DeviceInfo deviceInfo) {
         this.deviceInfo = deviceInfo;
+    }
+
+    public boolean isManual() {
+        return manual;
+    }
+
+    public OkraOptions setManual(boolean manual) {
+        this.manual = manual;
+        return this;
     }
 }
 

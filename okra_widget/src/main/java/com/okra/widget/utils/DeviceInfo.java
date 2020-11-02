@@ -1,6 +1,8 @@
 package com.okra.widget.utils;
 
-public class DeviceInfo {
+import java.io.Serializable;
+
+public class DeviceInfo implements Serializable {
 
     private String deviceName;
     private String deviceModel;

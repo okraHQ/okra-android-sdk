@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         .setWidget_failed("")
         .setCurrency("USD")
         .setExp("2020-08-06")
+        .setManual(false)
         .setSuccess_title("it has entered success")
         .setSuccess_message("this is the success message");
         Okra.create(MainActivity.this, okraOptions);

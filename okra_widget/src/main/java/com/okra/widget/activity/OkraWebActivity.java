@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -37,13 +38,13 @@ public class OkraWebActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         final OkraOptions okraOptions = (OkraOptions) getIntent().getSerializableExtra("okraOptions");
         if(okraOptions != null) {
+            okraOptions.setUuid(Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
             okraOptions.getDeviceInfo().setDeviceModel(android.os.Build.MODEL);
             okraOptions.getDeviceInfo().setDeviceName(Build.BRAND);
             okraOptions.getDeviceInfo().setPlatform("android");
-            okraOptions.setImei(getIMEI(this));
+            okraOptions.setImei("");
         }
 
         final WebView okraLinkWebview = findViewById(R.id.ok_webview);
@@ -135,7 +136,7 @@ public class OkraWebActivity extends AppCompatActivity {
                return "null";
            }else {
                if (telephonyManager == null) return "null";
-               return telephonyManager.getDeviceId() == "null" ? "" : telephonyManager.getDeviceId();
+               return telephonyManager.getDeviceId().equals("null") || telephonyManager.getDeviceId() == null ? "" : telephonyManager.getDeviceId();
            }
        }catch (Exception exception){
            return "";
