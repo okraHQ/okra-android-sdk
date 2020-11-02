@@ -128,18 +128,4 @@ public class OkraWebActivity extends AppCompatActivity {
         formattedArray.append("]");
         return formattedArray.toString();
     }
-
-    public String getIMEI(Activity activity) {
-       try{
-           TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
-           if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-               return "null";
-           }else {
-               if (telephonyManager == null) return "null";
-               return telephonyManager.getDeviceId().equals("null") || telephonyManager.getDeviceId() == null ? "" : telephonyManager.getDeviceId();
-           }
-       }catch (Exception exception){
-           return "";
-       }
-    }
 }
