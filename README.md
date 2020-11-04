@@ -26,14 +26,49 @@ dependencies {
  }
 ```
 
-### Usage
+### Usage versions v2.1-beta and below
 ``` java
 ArrayList products = new ArrayList<Enums.Product>();
 products.add(Enums.Product.auth);
 products.add(Enums.Product.transactions);
-OkraOptions okraOptions = new OkraOptions(true, "c81f3e05-7a5c-5727-8d33-1113a3c7a5e4","5d8a35224d8113507c7521ac", products, "production-sandbox","Bassey");
+OkraOptions okraOptions = new OkraOptions(true, "c81f3e05-7a5c-5727-8d33-1113a3c7a5e4","5d8a35224d8113507c7521ac", products, Enums.Environment.sandbox,"Bassey");
 Okra.create(MainActivity.this, okraOptions);
 ```
+
+### Usage versions v2.2-beta and above
+``` java
+final Map<String, Object> guarantor = new HashMap<>();
+        guarantor.put("status", true);
+        guarantor.put("message","hello nurse");
+        guarantor.put("number",3);
+
+        Map<String, Object> dataMap  = new HashMap<String, Object>() {{
+            put("products", new String[]{"auth", "balance", "identity", "transaction"});
+            put("key", "public key");
+            put("token", "client token");
+            put("env", Enums.Environment.production_sandbox.toString());
+            put("clientName", "Chris");
+            put("color", "#953ab7");
+            put("limit", "24");
+            put("corporate", false);
+            put("connectMessage", "Which account do you want to connect with?");
+            put("guarantors", guarantor);
+            put("callback_url", "");
+            put("redirect_url", "");
+            put("logo", "https://cdn.okra.ng/images/icon.svg");
+            //put("filter", new Filter(Enums.IndustryType.all.toString(), banks));
+            put("widget_success", "Your account was successfully linked to Okra, Inc");
+            put("widget_failed", "Which account do you want to connect with?");
+            put("currency", "NGN");
+            put("exp", "2020-08-06");
+            put("manual", false);
+            put("success_title", "it has entered success");
+            put("success_message", "this is the success message");
+        }};
+
+        Okra.create(MainActivity.this, dataMap);
+```
+
 #### OkraOptions
 
 |Name                   | Type           | Required            | Default Value       | Description         |
@@ -42,7 +77,7 @@ Okra.create(MainActivity.this, okraOptions);
 |  `key `               | `String`       | true                |  undefined          | Your public key from Okra.
 |  `token`              | `String`       | true                |  undefined          | Your client token from okra.
 |  `products`           | `ArrayList<Enums.Product>`| true     |  undefined          | The Okra products you want to use with the widget.
-|  `env`                | `String`| true            |  undefined          | `production-sandbox` or `production`
+|  `env`                | `Enums.Environment`| true            |  undefined          | 
 |  `clientName`         | `String`       | true                |  undefined          | Name of the customer using the widget on the application
 |  `webhook`            | `String`       | true                |  undefined          | The Url that Okra send the client's data to.
 
