@@ -1,35 +1,27 @@
 package com.okra.widget.activity;
 
-
-import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-
-import com.google.gson.Gson;
 import com.okra.widget.Okra;
 import com.okra.widget.R;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.models.Enums;
-import com.okra.widget.utils.OkraOptions;
 import com.okra.widget.utils.WebInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import org.json.JSONObject;
 
 
 public class OkraWebActivity extends AppCompatActivity {
@@ -38,13 +30,20 @@ public class OkraWebActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-        final OkraOptions okraOptions = (OkraOptions) getIntent().getSerializableExtra("okraOptions");
-        if(okraOptions != null) {
-            okraOptions.setUuid(Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
-            okraOptions.getDeviceInfo().setDeviceModel(android.os.Build.MODEL);
-            okraOptions.getDeviceInfo().setDeviceName(Build.BRAND);
-            okraOptions.getDeviceInfo().setPlatform("android");
-            okraOptions.setImei("");
+
+        final Map<String, Object> mapOkraOptions = (Map<String, Object>) getIntent().getSerializableExtra("okraOptions");
+        boolean isMap = getIntent().getBooleanExtra("isMap", false);
+        if(isMap && getIntent().hasExtra("okraOptions")){
+            Map<String, Object> deviceInfo = new HashMap<>();
+            deviceInfo.put("deviceName", Build.BRAND);
+            deviceInfo.put("deviceModel", android.os.Build.MODEL);
+            deviceInfo.put("longitude", 0.0);
+            deviceInfo.put("latitude", 0.0);
+            deviceInfo.put("platform", "android");
+            mapOkraOptions.put("uuid", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
+            mapOkraOptions.put("deviceInfo", deviceInfo);
+            mapOkraOptions.put("isWebview", true);
+            mapOkraOptions.put("source", "android");
         }
 
         final WebView okraLinkWebview = findViewById(R.id.ok_webview);
@@ -53,8 +52,7 @@ public class OkraWebActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        okraLinkWebview.addJavascriptInterface(new WebInterface(this, okraOptions), "Android");
-
+        okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
         okraLinkWebview.loadUrl("https://v2-mobile.okra.ng/");
 
@@ -79,27 +77,12 @@ public class OkraWebActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String weburl){
                 progressBar.setVisibility(View.GONE);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                    okraLinkWebview.evaluateJavascript("openOkraWidget("+"'"+new Gson().toJson(okraOptions)+"'"+");", null);
+                    okraLinkWebview.evaluateJavascript("openOkraWidget("+"'"+new JSONObject(mapOkraOptions).toString()+"'"+");", null);
                 } else {
-                    okraLinkWebview.loadUrl("openOkraWidget("+"'"+new Gson().toJson(okraOptions)+"'"+");");
+                    okraLinkWebview.loadUrl("openOkraWidget("+"'"+new JSONObject(mapOkraOptions).toString()+"'"+");");
                 }
-
             }
         });
-    }
-
-    public Uri generateLinkInitializationUrl(HashMap<String, Object> linkOptions) {
-        Uri.Builder builder = Uri.parse(linkOptions.get("baseUrl").toString())
-                .buildUpon()
-                .appendQueryParameter("isWebview", "true")
-                .appendQueryParameter("isMobile", "true");
-        for (String key : linkOptions.keySet()) {
-            if (!key.equals("baseUrl")) {
-                String p = linkOptions.get(key).toString();
-                builder.appendQueryParameter(key, linkOptions.get(key).toString());
-            }
-        }
-        return builder.build();
     }
 
     public HashMap<String, String> parseLinkUriData(Uri linkUri) {
@@ -114,18 +97,5 @@ public class OkraWebActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-    }
-
-    public String convertArrayListToString(ArrayList<Enums.Product> productList) {
-        StringBuilder formattedArray = new StringBuilder("[");
-        for (int index = 0; index < productList.size(); index++) {
-            if (index == (productList.size() - 1)) {
-                formattedArray.append(String.format("\"%s\"", productList.get(index)));
-            } else {
-                formattedArray.append(String.format("\"%s\",", productList.get(index)));
-            }
-        }
-        formattedArray.append("]");
-        return formattedArray.toString();
     }
 }

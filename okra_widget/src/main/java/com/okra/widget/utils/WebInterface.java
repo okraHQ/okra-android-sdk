@@ -9,12 +9,10 @@ import com.okra.widget.handlers.OkraHandler;
 
 public class WebInterface {
     Context mContext;
-    OkraOptions okraOptions;
 
     // Instantiate the interface and set the context
-    public WebInterface(Context c, OkraOptions okraOptions) {
+    public WebInterface(Context c) {
         mContext = c;
-        this.okraOptions = okraOptions;
     }
 
     @JavascriptInterface
