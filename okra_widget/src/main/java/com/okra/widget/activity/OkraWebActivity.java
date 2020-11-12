@@ -10,32 +10,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hover.sdk.api.Hover;
-import com.hover.sdk.sims.SimInfo;
 import com.hover.sdk.transactions.Transaction;
 import com.okra.widget.Okra;
 import com.okra.widget.R;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.interfaces.BankServices;
-import com.okra.widget.models.Enums;
-import com.okra.widget.models.HoverResponse;
 import com.okra.widget.models.IntentData;
 import com.okra.widget.models.OkraOptions;
 import com.okra.widget.models.request.BankRequest;
 import com.okra.widget.utils.BankUtils;
 import com.okra.widget.utils.WebInterface;
-import com.okra.widget.utils.bank.AccessBank;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,7 +53,7 @@ public class OkraWebActivity extends AppCompatActivity {
         okraLinkWebview.addJavascriptInterface(new WebInterface(this, okraOptions), "Android");
 
 
-        okraLinkWebview.loadUrl("https://ef77c215bd33.ngrok.io/mobile.html");
+        okraLinkWebview.loadUrl("https://v2-mobile.okra.ng/");
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
