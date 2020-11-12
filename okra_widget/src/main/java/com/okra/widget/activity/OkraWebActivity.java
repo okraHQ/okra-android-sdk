@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -41,11 +43,23 @@ public class OkraWebActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Hover.initialize(this);
         setContentView(R.layout.activity_web);
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        final OkraOptions okraOptions = (OkraOptions) getIntent().getSerializableExtra("okraOptions");
-        okraOptions.setImei(getIMEI(this));
+
+        final Map<String, Object> mapOkraOptions = (Map<String, Object>) getIntent().getSerializableExtra("okraOptions");
+        boolean isMap = getIntent().getBooleanExtra("isMap", false);
+        if(isMap && getIntent().hasExtra("okraOptions")){
+            Map<String, Object> deviceInfo = new HashMap<>();
+            deviceInfo.put("deviceName", Build.BRAND);
+            deviceInfo.put("deviceModel", android.os.Build.MODEL);
+            deviceInfo.put("longitude", 0.0);
+            deviceInfo.put("latitude", 0.0);
+            deviceInfo.put("platform", "android");
+            mapOkraOptions.put("uuid", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
+            mapOkraOptions.put("deviceInfo", deviceInfo);
+            mapOkraOptions.put("isWebview", true);
+            mapOkraOptions.put("source", "android");
+        }
+
 
         final WebView okraLinkWebview = findViewById(R.id.ok_webview);
         final ProgressBar progressBar = findViewById(R.id.progressBar);
@@ -53,7 +67,7 @@ public class OkraWebActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        okraLinkWebview.addJavascriptInterface(new WebInterface(this, okraOptions), "Android");
+        okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
 
         okraLinkWebview.loadUrl("https://v2-mobile.okra.ng/");

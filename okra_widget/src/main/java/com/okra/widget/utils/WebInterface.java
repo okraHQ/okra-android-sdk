@@ -8,18 +8,15 @@ import com.okra.widget.Okra;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.IntentData;
-import com.okra.widget.models.OkraOptions;
 
 import org.json.JSONObject;
 
 public class WebInterface {
     Context mContext;
-    OkraOptions okraOptions;
 
     // Instantiate the interface and set the context
-    public WebInterface(Context c, OkraOptions okraOptions) {
+    public WebInterface(Context c) {
         mContext = c;
-        this.okraOptions = okraOptions;
     }
 
     @JavascriptInterface
