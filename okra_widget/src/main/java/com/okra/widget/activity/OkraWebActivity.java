@@ -10,9 +10,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.telephony.TelephonyManager;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.hover.sdk.api.Hover;
@@ -46,6 +48,7 @@ public class OkraWebActivity extends AppCompatActivity {
         okraOptions.setImei(getIMEI(this));
 
         final WebView okraLinkWebview = findViewById(R.id.ok_webview);
+        final ProgressBar progressBar = findViewById(R.id.progressBar);
         WebSettings webSettings = okraLinkWebview.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
@@ -74,6 +77,7 @@ public class OkraWebActivity extends AppCompatActivity {
             }
 
             public void onPageFinished(WebView view, String weburl){
+                progressBar.setVisibility(View.GONE);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                     okraLinkWebview.evaluateJavascript("openOkraWidget("+"'"+new Gson().toJson(okraOptions)+"'"+");", null);
                 } else {
