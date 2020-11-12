@@ -36,6 +36,8 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import org.json.JSONObject;
+
 
 public class OkraWebActivity extends AppCompatActivity {
 
@@ -93,9 +95,9 @@ public class OkraWebActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String weburl){
                 progressBar.setVisibility(View.GONE);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                    okraLinkWebview.evaluateJavascript("openOkraWidget("+"'"+new Gson().toJson(okraOptions)+"'"+");", null);
+                    okraLinkWebview.evaluateJavascript("openOkraWidget("+"'"+new JSONObject(mapOkraOptions).toString()+"'"+");", null);
                 } else {
-                    okraLinkWebview.loadUrl("openOkraWidget("+"'"+new Gson().toJson(okraOptions)+"'"+");");
+                    okraLinkWebview.loadUrl("openOkraWidget("+"'"+new JSONObject(mapOkraOptions).toString()+"'"+");");
                 }
             }
         });
