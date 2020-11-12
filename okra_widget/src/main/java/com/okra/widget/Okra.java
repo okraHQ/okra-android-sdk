@@ -14,28 +14,26 @@ import com.okra.widget.models.OkraOptions;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.Serializable;
+import java.util.Map;
+
 public class Okra {
 
     @SuppressLint("StaticFieldLeak")
     public static Context baseContext;
 
-    public static void create(Context context, OkraOptions okraOptions){
-
-
+    public static void create(Context context, Map<String, Object> okraOptions){
+        baseContext = context;
         int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE);
-
+        int REQUEST_READ_PHONE_STATE = 1;
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            int REQUEST_READ_PHONE_STATE = 1;
             ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
         }else {
-            int LAUNCH_SECOND_ACTIVITY = 1;
             if (context instanceof Activity) {
-                baseContext = context;
                 Intent intent = new Intent(context, OkraWebActivity.class);
-                intent.putExtra("okraOptions", okraOptions);
-                ((Activity) context).startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
+                intent.putExtra("okraOptions", (Serializable) okraOptions);
+                ((Activity) context).startActivityForResult(intent, REQUEST_READ_PHONE_STATE);
             }
         }
     }
-
 }
