@@ -48,8 +48,7 @@ public class OkraWebActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web);
 
         final Map<String, Object> mapOkraOptions = (Map<String, Object>) getIntent().getSerializableExtra("okraOptions");
-        boolean isMap = getIntent().getBooleanExtra("isMap", false);
-        if(isMap && getIntent().hasExtra("okraOptions")){
+        if(getIntent().hasExtra("okraOptions")){
             Map<String, Object> deviceInfo = new HashMap<>();
             deviceInfo.put("deviceName", Build.BRAND);
             deviceInfo.put("deviceModel", android.os.Build.MODEL);
@@ -72,7 +71,7 @@ public class OkraWebActivity extends AppCompatActivity {
         okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
 
-        okraLinkWebview.loadUrl("https://v2-mobile.okra.ng/");
+        okraLinkWebview.loadUrl("https://1675ec5b8593.ngrok.io/mobile.html");
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -94,6 +93,7 @@ public class OkraWebActivity extends AppCompatActivity {
 
             public void onPageFinished(WebView view, String weburl){
                 progressBar.setVisibility(View.GONE);
+                String rr = new JSONObject(mapOkraOptions).toString();
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                     okraLinkWebview.evaluateJavascript("openOkraWidget("+"'"+new JSONObject(mapOkraOptions).toString()+"'"+");", null);
                 } else {

@@ -3,11 +3,13 @@ package com.okra.widget.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.hover.sdk.api.Hover;
 import com.hover.sdk.api.HoverParameters;
+import com.hover.sdk.api.HoverTemplates;
 import com.hover.sdk.sims.SimInfo;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.HoverResponse;
@@ -111,8 +113,11 @@ public class BankUtils {
                 .private_extra("recordId", intentData.getRecordId())
                 .private_extra("miscellaneous", intentData.getExtra())
                 .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
+                .template(HoverTemplates.OKRA)
+                .setHeader(String.format("Connecting to %s...", intentData.getBankSlug().replace("-", " ")))
+                .initialProcessingMessage("Verifying your credentials")
+                .usableColors(Color.parseColor("#D81B60"), Color.WHITE, Color.rgb(22, 45, 76)) // .usableColors takes 3 colors, (Background color, Accent Color, Button Color)
                 .request(hoverStrategy.getActionId());
-
         if(!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()){
             hoverBuilder.extra("pin", intentData.getPin());
         }

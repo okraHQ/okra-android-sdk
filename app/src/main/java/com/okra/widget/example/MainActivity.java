@@ -15,6 +15,8 @@ import com.okra.widget.models.Guarantor;
 import com.okra.widget.models.OkraOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,32 +61,34 @@ public class MainActivity extends AppCompatActivity {
 
     public void openOkraWidget(){
 
-        ArrayList banks = new ArrayList<String>();
-        banks.add(Enums.Banks.AccessBank.toString());
-        banks.add(Enums.Banks.GTB.toString());
+        final Map<String, Object> guarantor = new HashMap<>();
+        guarantor.put("status", true);
+        guarantor.put("message","hello nurse");
+        guarantor.put("number",3);
 
-        ArrayList  products = new ArrayList<Enums.Product>();
-        products.add(Enums.Product.auth);
-        products.add(Enums.Product.balance);
-        products.add(Enums.Product.identity);
-        products.add(Enums.Product.transactions);
-        OkraOptions okraOptions = new OkraOptions(true, "b7704b61-1ce5-58bf-af49-2d805fa8f798","5da6358130a943486f33dced", products, "production-sandbox","Chris");
-        okraOptions.setColor("#953ab7")
-        .setLimit("24")
-        .setCorporate(false)
-        .setConnectMessage("Which account do you want to connect with?")
-        .setGuarantors(new Guarantor(false, "this is me", 3))
-        .setCallback_url("")
-        .setRedirect_url("redirect")
-        .setLogo("https://cdn.okra.ng/images/icon.svg")
-        .setFilter(new Filter(Enums.IndustryType.all.toString(), banks))
-        .setWidget_success("Your account was successfully linked to Okra, Inc")
-        .setWidget_failed("")
-        .setCurrency("USD")
-        .setExp("2020-08-06")
-        .setSuccess_title("it has entered success")
-        .setSuccess_message("this is the success message")
-        .setPrivateKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkyODhlYTE4MmQzZDAwMGNiN2M0ODYiLCJpYXQiOjE1OTYwMjI0NTF9.yPogxqMx_kUquRPEZAGLHgiq-wnFk20UtZjVhat4PPc");
-        Okra.create(MainActivity.this, okraOptions);
+        Map<String, Object> dataMap  = new HashMap<String, Object>() {{
+            put("products", new String[]{"auth", "balance", "identity", "transactions"});
+            put("key", "fa85e5ce-0e4e-5a88-883d-9ba9b4357683");
+            put("token", "5da6358130a943486f33dced");
+            put("env", "production");
+            put("clientName", "Chris");
+            put("color", "#953ab7");
+            put("limit", "24");
+            put("ussd", true);
+            put("corporate", false);
+            put("connectMessage", "Which account do you want to connect with?");
+            put("callback_url", "");
+            put("redirect_url", "");
+            put("logo", "https://cdn.okra.ng/images/icon.svg");
+            put("widget_success", "Your account was successfully linked to Okra, Inc");
+            put("widget_failed", "Which account do you want to connect with?");
+            put("currency", "NGN");
+            put("exp", "2020-08-06");
+            put("manual", false);
+            put("success_title", "it has entered success");
+            put("success_message", "this is the success message");
+        }};
+
+        Okra.create(MainActivity.this, dataMap);
     }
 }
