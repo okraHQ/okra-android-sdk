@@ -32,8 +32,7 @@ public class OkraWebActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web);
 
         final Map<String, Object> mapOkraOptions = (Map<String, Object>) getIntent().getSerializableExtra("okraOptions");
-        boolean isMap = getIntent().getBooleanExtra("isMap", false);
-        if(isMap && getIntent().hasExtra("okraOptions")){
+        if(getIntent().hasExtra("okraOptions")){
             Map<String, Object> deviceInfo = new HashMap<>();
             deviceInfo.put("deviceName", Build.BRAND);
             deviceInfo.put("deviceModel", android.os.Build.MODEL);
