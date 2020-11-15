@@ -14,10 +14,7 @@ import android.widget.ProgressBar;
 import com.okra.widget.Okra;
 import com.okra.widget.R;
 import com.okra.widget.handlers.OkraHandler;
-import com.okra.widget.models.Enums;
 import com.okra.widget.utils.WebInterface;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
@@ -74,11 +71,12 @@ public class OkraWebActivity extends AppCompatActivity {
             }
 
             public void onPageFinished(WebView view, String weburl){
+                String convertedJson = new JSONObject(mapOkraOptions).toString().replace("'", "\\'");
                 progressBar.setVisibility(View.GONE);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                    okraLinkWebview.evaluateJavascript("openOkraWidget("+"'"+new JSONObject(mapOkraOptions).toString()+"'"+");", null);
+                    okraLinkWebview.evaluateJavascript("openOkraWidget("+"'"+convertedJson+"'"+");", null);
                 } else {
-                    okraLinkWebview.loadUrl("openOkraWidget("+"'"+new JSONObject(mapOkraOptions).toString()+"'"+");");
+                    okraLinkWebview.loadUrl("openOkraWidget("+"'"+convertedJson+"'"+");");
                 }
             }
         });
