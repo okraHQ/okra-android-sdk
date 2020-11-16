@@ -40,7 +40,18 @@ public class WebInterface {
     }
 
     @JavascriptInterface
-    public String getCustomer(){
+    public boolean permissionOn(String permission){
+        switch (permission) {
+            case "message":
+                return true;
+            case "accessibility":
+                return true;
+            default: return true;
+        }
+    }
+
+    @JavascriptInterface
+    public String switchPermissionOn(String permission){
         return "08098516969";
     }
 
