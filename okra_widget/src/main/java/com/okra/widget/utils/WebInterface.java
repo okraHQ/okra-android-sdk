@@ -1,8 +1,12 @@
 package com.okra.widget.utils;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.webkit.JavascriptInterface;
+
+import androidx.core.content.ContextCompat;
 
 import com.okra.widget.Okra;
 import com.okra.widget.handlers.OkraHandler;
@@ -41,12 +45,15 @@ public class WebInterface {
 
     @JavascriptInterface
     public boolean permissionOn(String permission){
+        int permissionCheck;
         switch (permission) {
             case "message":
-                return true;
+                permissionCheck = ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_PHONE_STATE);
+                return permissionCheck == PackageManager.PERMISSION_GRANTED;
             case "accessibility":
-                return true;
-            default: return true;
+                permissionCheck = ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_CONTACTS);
+                return permissionCheck == PackageManager.PERMISSION_GRANTED;
+            default: return false;
         }
     }
 
