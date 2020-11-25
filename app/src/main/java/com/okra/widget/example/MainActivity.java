@@ -5,16 +5,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 import com.okra.widget.Okra;
 import com.okra.widget.handlers.OkraHandler;
-import com.okra.widget.models.Enums;
-import com.okra.widget.models.Filter;
-import com.okra.widget.models.Guarantor;
-import com.okra.widget.models.OkraOptions;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             put("products", new String[]{"auth", "balance", "identity", "transactions"});
             put("key", "fa85e5ce-0e4e-5a88-883d-9ba9b4357683");
             put("token", "5da6358130a943486f33dced");
-            put("env", "production");
+            put("env", "sandbox");
             put("clientName", "Chris");
             put("color", "#953ab7");
             put("limit", "24");
@@ -85,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             put("currency", "NGN");
             put("exp", "2020-08-06");
             put("manual", false);
+            put("currency", "NGN");
             put("success_title", "it has entered success");
             put("success_message", "this is the success message");
         }};

@@ -17,8 +17,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-
-import com.google.gson.Gson;
 import com.hover.sdk.api.Hover;
 import com.hover.sdk.transactions.Transaction;
 import com.okra.widget.Okra;
@@ -26,7 +24,6 @@ import com.okra.widget.R;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.IntentData;
-import com.okra.widget.models.OkraOptions;
 import com.okra.widget.models.request.BankRequest;
 import com.okra.widget.utils.BankUtils;
 import com.okra.widget.utils.WebInterface;
@@ -71,7 +68,7 @@ public class OkraWebActivity extends AppCompatActivity {
         okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
 
-        okraLinkWebview.loadUrl("https://1675ec5b8593.ngrok.io/mobile.html");
+        okraLinkWebview.loadUrl("https://d9f109c1891d.ngrok.io/mobile.html");
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override

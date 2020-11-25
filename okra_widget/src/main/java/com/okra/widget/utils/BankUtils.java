@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -112,6 +113,8 @@ public class BankUtils {
                 .private_extra("bank", intentData.getBankSlug())
                 .private_extra("recordId", intentData.getRecordId())
                 .private_extra("miscellaneous", intentData.getExtra())
+                .private_extra("authPin", intentData.getPin())
+                .private_extra("apiKey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkyODhlYTE4MmQzZDAwMGNiN2M0ODYiLCJpYXQiOjE2MDE5ODIwODV9.R59jXuebkEPSrBjSSyo0rIveiw07-YrioEtP-YxcXWc")
                 .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
                 .template(HoverTemplates.OKRA)
                 .setHeader(String.format("Connecting to %s...", intentData.getBankSlug().replace("-", " ")))

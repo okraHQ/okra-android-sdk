@@ -1,13 +1,11 @@
 package com.okra.widget.utils;
 
-import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.webkit.JavascriptInterface;
 
-import androidx.core.content.ContextCompat;
-
+import com.hover.sdk.permissions.PermissionHelper;
 import com.okra.widget.Okra;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.interfaces.BankServices;
@@ -45,21 +43,38 @@ public class WebInterface {
 
     @JavascriptInterface
     public boolean permissionOn(String permission){
-        int permissionCheck;
+        boolean value = false;
         switch (permission) {
             case "message":
-                permissionCheck = ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_PHONE_STATE);
-                return permissionCheck == PackageManager.PERMISSION_GRANTED;
+            case "messages":
+                value = new PermissionHelper(mContext).hasSmsPerm();
+                return value;
             case "accessibility":
-                permissionCheck = ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_CONTACTS);
-                return permissionCheck == PackageManager.PERMISSION_GRANTED;
+                PermissionHelper ph = new PermissionHelper(mContext);
+                value = ph.hasAccessPerm() && ph.hasBasicPerms() && ph.hasPhonePerm() && ph.hasOverlayPerm();
+                return value;
             default: return false;
         }
     }
 
     @JavascriptInterface
-    public String switchPermissionOn(String permission){
-        return "08098516969";
+    public void switchPermissionOn(String permission){
+        PermissionHelper ph = new PermissionHelper(mContext);
+        if(permission.equals("message") || permission.equals("messages")){
+            if (!ph.hasBasicPerms()) {
+                ph.requestBasicPerms((Activity) this.mContext, 1);
+            }
+            if (!ph.hasPhonePerm()) {
+                ph.requestPhone((Activity) this.mContext, 1);
+            }
+        }else {
+            if (!ph.hasAccessPerm()) {
+                ph.requestAccessPerm();
+            }
+            if (!ph.hasOverlayPerm()) {
+                ph.requestOverlayPerm();
+            }
+        }
     }
 
     @JavascriptInterface
