@@ -62,15 +62,14 @@ public class MainActivity extends AppCompatActivity {
 
         Map<String, Object> dataMap  = new HashMap<String, Object>() {{
             put("products", new String[]{"auth", "balance", "identity", "transaction"});
-            put("key", "public key");
-            put("token", "client token");
-            put("env", Enums.Environment.production_sandbox.toString());
+            put("key", "fa85e5ce-0e4e-5a88-883d-9ba9b4357683");
+            put("token", "5da6358130a943486f33dced");
+            put("env", "production");
             put("clientName", "Chris");
             put("color", "#953ab7");
             put("limit", "24");
             put("corporate", false);
             put("connectMessage", "Which account do you want to connect with?");
-            put("guarantors", guarantor);
             put("callback_url", "");
             put("redirect_url", "");
             put("logo", "https://cdn.okra.ng/images/icon.svg");
