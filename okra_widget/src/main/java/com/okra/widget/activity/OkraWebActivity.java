@@ -59,6 +59,7 @@ public class OkraWebActivity extends AppCompatActivity {
         }
 
 
+        WebView.setWebContentsDebuggingEnabled(true);
         final WebView okraLinkWebview = findViewById(R.id.ok_webview);
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         WebSettings webSettings = okraLinkWebview.getSettings();
@@ -68,7 +69,7 @@ public class OkraWebActivity extends AppCompatActivity {
         okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
 
-        okraLinkWebview.loadUrl("https://d9f109c1891d.ngrok.io/mobile.html");
+        okraLinkWebview.loadUrl("https://c7083de3c480.ngrok.io/mobile.html");
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
