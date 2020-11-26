@@ -41,8 +41,9 @@ public class OkraWebActivity extends AppCompatActivity {
             mapOkraOptions.put("isWebview", true);
             mapOkraOptions.put("source", "android");
         }
-
+       // WebView.setWebContentsDebuggingEnabled(true);
         final WebView okraLinkWebview = findViewById(R.id.ok_webview);
+        //okraLinkWebview.setWebContentsDebuggingEnabled(true);
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         WebSettings webSettings = okraLinkWebview.getSettings();
         webSettings.setJavaScriptEnabled(true);

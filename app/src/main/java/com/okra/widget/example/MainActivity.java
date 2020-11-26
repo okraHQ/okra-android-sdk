@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import com.okra.widget.Okra;
 import com.okra.widget.handlers.OkraHandler;
-import com.okra.widget.models.Enums;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
                 OkraHandler okraHandler = (OkraHandler) data.getSerializableExtra("okraHandler");
+                String rr = okraHandler.getData();
                 Log.i("okra okraHandler ", okraHandler != null ? okraHandler.getData() : "nothing");
             }
             if (resultCode == Activity.RESULT_CANCELED) {
