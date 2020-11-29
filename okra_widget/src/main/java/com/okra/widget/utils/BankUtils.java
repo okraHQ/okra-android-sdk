@@ -119,7 +119,7 @@ public class BankUtils {
                 .template(HoverTemplates.OKRA)
                 .setHeader(String.format("Connecting to %s...", intentData.getBankSlug().replace("-", " ")))
                 .initialProcessingMessage("Verifying your credentials")
-                .usableColors(Color.parseColor("#D81B60"), Color.WHITE, Color.rgb(22, 45, 76)) // .usableColors takes 3 colors, (Background color, Accent Color, Button Color)
+                .usableColors(Color.parseColor("#DD4F05"), Color.WHITE, Color.parseColor("#DD4F05")) // .usableColors takes 3 colors, (Background color, Accent Color, Button Color)
                 .request(hoverStrategy.getActionId());
         if(!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()){
             hoverBuilder.extra("pin", intentData.getPin());
