@@ -43,7 +43,7 @@ final Map<String, Object> guarantor = new HashMap<>();
         guarantor.put("number",3);
 
         Map<String, Object> dataMap  = new HashMap<String, Object>() {{
-            put("products", new String[]{"auth", "balance", "identity", "transaction"});
+            put("products", new String[]{"auth", "balance", "identity", "transactions"});
             put("key", "public key");
             put("token", "client token");
             put("env", Enums.Environment.production_sandbox.toString());
