@@ -65,7 +65,7 @@ public class StanbicBank extends BaseBank implements BankServices {
     @Override
     public HoverStrategy getAccountBalance() {
         HoverStrategy hoverStrategy =  new HoverStrategy(
-                "f6ccd22e",
+                "261e7dfe",
                 "Stanbic Bank",
                 "Fetching account balance",
                 10000
