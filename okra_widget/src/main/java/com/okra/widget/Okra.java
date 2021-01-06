@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import com.hover.sdk.api.Hover;
 import com.okra.widget.activity.OkraWebActivity;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ public class Okra {
     public static void create(Context context, Map<String, Object> okraOptions){
         baseContext = context;
         if (context instanceof Activity) {
+            Hover.initialize(context);
             Intent intent = new Intent(context, OkraWebActivity.class);
             intent.putExtra("okraOptions", (Serializable) okraOptions);
             ((Activity) context).startActivity(intent);
