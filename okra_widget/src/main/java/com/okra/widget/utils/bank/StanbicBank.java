@@ -1,13 +1,8 @@
 package com.okra.widget.utils.bank;
 
-import com.hover.sdk.transactions.Transaction;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.Enums;
 import com.okra.widget.models.HoverStrategy;
-import com.okra.widget.models.request.Balance;
-import com.okra.widget.models.request.BankRequest;
-
-import org.json.JSONException;
 
 public class StanbicBank extends BaseBank implements BankServices {
 
@@ -68,7 +63,7 @@ public class StanbicBank extends BaseBank implements BankServices {
                 "261e7dfe",
                 "Stanbic Bank",
                 "Fetching account balance",
-                10000
+                0
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
