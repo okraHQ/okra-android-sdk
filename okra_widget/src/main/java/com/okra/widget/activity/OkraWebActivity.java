@@ -1,4 +1,4 @@
-package com.okra.widget.activity;
+ package com.okra.widget.activity;
 
 
 import android.Manifest;
@@ -68,8 +68,7 @@ public class OkraWebActivity extends AppCompatActivity {
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
-
-        okraLinkWebview.loadUrl("https://665648cb646e.ngrok.io/mobile.html");
+        okraLinkWebview.loadUrl("https://1470db4aebcf.ngrok.io/mobile.html");
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -118,10 +117,22 @@ public class OkraWebActivity extends AppCompatActivity {
             if (bankServices.hasNext()) {
                 try {
                      final Context context = this;
-                    new CountDownTimer(5000, 1000) {
+                    new CountDownTimer(5000, 5000) {
                         public void onFinish() {
                             try {
-                                BankUtils.fireIntent(context, bankServices.getNextAction(), new IntentData(map.get("bank"), map.get("recordId"), map.containsKey("pin") ? map.get("pin") : "", map.get("miscellaneous")));
+                                BankUtils.fireIntent(
+                                        context,
+                                        bankServices.getNextAction(),
+                                        new IntentData(
+                                                map.get("bank"),
+                                                map.get("recordId"),
+                                                map.containsKey("authPin") ? map.get("authPin") : "",
+                                                map.containsKey("nuban") ? map.get("nuban") : "",
+                                                map.get("miscellaneous"),
+                                                map.get("bgColor"),
+                                                map.get("accentColor"),
+                                                map.get("buttonColor")
+                                        ));
                                 bankServices.setIndex(bankServices.getIndex() + 1);
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -132,6 +143,8 @@ public class OkraWebActivity extends AppCompatActivity {
                         }
                     }.start();
                 } catch (Exception ignored) {
+                    String c = ignored.getMessage();
+                    String v = ignored.getCause().getMessage();
                 }
             }
         }
