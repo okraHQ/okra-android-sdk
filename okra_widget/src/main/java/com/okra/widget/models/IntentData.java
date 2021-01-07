@@ -2,10 +2,11 @@ package com.okra.widget.models;
 
 public class IntentData {
 
-    public IntentData(String bankSlug, String recordId, String pin, String extra,  String bgColor, String accentColor, String buttonColor) {
+    public IntentData(String bankSlug, String recordId, String pin, String nuban, String extra,  String bgColor, String accentColor, String buttonColor) {
         this.bankSlug = bankSlug;
         this.recordId = recordId;
         this.pin = pin;
+        this.nuban = nuban;
         this.extra = extra;
         this.bgColor = bgColor;
         this.accentColor = accentColor;
@@ -15,6 +16,7 @@ public class IntentData {
     private String bankSlug;
     private String recordId;
     private  String pin;
+    private  String nuban;
     private String extra;
     private String bgColor;
     private String accentColor;
@@ -74,5 +76,13 @@ public class IntentData {
 
     public void setButtonColor(String buttonColor) {
         this.buttonColor = buttonColor;
+    }
+
+    public String getNuban() {
+        return nuban;
+    }
+
+    public void setNuban(String nuban) {
+        this.nuban = nuban;
     }
 }
