@@ -86,6 +86,7 @@ public class BankUtils {
                 .private_extra("buttonColor", intentData.getButtonColor())
 
                 .private_extra("authPin", intentData.getPin())
+                .private_extra("nuban", intentData.getNuban())
                 .private_extra("apiKey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkyODhlYTE4MmQzZDAwMGNiN2M0ODYiLCJpYXQiOjE2MDE5ODIwODV9.R59jXuebkEPSrBjSSyo0rIveiw07-YrioEtP-YxcXWc")
                 .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
                 .template(HoverTemplates.OKRA)
@@ -95,6 +96,10 @@ public class BankUtils {
                 .request(hoverStrategy.getActionId());
         if(!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()){
             hoverBuilder.extra("pin", intentData.getPin());
+        }
+
+        if(!intentData.getNuban().isEmpty() || !intentData.getNuban().trim().isEmpty()){
+            hoverBuilder.extra("accountNumber", intentData.getNuban());
         }
 
         if(!hoverStrategy.isFirstAction()){
