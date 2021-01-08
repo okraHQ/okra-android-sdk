@@ -34,11 +34,11 @@ public class FCMB extends BaseBank implements BankServices {
     public HoverStrategy getActionByIndex(int index) throws Exception {
         switch (index){
             case 1:
-                return getBvn();
-            case 2:
                 return getAccountBalance();
-            case 3:
+            case 2:
                 return getTransactions();
+            case 3:
+                return getBvn();
             default:
                 return getAccountBalance();
         }

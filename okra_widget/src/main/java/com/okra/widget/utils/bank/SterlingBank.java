@@ -34,11 +34,11 @@ public class SterlingBank extends BaseBank implements BankServices {
     public HoverStrategy getActionByIndex(int index) throws Exception {
         switch (index){
             case 1:
-                return getBvn();
-            case 2:
                 return getAccounts();
-            case 3:
+            case 2:
                 return getAccountBalance();
+            case 3:
+                return getBvn();
             default:
                 return getAccounts();
         }

@@ -33,9 +33,9 @@ public class KeystoneBank implements BankServices {
     public HoverStrategy getActionByIndex(int index) throws Exception {
         switch (index){
             case 1:
-                return getBvn();
-            case 2:
                 return getAccountBalance();
+            case 2:
+                return getBvn();
             default:
                 return getBvn();
         }

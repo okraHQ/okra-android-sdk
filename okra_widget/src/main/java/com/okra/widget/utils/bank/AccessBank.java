@@ -40,13 +40,13 @@ public class AccessBank extends BaseBank implements BankServices {
     public HoverStrategy getActionByIndex(int index) {
         switch (index){
             case 1:
-                return getBvn();
-            case 2:
                 return getAccounts();
-            case 3:
+            case 2:
                 return getAccountBalance();
-            case 4:
+            case 3:
                 return getTransactions();
+            case 4:
+                return getBvn();
             default:
                 return getBvn();
         }
