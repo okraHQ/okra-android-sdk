@@ -63,7 +63,7 @@ public class AccessBank extends BaseBank implements BankServices {
        );
        hoverStrategy.setId("bvn");
        hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-       hoverStrategy.setFirstAction(true);
+       hoverStrategy.setLastAction(true);
        return hoverStrategy;
     }
 
@@ -76,6 +76,7 @@ public class AccessBank extends BaseBank implements BankServices {
                 0
         );
         hoverStrategy.setId("accounts");
+        hoverStrategy.setFirstAction(true);
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.sms);
         return hoverStrategy;
     }
@@ -104,7 +105,6 @@ public class AccessBank extends BaseBank implements BankServices {
         );
         hoverStrategy.setId("transactions");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.sms);
-        hoverStrategy.setLastAction(true);
         return hoverStrategy;
     }
 }

@@ -63,7 +63,7 @@ public class UnityBank extends BaseBank implements BankServices {
         );
         hoverStrategy.setId("bvn");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-        hoverStrategy.setFirstAction(true);
+        hoverStrategy.setLastAction(true);
         return hoverStrategy;
     }
 
@@ -82,7 +82,7 @@ public class UnityBank extends BaseBank implements BankServices {
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-        hoverStrategy.setLastAction(true);
+        hoverStrategy.setFirstAction(true);
         return hoverStrategy;
     }
 

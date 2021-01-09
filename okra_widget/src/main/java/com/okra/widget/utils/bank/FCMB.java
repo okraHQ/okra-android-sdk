@@ -76,6 +76,7 @@ public class FCMB extends BaseBank implements BankServices {
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
+        hoverStrategy.setFirstAction(true);
         return hoverStrategy;
     }
 
@@ -89,7 +90,6 @@ public class FCMB extends BaseBank implements BankServices {
         );
         hoverStrategy.setId("transactions");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-        hoverStrategy.setLastAction(true);
         return hoverStrategy;
     }
 }

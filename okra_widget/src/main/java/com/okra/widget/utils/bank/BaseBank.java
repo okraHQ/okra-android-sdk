@@ -19,7 +19,7 @@ public class BaseBank {
         );
         hoverStrategy.setId("bvn");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-        hoverStrategy.setFirstAction(true);
+        hoverStrategy.setLastAction(true);
         return hoverStrategy;
     }
 }

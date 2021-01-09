@@ -67,7 +67,7 @@ public class FidelityBank implements BankServices {
         );
         hoverStrategy.setId("bvn");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-        hoverStrategy.setFirstAction(true);
+        hoverStrategy.setLastAction(true);
         return hoverStrategy;
     }
 
@@ -81,6 +81,7 @@ public class FidelityBank implements BankServices {
         );
         hoverStrategy.setId("accounts");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
+        hoverStrategy.setFirstAction(true);
         return hoverStrategy;
     }
 
@@ -94,7 +95,6 @@ public class FidelityBank implements BankServices {
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-        hoverStrategy.setLastAction(true);
         return hoverStrategy;
     }
 

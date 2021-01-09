@@ -70,6 +70,7 @@ public class SterlingBank extends BaseBank implements BankServices {
         );
         hoverStrategy.setId("accounts");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
+        hoverStrategy.setFirstAction(true);
         return hoverStrategy;
     }
 
@@ -83,7 +84,6 @@ public class SterlingBank extends BaseBank implements BankServices {
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-        hoverStrategy.setLastAction(true);
         return hoverStrategy;
     }
 

@@ -67,7 +67,7 @@ public class StanbicBank extends BaseBank implements BankServices {
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-        hoverStrategy.setLastAction(true);
+        hoverStrategy.setFirstAction(true);
         return hoverStrategy;
     }
 
