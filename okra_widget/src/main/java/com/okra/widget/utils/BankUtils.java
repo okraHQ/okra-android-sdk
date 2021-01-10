@@ -71,45 +71,49 @@ public class BankUtils {
     }
 
     public static void fireIntent(Context mContext, HoverStrategy hoverStrategy, IntentData intentData) {
-        Intent intent;
-        HoverParameters.Builder hoverBuilder = new HoverParameters.Builder(mContext)
-                .private_extra("id", hoverStrategy.getId())
-                .private_extra("bankResponseMethod", hoverStrategy.getBankResponseMethod().toString())
-                .private_extra("isFirstAction", hoverStrategy.isFirstAction().toString())
-                .private_extra("isLastAction", hoverStrategy.isLastAction().toString())
-                .private_extra("bank", intentData.getBankSlug())
-                .private_extra("recordId", intentData.getRecordId())
-                .private_extra("miscellaneous", intentData.getExtra())
+        try{
+            Intent intent;
+            HoverParameters.Builder hoverBuilder = new HoverParameters.Builder(mContext)
+                    .private_extra("id", hoverStrategy.getId())
+                    .private_extra("bankResponseMethod", hoverStrategy.getBankResponseMethod().toString())
+                    .private_extra("isFirstAction", hoverStrategy.isFirstAction().toString())
+                    .private_extra("isLastAction", hoverStrategy.isLastAction().toString())
+                    .private_extra("bank", intentData.getBankSlug())
+                    .private_extra("recordId", intentData.getRecordId())
+                    .private_extra("miscellaneous", intentData.getExtra())
 
-                .private_extra("bgColor", intentData.getBgColor())
-                .private_extra("accentColor", intentData.getAccentColor())
-                .private_extra("buttonColor", intentData.getButtonColor())
+                    .private_extra("bgColor", intentData.getBgColor())
+                    .private_extra("accentColor", intentData.getAccentColor())
+                    .private_extra("buttonColor", intentData.getButtonColor())
 
-                .private_extra("authPin", intentData.getPin())
-                .private_extra("nuban", intentData.getNuban())
-                .private_extra("apiKey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkyODhlYTE4MmQzZDAwMGNiN2M0ODYiLCJpYXQiOjE2MDE5ODIwODV9.R59jXuebkEPSrBjSSyo0rIveiw07-YrioEtP-YxcXWc")
-                .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
-                .template(HoverTemplates.OKRA)
-                .setHeader(String.format("Connecting to %s...", intentData.getBankSlug().replace("-", " ")))
-                .initialProcessingMessage("Verifying your credentials")
-                .usableColors(Color.parseColor(intentData.getBgColor()), Color.WHITE, Color.parseColor(intentData.getButtonColor())) // .usableColors takes 3 colors, (Background color, Accent Color, Button Color)
-                .request(hoverStrategy.getActionId());
-        if(!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()){
-            hoverBuilder.extra("pin", intentData.getPin());
+                    .private_extra("authPin", intentData.getPin())
+                    .private_extra("nuban", intentData.getNuban())
+                    .private_extra("apiKey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkyODhlYTE4MmQzZDAwMGNiN2M0ODYiLCJpYXQiOjE2MDE5ODIwODV9.R59jXuebkEPSrBjSSyo0rIveiw07-YrioEtP-YxcXWc")
+                    .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
+                    .template(HoverTemplates.OKRA)
+                    .setHeader(String.format("Connecting to %s...", intentData.getBankSlug().replace("-", " ")))
+                    .initialProcessingMessage("Verifying your credentials")
+                    .usableColors(Color.parseColor(intentData.getBgColor()), Color.WHITE, Color.parseColor(intentData.getButtonColor())) // .usableColors takes 3 colors, (Background color, Accent Color, Button Color)
+                    .request(hoverStrategy.getActionId());
+            if((!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()) && hoverStrategy.getRequiresPin()){
+                hoverBuilder.extra("pin", intentData.getPin());
+            }
+
+            if((!intentData.getNuban().isEmpty() || !intentData.getNuban().trim().isEmpty()) && hoverStrategy.getRequiresAccountNumber()){
+                hoverBuilder.extra("accountNumber", intentData.getNuban());
+            }
+
+            if(!hoverStrategy.isFirstAction()){
+                hoverBuilder.setSim(BankUtils.selectedSim.getOSReportedHni());
+            }
+
+            hoverBuilder.finalMsgDisplayTime(0);
+
+            intent = hoverBuilder.buildIntent();
+            ((Activity)mContext).startActivityForResult(intent, 0);
+        }catch (Exception exception){
+            System.out.println("it reached here");
         }
-
-        if(!intentData.getNuban().isEmpty() || !intentData.getNuban().trim().isEmpty()){
-            hoverBuilder.extra("accountNumber", intentData.getNuban());
-        }
-
-        if(!hoverStrategy.isFirstAction()){
-            hoverBuilder.setSim(BankUtils.selectedSim.getOSReportedHni());
-        }
-
-        hoverBuilder.finalMsgDisplayTime(0);
-
-        intent = hoverBuilder.buildIntent();
-        ((Activity)mContext).startActivityForResult(intent, 0);
     }
 
     public static Map<String, String> getInputExtras(Intent intent){

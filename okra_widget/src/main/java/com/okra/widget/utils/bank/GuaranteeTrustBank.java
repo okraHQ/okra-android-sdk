@@ -73,6 +73,7 @@ public class GuaranteeTrustBank implements BankServices {
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
         hoverStrategy.setFirstAction(true);
         hoverStrategy.setLastAction(true);
+        hoverStrategy.setRequiresPin(true);
         return hoverStrategy;
     }
 
