@@ -77,6 +77,7 @@ public class UnionBank extends BaseBank implements BankServices {
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
         hoverStrategy.setFirstAction(true);
+        hoverStrategy.setRequiresPin(true);
         return hoverStrategy;
     }
 
@@ -90,6 +91,7 @@ public class UnionBank extends BaseBank implements BankServices {
         );
         hoverStrategy.setId("transactions");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.sms);
+        hoverStrategy.setRequiresPin(true);
         return hoverStrategy;
     }
 }

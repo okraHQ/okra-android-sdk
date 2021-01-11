@@ -75,6 +75,8 @@ public class ZenithBank extends BaseBank implements BankServices {
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
         hoverStrategy.setFirstAction(true);
+        hoverStrategy.setRequiresPin(true);
+        hoverStrategy.setRequiresAccountNumber(true);
         return hoverStrategy;
     }
 

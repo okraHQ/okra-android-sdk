@@ -78,6 +78,7 @@ public class AccessBank extends BaseBank implements BankServices {
         hoverStrategy.setId("accounts");
         hoverStrategy.setFirstAction(true);
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.sms);
+        hoverStrategy.setRequiresPin(true);
         return hoverStrategy;
     }
 
@@ -105,6 +106,7 @@ public class AccessBank extends BaseBank implements BankServices {
         );
         hoverStrategy.setId("transactions");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.sms);
+        hoverStrategy.setRequiresPin(true);
         return hoverStrategy;
     }
 }

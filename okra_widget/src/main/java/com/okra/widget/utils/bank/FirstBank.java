@@ -61,6 +61,7 @@ public class FirstBank implements BankServices {
         hoverStrategy.setId("bvn");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.sms);
         hoverStrategy.setLastAction(true);
+        hoverStrategy.setRequiresPin(true);
         return hoverStrategy;
     }
 
@@ -75,6 +76,7 @@ public class FirstBank implements BankServices {
         hoverStrategy.setId("accounts");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.sms);
         hoverStrategy.setFirstAction(true);
+        hoverStrategy.setRequiresPin(true);
         return hoverStrategy;
     }
 
