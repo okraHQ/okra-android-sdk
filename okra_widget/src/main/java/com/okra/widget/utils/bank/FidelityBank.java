@@ -38,10 +38,8 @@ public class FidelityBank implements BankServices {
                 return getAccounts();
             case 2:
                 return getAccountBalance();
-            case 3:
-                return getBvn();
             default:
-                return getBvn();
+                return getAccounts();
         }
     }
 
@@ -59,16 +57,7 @@ public class FidelityBank implements BankServices {
 
     @Override
     public HoverStrategy getBvn() throws Exception {
-        HoverStrategy hoverStrategy =  new HoverStrategy(
-                "d85c09f7",
-                "Fidelity Bank",
-                "Fetching BVN",
-                0
-        );
-        hoverStrategy.setId("bvn");
-        hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
-        hoverStrategy.setLastAction(true);
-        return hoverStrategy;
+        throw new Exception("Not implemented");
     }
 
     @Override
@@ -82,6 +71,7 @@ public class FidelityBank implements BankServices {
         hoverStrategy.setId("accounts");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
         hoverStrategy.setFirstAction(true);
+        hoverStrategy.setRequiresPin(true);
         return hoverStrategy;
     }
 
@@ -95,6 +85,7 @@ public class FidelityBank implements BankServices {
         );
         hoverStrategy.setId("balance");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
+        hoverStrategy.setRequiresPin(true);
         return hoverStrategy;
     }
 
