@@ -1,14 +1,8 @@
 package com.okra.widget.utils.bank;
 
-import com.hover.sdk.transactions.Transaction;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.Enums;
 import com.okra.widget.models.HoverStrategy;
-import com.okra.widget.models.request.Balance;
-import com.okra.widget.models.request.BankRequest;
-import com.okra.widget.models.request.Identity;
-
-import org.json.JSONException;
 
 public class UnityBank extends BaseBank implements BankServices {
 
@@ -63,6 +57,7 @@ public class UnityBank extends BaseBank implements BankServices {
         );
         hoverStrategy.setId("bvn");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.ussd);
+        hoverStrategy.setRequiresPin(true);
         hoverStrategy.setLastAction(true);
         return hoverStrategy;
     }
