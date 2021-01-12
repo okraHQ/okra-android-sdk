@@ -25,6 +25,8 @@ public class HoverStrategy {
     private String header;
     private String processingMessage;
     private int displayTime;
+    private Boolean requiresPin = false;
+    private Boolean requiresAccountNumber = false;
 
     public String getActionId() {
         return actionId;
@@ -88,5 +90,29 @@ public class HoverStrategy {
 
     public void setLastAction(Boolean lastAction) {
         this.lastAction = lastAction;
+    }
+
+    public Boolean getFirstAction() {
+        return firstAction;
+    }
+
+    public Boolean getLastAction() {
+        return lastAction;
+    }
+
+    public Boolean getRequiresPin() {
+        return requiresPin;
+    }
+
+    public void setRequiresPin(Boolean requiresPin) {
+        this.requiresPin = requiresPin;
+    }
+
+    public Boolean getRequiresAccountNumber() {
+        return requiresAccountNumber;
+    }
+
+    public void setRequiresAccountNumber(Boolean requiresAccountNumber) {
+        this.requiresAccountNumber = requiresAccountNumber;
     }
 }
