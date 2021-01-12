@@ -17,7 +17,7 @@ public class FidelityBank implements BankServices {
 
     @Override
     public int getActionCount() {
-        return 3;
+        return 2;
     }
 
     @Override
