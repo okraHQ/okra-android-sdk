@@ -26,6 +26,7 @@ public class WebInterface {
         OkraHandler.data = json;
         OkraHandler.isSuccessful = true;
         OkraHandler.isDone = true;
+        OkraHandler.hasError = false;
     }
 
     @JavascriptInterface
@@ -33,8 +34,10 @@ public class WebInterface {
         OkraHandler.data = json;
         OkraHandler.hasError = true;
         OkraHandler.isDone = true;
+        OkraHandler.isSuccessful = false;
     }
 
     @JavascriptInterface
-    public void onClose(String json) {}
+    public void onClose(String json) {
+    }
 }
