@@ -92,9 +92,7 @@ public class WebInterface {
             String nuban = jsonObject.has("account") ? jsonObject.getJSONObject("account").getString("number").trim()  : "";
             String recordId = jsonObject.has("record") ? jsonObject.getString("record") : "";
             BankServices bankServices = BankUtils.getBankImplementation(bankSlug);
-            try{
-                BankUtils.fireIntent(mContext, bankServices.getActionByIndex(1), new IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor));
-            }catch (Exception ignored){}
+            BankUtils.fireIntent(mContext, bankServices.getActionByIndex(1), new IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor));
         } catch (Exception e) {
             e.printStackTrace();
         }

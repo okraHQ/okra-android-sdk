@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.hover.sdk.api.Hover;
 import com.hover.sdk.api.HoverParameters;
@@ -71,7 +72,7 @@ public class BankUtils {
     }
 
     public static void fireIntent(Context mContext, HoverStrategy hoverStrategy, IntentData intentData) {
-        try{
+        Log.i("partyneverstops", "-------About to start an intent--------");
             Intent intent;
             HoverParameters.Builder hoverBuilder = new HoverParameters.Builder(mContext)
                     .private_extra("id", hoverStrategy.getId())
@@ -107,13 +108,12 @@ public class BankUtils {
                 hoverBuilder.setSim(BankUtils.selectedSim.getOSReportedHni());
             }
 
+           Log.i("the start", "of good things");
             hoverBuilder.finalMsgDisplayTime(0);
 
             intent = hoverBuilder.buildIntent();
+            Log.i("partyneverstops", hoverStrategy.getActionId());
             ((Activity)mContext).startActivityForResult(intent, 0);
-        }catch (Exception exception){
-            System.out.println("it reached here");
-        }
     }
 
     public static Map<String, String> getInputExtras(Intent intent){

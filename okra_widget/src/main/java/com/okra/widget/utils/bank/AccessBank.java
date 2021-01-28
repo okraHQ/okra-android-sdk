@@ -102,7 +102,7 @@ public class AccessBank extends BaseBank implements BankServices {
                 "5584dd8c",
                 "Access Bank",
                 "Fetching your account statement",
-                10000
+                0
         );
         hoverStrategy.setId("transactions");
         hoverStrategy.setBankResponseMethod(Enums.BankResponseMethod.sms);
