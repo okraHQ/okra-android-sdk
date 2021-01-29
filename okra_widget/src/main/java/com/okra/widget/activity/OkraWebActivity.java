@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -68,7 +69,7 @@ public class OkraWebActivity extends AppCompatActivity {
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
-        okraLinkWebview.loadUrl("https://80f687004f88.ngrok.io/mobile.html");  //https://dev-v2-app.okra.ng
+        okraLinkWebview.loadUrl("https://42769df3ae8a.ngrok.io/mobile.html");  //https://dev-v2-app.okra.ng
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -114,6 +115,9 @@ public class OkraWebActivity extends AppCompatActivity {
                 BankUtils.selectedSim = BankUtils.getSelectedSim(this, data);
             }
 
+            Log.i("partyneverstops", "action count is " + bankServices.getActionCount());
+            Log.i("partyneverstops", "and present index is " + bankServices.getIndex());
+            Log.i("partyneverstops", bankServices.hasNext() ? "this bank has next" : "this bank doesnt have next");
             if (bankServices.hasNext()) {
                 try {
                      final Context context = this;
@@ -146,6 +150,8 @@ public class OkraWebActivity extends AppCompatActivity {
                     String c = ignored.getMessage();
                     String v = ignored.getCause().getMessage();
                 }
+            }else {
+                bankServices.setIndex(1);
             }
         }
     }
