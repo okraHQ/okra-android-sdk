@@ -81,6 +81,11 @@ public class WebInterface {
     public void onClose(String json) {}
 
     @JavascriptInterface
+    public boolean hasUssdFeature(){
+        return true;
+    }
+
+    @JavascriptInterface
     public void openUSSD(String json) {
         try {
             JSONObject jsonObject = new JSONObject(json);
