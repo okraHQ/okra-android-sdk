@@ -24,13 +24,23 @@ public class WebInterface {
     @JavascriptInterface
     public void onSuccess(String json) {
         OkraHandler.data = json;
+        formatJsonString(json);
         OkraHandler.isSuccessful = true;
         OkraHandler.isDone = true;
         OkraHandler.hasError = false;
     }
 
+    private void formatJsonString(String json) {
+        try {
+            OkraHandler.dataObject = FormatJson.formatJson(json);
+        } catch (Exception exception) {
+            OkraHandler.dataObject = null;
+        }
+    }
+
     @JavascriptInterface
     public void onError(String json) {
+        formatJsonString(json);
         OkraHandler.data = json;
         OkraHandler.hasError = true;
         OkraHandler.isDone = true;
