@@ -84,9 +84,10 @@ public class MainActivity extends AppCompatActivity  implements OkraHandlerModel
         Okra.create(MainActivity.this, dataMap);
     }
 
+
+
     @Override
-    public void onOkraResponseReceived() {
-        OkraHandler handler = OkraHandlerModel.Companion.getInstance().getOkraHandler();
-        System.out.println("DATA FROM INTERFACE " + handler.getData());
+    public void onOkraResponseReceived(OkraHandler okraHandler) {
+        System.out.println("DATA FROM INTERFACE " + okraHandler.getData());
     }
 }

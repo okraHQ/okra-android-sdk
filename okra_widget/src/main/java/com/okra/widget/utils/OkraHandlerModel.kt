@@ -4,7 +4,7 @@ import com.okra.widget.handlers.OkraHandler
 
 class OkraHandlerModel private constructor() {
     interface OnOkraResponseReceived {
-        fun onOkraResponseReceived()
+        fun onOkraResponseReceived(okraHandler: OkraHandler?)
     }
 
     private var mListener: OnOkraResponseReceived? = null
@@ -25,7 +25,7 @@ class OkraHandlerModel private constructor() {
     }
 
     private fun notifyStateChange() {
-        mListener?.onOkraResponseReceived()
+        mListener?.onOkraResponseReceived(instance?.okraHandler)
     }
 
     companion object {
