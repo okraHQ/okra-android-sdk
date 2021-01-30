@@ -15,6 +15,7 @@ import com.okra.widget.Okra;
 import com.okra.widget.R;
 import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.utils.FormatJson;
+import com.okra.widget.utils.OkraHandlerModel;
 import com.okra.widget.utils.WebInterface;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,9 +63,11 @@ public class OkraWebActivity extends AppCompatActivity {
                 HashMap<String, String> linkData = parseLinkUriData(parsedUri);
                 boolean shouldClose = Boolean.parseBoolean(linkData.get("shouldClose"));
                 if (shouldClose) {
-                    Intent intent = new Intent(OkraWebActivity.this, Okra.baseContext.getClass());
-                    intent.putExtra("okraHandler", new OkraHandler());
-                    setResult(Activity.RESULT_OK, intent);
+                    try {
+                        OkraHandlerModel.Companion.getInstance().onOkraResponseReceived(new OkraHandler());
+                    }catch (Exception exception){
+                        System.out.println(exception);
+                    }
                     finish();
                 } else {
                     return false;

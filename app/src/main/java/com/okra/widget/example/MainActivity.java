@@ -11,11 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.okra.widget.Okra;
 import com.okra.widget.handlers.OkraHandler;
+import com.okra.widget.utils.OkraHandlerModel;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements OkraHandlerModel.OnOkraResponseReceived {
 
     Button button;
 
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        OkraHandlerModel.Companion.getInstance().setListener(this);
 //        OkraHandler okraHandler = (OkraHandler) getIntent().getSerializableExtra("okraHandler");
 //        String okraData = "";
 //        if(okraHandler != null){
@@ -42,20 +43,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                OkraHandler okraHandler = (OkraHandler) data.getSerializableExtra("okraHandler");
-                String rr = okraHandler.getData();
-                Log.i("okra okraHandler ", okraHandler != null ? okraHandler.getData() : "nothing");
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
-            }
-        }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        OkraHandlerModel.Companion.getInstance().setListener(null);
     }
 
     public void openOkraWidget(){
@@ -67,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
         Map<String, Object> dataMap  = new HashMap<String, Object>() {{
             put("products", new String[]{"auth", "balance", "identity", "transaction"});
-            put("key", "key");
-            put("token", "token");
+            put("key", "b6a3886d-bf9d-5e5c-8895-544bcb19645b");
+            put("token", "5da6358130a943486f33dced");
             put("env", "production");
             put("clientName", "Chris");
             put("color", "#953ab7");
@@ -89,5 +82,11 @@ public class MainActivity extends AppCompatActivity {
         }};
 
         Okra.create(MainActivity.this, dataMap);
+    }
+
+    @Override
+    public void onOkraResponseReceived() {
+        OkraHandler handler = OkraHandlerModel.Companion.getInstance().getOkraHandler();
+        System.out.println("DATA FROM INTERFACE " + handler.getData());
     }
 }
