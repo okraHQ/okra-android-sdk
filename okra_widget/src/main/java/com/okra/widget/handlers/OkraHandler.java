@@ -1,5 +1,8 @@
 package com.okra.widget.handlers;
 
+import com.okra.widget.utils.FormatJson;
+import com.okra.widget.utils.successmodel.OkraResponse;
+
 import java.io.Serializable;
 
 public class OkraHandler implements Serializable {
@@ -7,12 +10,17 @@ public class OkraHandler implements Serializable {
     public static Boolean isSuccessful = false;
     public static Boolean hasError = false;
     public static Boolean isDone = false;
+    public static OkraResponse dataObject = null;
 
     public String getData() {
         return data;
     }
+    public OkraResponse getDataObject() {
+        return dataObject;
+    }
 
     public void setData(String data) {
+
         this.data = data;
     }
 
