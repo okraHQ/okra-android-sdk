@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
         Map<String, Object> dataMap  = new HashMap<String, Object>() {{
             put("products", new String[]{"auth", "balance", "identity", "transactions"});
-            put("key", "fa85e5ce-0e4e-5a88-883d-9ba9b4357683");
-            put("token", "5da6358130a943486f33dced");
+            put("key", "");
+            put("token", "");
             put("env", "sandbox");
             put("clientName", "Chris");
             put("color", "#953ab7");

@@ -40,10 +40,12 @@ import org.json.JSONObject;
 public class OkraWebActivity extends AppCompatActivity {
 
     BankRequest bankRequest = null;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
+        context = this;
 
         final Map<String, Object> mapOkraOptions = (Map<String, Object>) getIntent().getSerializableExtra("okraOptions");
         if(getIntent().hasExtra("okraOptions")){
