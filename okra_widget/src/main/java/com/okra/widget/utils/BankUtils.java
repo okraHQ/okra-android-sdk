@@ -3,18 +3,11 @@ package com.okra.widget.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.WindowManager;
 
 import com.hover.sdk.api.Hover;
 import com.hover.sdk.api.HoverParameters;
-import com.hover.sdk.api.HoverTemplates;
 import com.hover.sdk.sims.SimInfo;
 import com.okra.widget.R;
 import com.okra.widget.interfaces.BankServices;
@@ -97,10 +90,9 @@ public class BankUtils {
                     .private_extra("nuban", intentData.getNuban())
                     .private_extra("apiKey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkyODhlYTE4MmQzZDAwMGNiN2M0ODYiLCJpYXQiOjE2MDE5ODIwODV9.R59jXuebkEPSrBjSSyo0rIveiw07-YrioEtP-YxcXWc")
                     .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
-                    .template(HoverTemplates.OKRA)
                     .setHeader(String.format("Connecting to %s...", intentData.getBankSlug().replace("-", " ")))
                     .initialProcessingMessage("Verifying your credentials")
-                    .usableColors(Color.parseColor(intentData.getBgColor()), Color.WHITE, Color.parseColor(intentData.getButtonColor())) // .usableColors takes 3 colors, (Background color, Accent Color, Button Color)
+                    .sessionOverlayLayout(R.layout.okra_overlay_layout)
                     .request(hoverStrategy.getActionId());
             if((!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()) && hoverStrategy.getRequiresPin()){
                 hoverBuilder.extra("pin", intentData.getPin());
@@ -119,6 +111,7 @@ public class BankUtils {
 
             intent = hoverBuilder.buildIntent();
             Log.i("partyneverstops", hoverStrategy.getActionId());
+            ((Activity)mContext).startActivityForResult(intent, 0);
 
 
 //            if(hoverStrategy.isFirstAction()) {
@@ -132,7 +125,7 @@ public class BankUtils {
 //                wm.addView(okraOverlayView, mParams);
 //            }
 
-        ((Activity)mContext).startActivityForResult(intent, 0);
+
     }
 
     public static Map<String, String> getInputExtras(Intent intent){
