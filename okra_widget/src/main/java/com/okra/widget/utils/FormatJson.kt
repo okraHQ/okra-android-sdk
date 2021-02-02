@@ -35,7 +35,6 @@ object FormatJson {
         return try {
             Gson().fromJson(cleanString, OkraResponse::class.java)
         } catch (ex: Exception) {
-            println(ex)
             null
         }
     }
