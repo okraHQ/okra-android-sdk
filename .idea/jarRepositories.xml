@@ -61,5 +61,10 @@
       <option name="name" value="maven" />
       <option name="url" value="https://pro.maven.usehover.com/snapshots" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="https://pro.maven.usehover.com/snapshot" />
+    </remote-repository>
   </component>
 </project>
