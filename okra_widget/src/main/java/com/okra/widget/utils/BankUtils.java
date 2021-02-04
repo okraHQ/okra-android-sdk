@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.hover.sdk.api.Hover;
 import com.hover.sdk.api.HoverParameters;
+import com.hover.sdk.api.HoverTemplates;
 import com.hover.sdk.sims.SimInfo;
 import com.okra.widget.R;
 import com.okra.widget.interfaces.BankServices;
@@ -92,7 +93,7 @@ public class BankUtils {
                     .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
                     .setHeader(String.format("Connecting to %s...", intentData.getBankSlug().replace("-", " ")))
                     .initialProcessingMessage("Verifying your credentials")
-                    .sessionOverlayLayout(R.layout.okra_overlay_layout)
+                    .template(HoverTemplates.OKRA)
                     .request(hoverStrategy.getActionId());
             if((!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()) && hoverStrategy.getRequiresPin()){
                 hoverBuilder.extra("pin", intentData.getPin());
