@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             put("products", new String[]{"auth", "balance", "identity", "transactions"});
             put("key", "5d9288ea182d3d000cb7c486");
             put("token", "d29f31bd-a935-53d6-bc2d-a9652d7a0d57");
-            put("env", "sandbox");
+            put("env", "dev-v2");
             put("clientName", "Chris");
             put("color", "#953ab7");
             put("limit", "24");
