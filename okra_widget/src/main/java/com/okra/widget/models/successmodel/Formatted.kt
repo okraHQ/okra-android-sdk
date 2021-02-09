@@ -1,4 +1,4 @@
-package com.okra.widget.utils.successmodel
+package com.okra.widget.models.successmodel
 
 import java.io.Serializable
 

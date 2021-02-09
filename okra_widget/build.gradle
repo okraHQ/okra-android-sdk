@@ -32,5 +32,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'com.github.okhi:android-okcollect:3.1.1'
+    implementation 'com.github.OkHi:android-core:1.1.4'
 
 }

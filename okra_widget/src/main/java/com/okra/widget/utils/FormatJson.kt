@@ -1,7 +1,7 @@
 package com.okra.widget.utils
 
 import com.google.gson.Gson
-import com.okra.widget.utils.successmodel.OkraResponse
+import com.okra.widget.models.successmodel.OkraResponse
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern

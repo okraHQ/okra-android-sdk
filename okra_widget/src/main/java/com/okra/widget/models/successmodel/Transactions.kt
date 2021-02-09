@@ -1,8 +1,9 @@
-package com.okra.widget.utils.successmodel
+package com.okra.widget.models.successmodel
 
 import java.io.Serializable
 
-data class Income (
+
+data class Transactions (
 
 	val callback_url : String?
 ): Serializable

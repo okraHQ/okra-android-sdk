@@ -1,7 +1,6 @@
 package com.okra.widget.handlers;
 
-import com.okra.widget.utils.FormatJson;
-import com.okra.widget.utils.successmodel.OkraResponse;
+import com.okra.widget.models.successmodel.OkraResponse;
 
 import java.io.Serializable;
 
