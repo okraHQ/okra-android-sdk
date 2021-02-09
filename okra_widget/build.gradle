@@ -33,6 +33,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.github.okhi:android-okcollect:3.1.1'
-    implementation 'com.github.OkHi:android-core:1.1.4'
+    implementation 'com.github.okhi:android-core:1.1.4'
 
 }

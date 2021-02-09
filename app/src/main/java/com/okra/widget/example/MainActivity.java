@@ -10,21 +10,23 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.okra.widget.Okra;
+import com.okra.widget.activity.OkHiAddressActivity;
 import com.okra.widget.handlers.OkraHandler;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends OkHiAddressActivity {
 
     Button button;
+    Button okHiButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        getAddressVerificationService().init(this,"bbdfc8","https://homepages.cae.wisc.edu/~ece533/images/airplane.png","bbdfc8");
 //        OkraHandler okraHandler = (OkraHandler) getIntent().getSerializableExtra("okraHandler");
 //        String okraData = "";
 //        if(okraHandler != null){
@@ -34,10 +36,19 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         button = findViewById(R.id.okra_btn);
+        okHiButton = findViewById(R.id.okra_okhi_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openOkraWidget();
+            }
+        });
+        okHiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getAddressVerificationService().addUser("Bolu","Okunaiya","+2348188288402");
+                getAddressVerificationService().launchAddressCollection();
+
             }
         });
     }
@@ -91,3 +102,4 @@ public class MainActivity extends AppCompatActivity {
         Okra.create(MainActivity.this, dataMap);
     }
 }
+

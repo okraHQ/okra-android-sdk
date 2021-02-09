@@ -17,4 +17,14 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/okra_okhi_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Open OkHi"
+        app:layout_constraintEnd_toEndOf="@+id/okra_btn"
+        app:layout_constraintStart_toStartOf="@+id/okra_btn"
+        app:layout_constraintTop_toBottomOf="@+id/okra_btn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
