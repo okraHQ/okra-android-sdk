@@ -12,11 +12,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.okra.widget.Okra;
 import com.okra.widget.activity.OkHiAddressActivity;
 import com.okra.widget.handlers.OkraHandler;
+import com.okra.widget.models.OkHiModels.Location;
+import com.okra.widget.models.OkHiModels.LocationException;
+import com.okra.widget.models.OkHiModels.User;
+import com.okra.widget.services.AddressVerificationListener;
+import com.okra.widget.services.PermissionType;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends OkHiAddressActivity {
+public class MainActivity extends OkHiAddressActivity implements AddressVerificationListener {
 
     Button button;
     Button okHiButton;
@@ -26,15 +31,7 @@ public class MainActivity extends OkHiAddressActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getAddressVerificationService().init(this,"bbdfc8","https://homepages.cae.wisc.edu/~ece533/images/airplane.png","bbdfc8");
-//        OkraHandler okraHandler = (OkraHandler) getIntent().getSerializableExtra("okraHandler");
-//        String okraData = "";
-//        if(okraHandler != null){
-//            if(okraHandler.getIsDone() && (okraHandler.getIsSuccessful() || okraHandler.getHasError()) ) {
-//                okraData = okraHandler.getData();
-//            }
-//        }
-
+        getAddressVerificationService().init(this,"#bbdfc8",R.mipmap.ic_launcher,"https://homepages.cae.wisc.edu/~ece533/images/airplane.png","#bbdfc8",this);
         button = findViewById(R.id.okra_btn);
         okHiButton = findViewById(R.id.okra_okhi_btn);
         button.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +97,45 @@ public class MainActivity extends OkHiAddressActivity {
         }};
 
         Okra.create(MainActivity.this, dataMap);
+    }
+
+
+    @Override
+    public void onSuccessCollection(User user, Location location) {
+        System.out.println("SUCCESSFUL COLLECTION "+ user +  " " + location);
+    }
+
+    @Override
+    public void onSuccessStartVerification(String result) {
+        System.out.println("SUCCESSFUL VERIFICATION "+ result);
+    }
+
+    @Override
+    public void onErrorCollectionAction(LocationException locationException) {
+        System.out.println("ERROR COLLECTING "+ locationException);
+    }
+
+    @Override
+    public void onErrorVerificationAction(LocationException locationException) {
+        System.out.println("ERROR VERIFYING "+ locationException);
+    }
+
+    @Override
+    public void permissionRequestHandler(boolean result, PermissionType type) {
+        System.out.println("PERMISSION "+ type + " Result : " + result);
+        switch (type){
+
+            case OK_COLLECT:
+                getAddressVerificationService().launchAddressCollection();
+                break;
+            case OK_VERIFY:
+                break;
+        }
+    }
+
+    @Override
+    public void permissionRequestHandlerError(LocationException locationException, PermissionType type) {
+        System.out.println("PERMISSION "+ type + " Error : " + locationException);
     }
 }
 
