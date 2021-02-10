@@ -153,6 +153,7 @@ public class OkraWebActivity extends AppCompatActivity {
                     String v = ignored.getCause().getMessage();
                 }
             }else {
+                Log.i("partyneverstops", "-------It has finished and reset to 1--------");
                 bankServices.setIndex(1);
             }
         }

@@ -72,7 +72,8 @@ public class BankUtils {
     }
 
     public static void fireIntent(Context mContext, HoverStrategy hoverStrategy, IntentData intentData) {
-        Log.i("partyneverstops", "-------About to start an intent--------");
+        try {
+            Log.i("partyneverstops", "-------About to start an intent--------");
             Intent intent;
             HoverParameters.Builder hoverBuilder = new HoverParameters.Builder(mContext)
                     .private_extra("id", hoverStrategy.getId())
@@ -95,24 +96,30 @@ public class BankUtils {
                     .initialProcessingMessage("Verifying your credentials")
                     .template(HoverTemplates.OKRA)
                     .request(hoverStrategy.getActionId());
-            if((!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()) && hoverStrategy.getRequiresPin()){
+            Log.i("the start", "as I suspected");
+            if ((!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()) && hoverStrategy.getRequiresPin()) {
                 hoverBuilder.extra("pin", intentData.getPin());
             }
 
-            if((!intentData.getNuban().isEmpty() || !intentData.getNuban().trim().isEmpty()) && hoverStrategy.getRequiresAccountNumber()){
+            if ((!intentData.getNuban().isEmpty() || !intentData.getNuban().trim().isEmpty()) && hoverStrategy.getRequiresAccountNumber()) {
                 hoverBuilder.extra("accountNumber", intentData.getNuban());
             }
 
-            if(!hoverStrategy.isFirstAction()){
+            if (!hoverStrategy.isFirstAction()) {
                 hoverBuilder.setSim(BankUtils.selectedSim.getOSReportedHni());
             }
 
-           Log.i("the start", "of good things");
+            Log.i("the start", "of good things");
             hoverBuilder.finalMsgDisplayTime(0);
 
             intent = hoverBuilder.buildIntent();
             Log.i("partyneverstops", hoverStrategy.getActionId());
-            ((Activity)mContext).startActivityForResult(intent, 0);
+            ((Activity) mContext).startActivityForResult(intent, 0);
+        }catch (Exception ex){
+            Log.i("partyneverstops", "-------an error occured--------");
+            Log.i("partyneverstops", ex.getCause().getMessage());
+            Log.i("partyneverstops", ex.getMessage());
+        }
 
 
 //            if(hoverStrategy.isFirstAction()) {
