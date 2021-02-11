@@ -10,9 +10,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
 import com.ncapdevi.fragnav.FragNavTransactionOptions
+import com.okra.widget.activity.OkHiAddressActivity
 import com.okra.widget.example.R
 
-open class BaseActivity : AppCompatActivity(), BaseFragment.FragmentNavigation, FragNavController.TransactionListener {
+open class BaseActivity : OkHiAddressActivity(), BaseFragment.FragmentNavigation, FragNavController.TransactionListener {
 
 
 

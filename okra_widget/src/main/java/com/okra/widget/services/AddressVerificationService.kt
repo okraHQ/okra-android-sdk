@@ -23,6 +23,9 @@ interface AddressVerificationService {
     fun addUser(firstName:String,lastName:String,phoneNumber:String)
     fun launchAddressCollection()
     fun launchAddressVerification(location:Location)
+    fun askForOkCollectPermissions():Boolean
+    fun askForOkVerifyPermissions():Boolean
+    fun changeDelegate(addressVerificationListener: AddressVerificationListener)
     fun onRequestPermissionsResult( requestCode:Int,permissions:Array<out String>,grantResults:IntArray)
     fun onActivityResult(requestCode:Int,resultCode:Int,data: Intent)
 }
@@ -87,7 +90,6 @@ class OkHiAddressVerificationServiceImpl :AddressVerificationService{
         if(canStartOkCollect) {
             okCollect?.launch(user!!, object : OkCollectCallback<OkHiUser, OkHiLocation> {
                 override fun onSuccess(user: OkHiUser, location: OkHiLocation) {
-                    println("GOT SUCCESS HEREEE")
                     addressVerificationListener?.onSuccessCollection(user.toUser(),location.toLocation())
                 }
 
@@ -119,6 +121,18 @@ class OkHiAddressVerificationServiceImpl :AddressVerificationService{
             })
         }
 
+    }
+
+    override fun askForOkCollectPermissions():Boolean {
+       return canStartAddressCreation(Handler(PermissionType.OK_COLLECT, addressVerificationListener!!))
+    }
+
+    override fun askForOkVerifyPermissions():Boolean {
+       return canStartAddressVerification(Handler(PermissionType.OK_VERIFY, addressVerificationListener!!))
+    }
+
+    override fun changeDelegate(addressVerificationListener: AddressVerificationListener) {
+        this.addressVerificationListener = addressVerificationListener
     }
 
 

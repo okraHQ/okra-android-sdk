@@ -77,7 +77,7 @@
                     style="@style/GreyInterRegular15sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textPersonName"
                     android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -104,7 +104,7 @@
                     style="@style/GreyInterRegular15sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textPersonName"
                     android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ngn"
                     android:drawablePadding="10dp"
-                    android:inputType="textEmailAddress"
+                    android:inputType="phone"
                     android:maxLines="1" />
 
 
