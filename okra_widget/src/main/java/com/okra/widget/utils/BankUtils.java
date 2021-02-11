@@ -3,6 +3,7 @@ package com.okra.widget.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -94,6 +95,7 @@ public class BankUtils {
                     .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
                     .setHeader(String.format("Connecting to %s...", intentData.getBankSlug().replace("-", " ")))
                     .initialProcessingMessage("Verifying your credentials")
+                    .usableColors(Color.parseColor(intentData.getBgColor()), Color.WHITE, Color.parseColor(intentData.getButtonColor()))
                     .template(HoverTemplates.OKRA)
                     .request(hoverStrategy.getActionId());
             Log.i("the start", "as I suspected");
