@@ -91,4 +91,9 @@ public class SterlingBank extends BaseBank implements BankServices {
     public HoverStrategy getTransactions() throws Exception {
         throw new Exception("Not implemented");
     }
+
+    @Override
+    public HoverStrategy makePayment(Boolean isInternal, Boolean hasMultipleAccounts) throws Exception {
+        return null;
+    }
 }

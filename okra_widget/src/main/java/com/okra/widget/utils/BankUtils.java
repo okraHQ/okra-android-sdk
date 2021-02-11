@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.hover.sdk.api.Hover;
 import com.hover.sdk.api.HoverParameters;
 import com.hover.sdk.api.HoverTemplates;
 import com.hover.sdk.sims.SimInfo;
-import com.okra.widget.R;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.HoverStrategy;
 import com.okra.widget.models.IntentData;
@@ -87,7 +85,7 @@ public class BankUtils {
                     .private_extra("bgColor", intentData.getBgColor())
                     .private_extra("accentColor", intentData.getAccentColor())
                     .private_extra("buttonColor", intentData.getButtonColor())
-
+                    .private_extra("payment",intentData.getPayment())
                     .private_extra("authPin", intentData.getPin())
                     .private_extra("nuban", intentData.getNuban())
                     .private_extra("apiKey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkyODhlYTE4MmQzZDAwMGNiN2M0ODYiLCJpYXQiOjE2MDE5ODIwODV9.R59jXuebkEPSrBjSSyo0rIveiw07-YrioEtP-YxcXWc")
@@ -122,16 +120,6 @@ public class BankUtils {
         }
 
 
-//            if(hoverStrategy.isFirstAction()) {
-//                DisplayMetrics displayMetrics = new DisplayMetrics();
-//                ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//                int height = displayMetrics.heightPixels;
-//                int width = displayMetrics.widthPixels;
-//                WindowManager.LayoutParams mParams = new WindowManager.LayoutParams(width, height, WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN, PixelFormat.TRANSLUCENT);
-//                View okraOverlayView = LayoutInflater.from(mContext).inflate(R.layout.okra_overlay_layout, null);
-//                WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-//                wm.addView(okraOverlayView, mParams);
-//            }
 
 
     }
@@ -155,12 +143,5 @@ public class BankUtils {
         }
     }
 
-    public static SimInfo getSelectedSim(Context context, Intent intent){
-        try {
-            BankUtils.simSlot = intent.getIntExtra("slot_idx", -1);
-            return Hover.getPresentSims(context).get(BankUtils.simSlot);
-        }catch (Exception exception){
-            return null;
-        }
-    }
+
 }

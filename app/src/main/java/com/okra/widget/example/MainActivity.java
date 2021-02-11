@@ -54,10 +54,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void openOkraWidget(){
 
-        final Map<String, Object> guarantor = new HashMap<>();
-        guarantor.put("status", true);
-        guarantor.put("message","hello nurse");
-        guarantor.put("number",3);
+        final Map<String, Object> charge = new HashMap<>();
+        charge.put("type", "one-time");
+        charge.put("amount","5000");
+        charge.put("note","");
+        charge.put("currency","NGN");
+        charge.put("account","5f450b2689a23801307c8b5b");
 
         Map<String, Object> dataMap  = new HashMap<String, Object>() {{
             put("products", new String[]{"auth", "balance", "identity", "transactions"});
@@ -79,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
             put("currency", "NGN");
             put("exp", "2020-08-06");
             put("manual", false);
-            put("currency", "NGN");
+            put("payment",true);
+            put("charge",charge);
             put("success_title", "it has entered success");
             put("success_message", "this is the success message");
         }};

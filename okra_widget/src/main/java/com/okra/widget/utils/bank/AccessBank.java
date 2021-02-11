@@ -109,4 +109,9 @@ public class AccessBank extends BaseBank implements BankServices {
         hoverStrategy.setRequiresPin(true);
         return hoverStrategy;
     }
+
+    @Override
+    public HoverStrategy makePayment(Boolean isInternal, Boolean hasMultipleAccounts) throws Exception {
+        return null;
+    }
 }
