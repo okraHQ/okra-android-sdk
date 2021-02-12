@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "681683586408",
+    "project_id": "okhidemo-7e3ea",
+    "storage_bucket": "okhidemo-7e3ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681683586408:android:68b10dd7c898f78ef99add",
+        "android_client_info": {
+          "package_name": "com.okra.widget.example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681683586408-pnfei59o28n88p5dpes5c16trkh10s4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOoXZnIt55uJfX5gWvbM-wFshfnTTaiBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681683586408-pnfei59o28n88p5dpes5c16trkh10s4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
