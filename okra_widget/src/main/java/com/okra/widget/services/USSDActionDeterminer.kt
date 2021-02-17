@@ -51,11 +51,9 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
     private fun runPaymentNextActions(bankServices: BankServices, map: Map<String, String>) {
         when{
             PaymentUtils.lastPaymentAction -> {
-                bankServices.index = 1
                 return
             }
             bankServices is WemaBank || bankServices is GuaranteeTrustBank ||bankServices is ZenithBank  -> {
-                bankServices.index = 1
                 PaymentUtils.lastPaymentAction = true
                 return
             }
