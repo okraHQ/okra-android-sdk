@@ -88,7 +88,12 @@ public class WebInterface {
 
     @JavascriptInterface
     public void startUSSDPayment(String json){
-        PaymentUtils.startPayment(json,mContext);
+        try{
+            PaymentUtils.startPayment(json,mContext);
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
+
     }
 
     @JavascriptInterface

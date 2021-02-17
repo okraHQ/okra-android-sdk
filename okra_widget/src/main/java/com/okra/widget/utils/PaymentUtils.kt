@@ -24,6 +24,7 @@ object PaymentUtils {
     var accentColor = ""
     var buttonColor = ""
     var lastPaymentAction = false
+    var bankMiscellaneous = ""
 
     @JvmStatic
     fun startPayment(json: String, mContext: Context){
@@ -39,10 +40,10 @@ object PaymentUtils {
 
         val isSameBank = paymentModel.sameBank ?: false
         val userHasMultipleAccounts = paymentModel.multipleAccounts ?: false
-        val creditBankName = paymentModel.creditBankName ?: ""
         val creditAccountNumber = paymentModel.clientAccount?.nuban ?: ""
         val amount = paymentModel.amount.toString()
-        currentBankService?.makePayment(isSameBank,userHasMultipleAccounts)?.let { fireIntent(mContext, it, IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, "true", creditAccountNumber, amount, creditBankName)) }
+        val creditBankName = paymentModel.creditBankName ?: ""
+        currentBankService?.makePayment(isSameBank,userHasMultipleAccounts)?.let { fireIntent(mContext, it, IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, "true", creditAccountNumber, amount, creditBankName, isSameBank.toString())) }
     }
 
     @JvmStatic
@@ -57,7 +58,7 @@ object PaymentUtils {
                     .private_extra("isLastAction", hoverStrategy.isLastAction.toString())
                     .private_extra("bank", intentData.bankSlug)
                     .private_extra("recordId", intentData.recordId)
-                    .private_extra("miscellaneous", intentData.extra)
+                    .private_extra("miscellaneous", bankMiscellaneous)
                     .private_extra("bgColor", intentData.bgColor)
                     .private_extra("accentColor", intentData.accentColor)
                     .private_extra("buttonColor", intentData.buttonColor)
@@ -78,12 +79,24 @@ object PaymentUtils {
                 hoverBuilder.setSim(BankUtils.selectedSim.osReportedHni)
             }
             if(intentData.paymentAmount.isNotEmpty()){
+                if(intentData.bankSlug == "access-bank") {
+                    var amount = intentData.paymentAmount.toDoubleOrNull()?.toInt()
+                    Log.i("partyneverstops", "This is the amount: $amount")
+                    amount = amount ?: 50
+                    Log.i("partyneverstops", "This is the FORMATTED amount: $amount")
+                    intentData.paymentAmount = amount.toString()
+                }
                 hoverBuilder.extra("amount",intentData.paymentAmount)
             }
+
+
             if(intentData.paymentCreditAccount.isNotEmpty()){
                 hoverBuilder.extra("accountNumber",intentData.paymentCreditAccount)
             }
-            if(intentData.paymentCreditBankName.isNotEmpty()){
+
+            var creditBankName =  intentData.paymentCreditBankName
+            if(hoverStrategy.differentActionForInternal && intentData.isSameBank == "true") creditBankName = ""
+            if(creditBankName.isNotEmpty()){
                 hoverBuilder.extra("bank",intentData.paymentCreditBankName)
             }
 

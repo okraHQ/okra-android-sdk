@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 //                okraData = okraHandler.getData();
 //            }
 //        }
+
         button = findViewById(R.id.okra_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -27,6 +27,7 @@ public class HoverStrategy {
     private int displayTime;
     private Boolean requiresPin = false;
     private Boolean requiresAccountNumber = false;
+    private Boolean differentActionForInternal = false;
 
     public String getActionId() {
         return actionId;
@@ -114,5 +115,13 @@ public class HoverStrategy {
 
     public void setRequiresAccountNumber(Boolean requiresAccountNumber) {
         this.requiresAccountNumber = requiresAccountNumber;
+    }
+
+    public Boolean getDifferentActionForInternal() {
+        return differentActionForInternal;
+    }
+
+    public void setDifferentActionForInternal(Boolean differentActionForInternal) {
+        this.differentActionForInternal = differentActionForInternal;
     }
 }
