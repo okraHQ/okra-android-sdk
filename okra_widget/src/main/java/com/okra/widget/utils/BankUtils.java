@@ -70,6 +70,11 @@ public class BankUtils {
         }
     }
 
+    public static int getBankLayout(Context mContext, String bankAlias){
+        String layoutName = String.format("%s%s",bankAlias.replaceAll("-","_"), "_layout");;
+        return mContext.getResources().getIdentifier(layoutName, "layout", mContext.getPackageName());
+    }
+
     public static void fireIntent(Context mContext, HoverStrategy hoverStrategy, IntentData intentData) {
         Log.i("partyneverstops", "-------About to start an intent--------");
             Intent intent;
@@ -92,7 +97,7 @@ public class BankUtils {
                     .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
                     .setHeader(String.format("Connecting to %s...", intentData.getBankSlug().replace("-", " ")))
                     .initialProcessingMessage("Verifying your credentials")
-                    .sessionOverlayLayout(R.layout.okra_overlay_layout)
+                    .sessionOverlayLayout(getBankLayout(mContext, intentData.getBankSlug()))
                     .request(hoverStrategy.getActionId());
             if((!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()) && hoverStrategy.getRequiresPin()){
                 hoverBuilder.extra("pin", intentData.getPin());
