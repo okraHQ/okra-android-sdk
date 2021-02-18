@@ -10,11 +10,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
+        android:id="@+id/bank_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/card_view"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="80dp"
         android:src="@drawable/ic_fidelity_bank" />
 
     <androidx.cardview.widget.CardView
@@ -22,7 +24,9 @@
         android:layout_width="match_parent"
         android:layout_height="240dp"
         android:layout_centerVertical="true"
-        android:layout_marginTop="70dp"
+        android:layout_below="@id/bank_logo"
+        android:layout_marginTop="10dp"
+        app:cardElevation=".5dp"
         app:cardCornerRadius="10dp">
 
         <LinearLayout
@@ -40,9 +44,10 @@
 
             <TextView
                 android:id="@+id/textswitcher"
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="connecting to bank" />
+                android:text="connecting to Fidelity bank" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

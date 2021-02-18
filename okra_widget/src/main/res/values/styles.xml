@@ -73,5 +73,7 @@
         <item name="colorAccent">#00D883</item>
     </style>
 
-
+    <style name="progressBarSterlingBank" parent="@style/Theme.AppCompat">
+        <item name="colorAccent">#D92128</item>
+    </style>
 </resources>

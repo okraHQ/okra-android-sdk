@@ -26,6 +26,7 @@
         android:layout_centerVertical="true"
         android:layout_below="@id/bank_logo"
         android:layout_marginTop="10dp"
+        app:cardElevation=".5dp"
         app:cardCornerRadius="10dp">
 
         <LinearLayout
