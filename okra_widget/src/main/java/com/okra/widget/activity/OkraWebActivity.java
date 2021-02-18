@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -25,6 +26,8 @@ import com.okra.widget.handlers.OkraHandler;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.IntentData;
 import com.okra.widget.models.request.BankRequest;
+import com.okra.widget.services.USSDActionDeterminer;
+import com.okra.widget.services.USSDActionDeterminerImpl;
 import com.okra.widget.utils.BankUtils;
 import com.okra.widget.utils.WebInterface;
 import java.util.HashMap;
@@ -39,16 +42,21 @@ import org.json.JSONObject;
 public class OkraWebActivity extends AppCompatActivity {
 
     BankRequest bankRequest = null;
+    Context context;
+    Map<String, Object> generalmapOkraOptions;
+    private USSDActionDeterminer ussdActionDeterminer = new USSDActionDeterminerImpl(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
+        context = this;
 
         final Map<String, Object> mapOkraOptions = (Map<String, Object>) getIntent().getSerializableExtra("okraOptions");
+        generalmapOkraOptions = mapOkraOptions;
         if(getIntent().hasExtra("okraOptions")){
             Map<String, Object> deviceInfo = new HashMap<>();
             deviceInfo.put("deviceName", Build.BRAND);
-            deviceInfo.put("deviceModel", android.os.Build.MODEL);
+            deviceInfo.put("deviceModel", Build.MODEL);
             deviceInfo.put("longitude", 0.0);
             deviceInfo.put("latitude", 0.0);
             deviceInfo.put("platform", "android");
@@ -58,8 +66,9 @@ public class OkraWebActivity extends AppCompatActivity {
             mapOkraOptions.put("source", "android");
         }
 
-
-        WebView.setWebContentsDebuggingEnabled(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
         final WebView okraLinkWebview = findViewById(R.id.ok_webview);
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         WebSettings webSettings = okraLinkWebview.getSettings();
@@ -68,7 +77,7 @@ public class OkraWebActivity extends AppCompatActivity {
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
-        okraLinkWebview.loadUrl("https://80f687004f88.ngrok.io/mobile.html");  //https://dev-v2-app.okra.ng
+        okraLinkWebview.loadUrl("https://97fd9d300fdf.jp.ngrok.io/mobile.html");  //https://dev-v2-app.okra.ng
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -91,7 +100,7 @@ public class OkraWebActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String weburl){
                 progressBar.setVisibility(View.GONE);
                 String rr = new JSONObject(mapOkraOptions).toString();
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     okraLinkWebview.evaluateJavascript("openOkraWidget("+"'"+new JSONObject(mapOkraOptions).toString()+"'"+");", null);
                 } else {
                     okraLinkWebview.loadUrl("openOkraWidget("+"'"+new JSONObject(mapOkraOptions).toString()+"'"+");");
@@ -104,49 +113,7 @@ public class OkraWebActivity extends AppCompatActivity {
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            final Map<String, String> map = BankUtils.getInputExtras(data);
-            final BankServices bankServices = BankUtils.getBankImplementation(map.get("bank"));
-//            if (map != null && !map.isEmpty() && map.containsKey("bank")) {
-//                bankServices = BankUtils.getBankImplementation(map.get("bank"));
-//            }
-
-            if (BankUtils.isFirstAction(map)) {
-                BankUtils.selectedSim = BankUtils.getSelectedSim(this, data);
-            }
-
-            if (bankServices.hasNext()) {
-                try {
-                     final Context context = this;
-                    new CountDownTimer(5000, 5000) {
-                        public void onFinish() {
-                            try {
-                                BankUtils.fireIntent(
-                                        context,
-                                        bankServices.getNextAction(),
-                                        new IntentData(
-                                                map.get("bank"),
-                                                map.get("recordId"),
-                                                map.containsKey("authPin") ? map.get("authPin") : "",
-                                                map.containsKey("nuban") ? map.get("nuban") : "",
-                                                map.get("miscellaneous"),
-                                                map.get("bgColor"),
-                                                map.get("accentColor"),
-                                                map.get("buttonColor")
-                                        ));
-                                bankServices.setIndex(bankServices.getIndex() + 1);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        public void onTick(long millisUntilFinished) {
-                            // millisUntilFinished    The amount of time until finished.
-                        }
-                    }.start();
-                } catch (Exception ignored) {
-                    String c = ignored.getMessage();
-                    String v = ignored.getCause().getMessage();
-                }
-            }
+            ussdActionDeterminer.onUSDDResultReceived(data,generalmapOkraOptions);
         }
     }
 

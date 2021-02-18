@@ -3,10 +3,9 @@ package com.okra.widget.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 
-import com.hover.sdk.api.Hover;
 import com.hover.sdk.api.HoverParameters;
 import com.hover.sdk.api.HoverTemplates;
 import com.hover.sdk.sims.SimInfo;
@@ -27,6 +26,7 @@ import com.okra.widget.utils.bank.UnionBank;
 import com.okra.widget.utils.bank.UnityBank;
 import com.okra.widget.utils.bank.WemaBank;
 import com.okra.widget.utils.bank.ZenithBank;
+
 import java.util.Map;
 
 public class BankUtils {
@@ -71,7 +71,8 @@ public class BankUtils {
     }
 
     public static void fireIntent(Context mContext, HoverStrategy hoverStrategy, IntentData intentData) {
-        try{
+        try {
+            Log.i("partyneverstops", "-------About to start an intent--------");
             Intent intent;
             HoverParameters.Builder hoverBuilder = new HoverParameters.Builder(mContext)
                     .private_extra("id", hoverStrategy.getId())
@@ -85,35 +86,43 @@ public class BankUtils {
                     .private_extra("bgColor", intentData.getBgColor())
                     .private_extra("accentColor", intentData.getAccentColor())
                     .private_extra("buttonColor", intentData.getButtonColor())
-
+                    .private_extra("payment",intentData.getPayment())
                     .private_extra("authPin", intentData.getPin())
                     .private_extra("nuban", intentData.getNuban())
                     .private_extra("apiKey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkyODhlYTE4MmQzZDAwMGNiN2M0ODYiLCJpYXQiOjE2MDE5ODIwODV9.R59jXuebkEPSrBjSSyo0rIveiw07-YrioEtP-YxcXWc")
                     .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
-                    .template(HoverTemplates.OKRA)
                     .setHeader(String.format("Connecting to %s...", intentData.getBankSlug().replace("-", " ")))
                     .initialProcessingMessage("Verifying your credentials")
-                    .usableColors(Color.parseColor(intentData.getBgColor()), Color.WHITE, Color.parseColor(intentData.getButtonColor())) // .usableColors takes 3 colors, (Background color, Accent Color, Button Color)
+                    .template(HoverTemplates.OKRA)
                     .request(hoverStrategy.getActionId());
-            if((!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()) && hoverStrategy.getRequiresPin()){
+            Log.i("the start", "as I suspected");
+            if ((!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()) && hoverStrategy.getRequiresPin()) {
                 hoverBuilder.extra("pin", intentData.getPin());
             }
 
-            if((!intentData.getNuban().isEmpty() || !intentData.getNuban().trim().isEmpty()) && hoverStrategy.getRequiresAccountNumber()){
+            if ((!intentData.getNuban().isEmpty() || !intentData.getNuban().trim().isEmpty()) && hoverStrategy.getRequiresAccountNumber()) {
                 hoverBuilder.extra("accountNumber", intentData.getNuban());
             }
 
-            if(!hoverStrategy.isFirstAction()){
+            if (!hoverStrategy.isFirstAction()) {
                 hoverBuilder.setSim(BankUtils.selectedSim.getOSReportedHni());
             }
 
+            Log.i("the start", "of good things");
             hoverBuilder.finalMsgDisplayTime(0);
 
             intent = hoverBuilder.buildIntent();
-            ((Activity)mContext).startActivityForResult(intent, 0);
-        }catch (Exception exception){
-            System.out.println("it reached here");
+            Log.i("partyneverstops", hoverStrategy.getActionId());
+            ((Activity) mContext).startActivityForResult(intent, 0);
+        }catch (Exception ex){
+            Log.i("partyneverstops", "-------an error occured--------");
+            Log.i("partyneverstops", ex.getCause().getMessage());
+            Log.i("partyneverstops", ex.getMessage());
         }
+
+
+
+
     }
 
     public static Map<String, String> getInputExtras(Intent intent){
@@ -135,12 +144,5 @@ public class BankUtils {
         }
     }
 
-    public static SimInfo getSelectedSim(Context context, Intent intent){
-        try {
-            BankUtils.simSlot = intent.getIntExtra("slot_idx", -1);
-            return Hover.getPresentSims(context).get(BankUtils.simSlot);
-        }catch (Exception exception){
-            return null;
-        }
-    }
+
 }

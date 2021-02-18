@@ -3,6 +3,7 @@ package com.okra.widget.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.hover.sdk.permissions.PermissionHelper;
@@ -81,9 +82,26 @@ public class WebInterface {
     public void onClose(String json) {}
 
     @JavascriptInterface
+    public boolean hasUssdFeature(){
+        return true;
+    }
+
+    @JavascriptInterface
+    public void startUSSDPayment(String json){
+        try{
+            PaymentUtils.startPayment(json,mContext);
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
+
+    }
+
+    @JavascriptInterface
     public void openUSSD(String json) {
         try {
             JSONObject jsonObject = new JSONObject(json);
+            String  payment = jsonObject.has("payment") ? jsonObject.getString("payment") : "false";
+            Log.i("partyneverstops", "OPEN USSD " + payment);
             String bankSlug = jsonObject.getJSONObject("bank").getString("slug");
             String bgColor = jsonObject.getJSONObject("bank").getString("bg");
             String accentColor = jsonObject.getJSONObject("bank").getString("accent");
@@ -92,9 +110,16 @@ public class WebInterface {
             String nuban = jsonObject.has("account") ? jsonObject.getJSONObject("account").getString("number").trim()  : "";
             String recordId = jsonObject.has("record") ? jsonObject.getString("record") : "";
             BankServices bankServices = BankUtils.getBankImplementation(bankSlug);
-            try{
-                BankUtils.fireIntent(mContext, bankServices.getActionByIndex(1), new IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor));
-            }catch (Exception ignored){}
+            PaymentUtils.INSTANCE.setCurrentBankService(bankServices);
+            PaymentUtils.INSTANCE.setLastPaymentAction(false);
+            PaymentUtils.INSTANCE.setBankSlug(bankSlug);
+            PaymentUtils.INSTANCE.setBgColor(bgColor);
+            PaymentUtils.INSTANCE.setAccentColor(accentColor);
+            PaymentUtils.INSTANCE.setButtonColor(buttonColor);
+            PaymentUtils.INSTANCE.setPin(pin);
+            PaymentUtils.INSTANCE.setNuban(nuban);
+            PaymentUtils.INSTANCE.setRecordId(recordId);
+            BankUtils.fireIntent(mContext, bankServices.getActionByIndex(1), new IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, payment));
         } catch (Exception e) {
             e.printStackTrace();
         }

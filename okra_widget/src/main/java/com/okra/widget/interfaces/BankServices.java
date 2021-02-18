@@ -15,4 +15,5 @@ public interface BankServices {
     HoverStrategy getAccounts() throws Exception;
     HoverStrategy getAccountBalance();
     HoverStrategy getTransactions() throws Exception;
+    HoverStrategy makePayment(Boolean isInternal,Boolean hasMultipleAccounts) throws Exception;
 }

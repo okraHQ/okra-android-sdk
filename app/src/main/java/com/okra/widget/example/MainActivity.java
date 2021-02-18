@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 //                okraData = okraHandler.getData();
 //            }
 //        }
+
         button = findViewById(R.id.okra_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,16 +55,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void openOkraWidget(){
 
-        final Map<String, Object> guarantor = new HashMap<>();
-        guarantor.put("status", true);
-        guarantor.put("message","hello nurse");
-        guarantor.put("number",3);
+        final Map<String, Object> charge = new HashMap<>();
+        charge.put("type", "one-time");
+        charge.put("amount","5000");
+        charge.put("note","");
+        charge.put("currency","NGN");
+        charge.put("account","5f450b2689a23801307c8b5b");
 
         Map<String, Object> dataMap  = new HashMap<String, Object>() {{
             put("products", new String[]{"auth", "balance", "identity", "transactions"});
-            put("key", "fa85e5ce-0e4e-5a88-883d-9ba9b4357683");
-            put("token", "5da6358130a943486f33dced");
+            put("key", "d29f31bd-a935-53d6-bc2d-a9652d7a0d57");
+            put("token", "5d9288ea182d3d000cb7c486");
             put("env", "sandbox");
+            put("isProdSB", true);
             put("clientName", "Chris");
             put("color", "#953ab7");
             put("limit", "24");
@@ -78,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
             put("currency", "NGN");
             put("exp", "2020-08-06");
             put("manual", false);
-            put("currency", "NGN");
+            put("payment",true);
+            put("charge",charge);
             put("success_title", "it has entered success");
             put("success_message", "this is the success message");
         }};
