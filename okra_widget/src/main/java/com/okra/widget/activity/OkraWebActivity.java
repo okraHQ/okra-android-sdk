@@ -46,7 +46,6 @@ public class OkraWebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         context = this;
-
         final Map<String, Object> mapOkraOptions = (Map<String, Object>) getIntent().getSerializableExtra("okraOptions");
         if(getIntent().hasExtra("okraOptions")){
             Map<String, Object> deviceInfo = new HashMap<>();
