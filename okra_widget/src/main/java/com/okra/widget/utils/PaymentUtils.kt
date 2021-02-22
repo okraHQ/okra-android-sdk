@@ -107,9 +107,11 @@ object PaymentUtils {
                 hoverBuilder.setSim(BankUtils.selectedSim.osReportedHni)
             }
             if(intentData.paymentAmount.isNotEmpty()){
-                if(intentData.bankSlug == "access-bank"||intentData.bankSlug == "guaranty-trust-bank") {
+                if(intentData.bankSlug == "access-bank" || intentData.bankSlug == "guaranty-trust-bank") {
                     var amount = intentData.paymentAmount.toDoubleOrNull()?.toInt()
+                    Log.i("partyneverstops", "This is the amount: $amount")
                     amount = amount ?: 50
+                    Log.i("partyneverstops", "This is the FORMATTED amount: $amount")
                     intentData.paymentAmount = amount.toString()
                 }
                 hoverBuilder.extra("amount",intentData.paymentAmount)
