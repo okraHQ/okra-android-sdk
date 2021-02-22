@@ -39,6 +39,10 @@ class AccessBank : BaseBank(), BankServices {
         }
     }
 
+    override fun confirmPayment(): HoverStrategy {
+        TODO("Not yet implemented")
+    }
+
     override fun getBvn(): HoverStrategy {
         val hoverStrategy = HoverStrategy(
                 "46f6e4e2",

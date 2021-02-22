@@ -3,6 +3,8 @@ package com.okra.widget.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.CountDownTimer
+import android.os.Handler
 import android.util.Log
 import com.google.gson.Gson
 import com.hover.sdk.api.HoverParameters
@@ -24,6 +26,7 @@ object PaymentUtils {
     var accentColor = ""
     var buttonColor = ""
     var lastPaymentAction = false
+    var paymentConfirmed = true
     var bankMiscellaneous = ""
 
     @JvmStatic
@@ -38,12 +41,37 @@ object PaymentUtils {
             return
         }
 
+        paymentConfirmed = false
         val isSameBank = paymentModel.sameBank ?: false
         val userHasMultipleAccounts = paymentModel.multipleAccounts ?: false
         val creditAccountNumber = paymentModel.clientAccount?.nuban ?: ""
         val amount = paymentModel.amount.toString()
         val creditBankName = paymentModel.creditBankName ?: ""
         currentBankService?.makePayment(isSameBank,userHasMultipleAccounts)?.let { fireIntent(mContext, it, IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, "true", creditAccountNumber, amount, creditBankName, isSameBank.toString())) }
+    }
+
+    fun confirmPayment( mContext: Context){
+        paymentConfirmed = true
+        Log.i("partyneverstops", "ABOUT TO FIRE CONFIRMATION")
+        val strategy =   currentBankService?.confirmPayment()
+        strategy?.let {
+            Log.i("partyneverstops", "ABOUT TO FIRE")
+            try {
+                object : CountDownTimer(5000, 5000) {
+                    override fun onFinish() {
+                        Log.i("partyneverstops", "COUNT DOWN TIMER FIRING")
+                        fireIntent(mContext, it, IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, "true"))
+                    }
+                    override fun onTick(millisUntilFinished: Long) {
+
+                    }
+                }.start()
+
+            }catch (ex:Exception){
+                Log.i("partyneverstops", ex.message)
+            }
+
+        }
     }
 
     @JvmStatic
@@ -79,17 +107,17 @@ object PaymentUtils {
                 hoverBuilder.setSim(BankUtils.selectedSim.osReportedHni)
             }
             if(intentData.paymentAmount.isNotEmpty()){
-                if(intentData.bankSlug == "access-bank") {
+                if(intentData.bankSlug == "access-bank"||intentData.bankSlug == "guaranty-trust-bank") {
                     var amount = intentData.paymentAmount.toDoubleOrNull()?.toInt()
-                    Log.i("partyneverstops", "This is the amount: $amount")
                     amount = amount ?: 50
-                    Log.i("partyneverstops", "This is the FORMATTED amount: $amount")
                     intentData.paymentAmount = amount.toString()
                 }
                 hoverBuilder.extra("amount",intentData.paymentAmount)
             }
 
-
+            if ((!intentData.nuban.isEmpty() || !intentData.nuban.trim { it <= ' ' }.isEmpty()) && hoverStrategy.requiresAccountNumber) {
+                hoverBuilder.extra("accountNumber", intentData.nuban)
+            }
             if(intentData.paymentCreditAccount.isNotEmpty()){
                 hoverBuilder.extra("accountNumber",intentData.paymentCreditAccount)
             }
@@ -111,4 +139,10 @@ object PaymentUtils {
             Log.i("partyneverstops", ex.message)
         }
     }
+}
+
+fun delayFor(millseconds:Long,action:() -> Unit ){
+    Handler().postDelayed({
+        action()
+    }, millseconds)
 }

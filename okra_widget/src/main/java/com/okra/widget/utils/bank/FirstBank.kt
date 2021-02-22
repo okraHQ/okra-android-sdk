@@ -29,6 +29,18 @@ class FirstBank : BankServices {
         }
     }
 
+    override fun confirmPayment(): HoverStrategy {
+        val hoverStrategy = HoverStrategy(
+                "dd25c8eb",
+                "First Bank",
+                "Confirming payment",
+                0
+        )
+        hoverStrategy.id = "verify-payment"
+        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.sms
+        return hoverStrategy
+    }
+
     @Throws(Exception::class)
     override fun getNextAction(): HoverStrategy {
         if (index >= actionCount) {

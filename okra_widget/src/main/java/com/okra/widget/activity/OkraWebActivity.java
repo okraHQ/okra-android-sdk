@@ -1,42 +1,39 @@
  package com.okra.widget.activity;
 
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.provider.Settings;
-import android.telephony.TelephonyManager;
-import android.util.Log;
-import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
-import com.hover.sdk.api.Hover;
-import com.hover.sdk.transactions.Transaction;
-import com.okra.widget.Okra;
-import com.okra.widget.R;
-import com.okra.widget.handlers.OkraHandler;
-import com.okra.widget.interfaces.BankServices;
-import com.okra.widget.models.IntentData;
-import com.okra.widget.models.request.BankRequest;
-import com.okra.widget.services.USSDActionDeterminer;
-import com.okra.widget.services.USSDActionDeterminerImpl;
-import com.okra.widget.utils.BankUtils;
-import com.okra.widget.utils.WebInterface;
-import java.util.HashMap;
-import java.util.Map;
+ import android.Manifest;
+ import android.app.Activity;
+ import android.content.Context;
+ import android.content.Intent;
+ import android.content.pm.PackageManager;
+ import android.net.Uri;
+ import android.os.Build;
+ import android.os.Bundle;
+ import android.provider.Settings;
+ import android.telephony.TelephonyManager;
+ import android.view.View;
+ import android.webkit.WebSettings;
+ import android.webkit.WebView;
+ import android.webkit.WebViewClient;
+ import android.widget.ProgressBar;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+ import androidx.appcompat.app.AppCompatActivity;
+ import androidx.core.content.ContextCompat;
 
-import org.json.JSONObject;
+ import com.hover.sdk.api.Hover;
+ import com.hover.sdk.transactions.Transaction;
+ import com.okra.widget.Okra;
+ import com.okra.widget.R;
+ import com.okra.widget.handlers.OkraHandler;
+ import com.okra.widget.models.request.BankRequest;
+ import com.okra.widget.services.USSDActionDeterminer;
+ import com.okra.widget.services.USSDActionDeterminerImpl;
+ import com.okra.widget.utils.WebInterface;
+
+ import org.json.JSONObject;
+
+ import java.util.HashMap;
+ import java.util.Map;
 
 
 public class OkraWebActivity extends AppCompatActivity {
@@ -44,13 +41,13 @@ public class OkraWebActivity extends AppCompatActivity {
     BankRequest bankRequest = null;
     Context context;
     Map<String, Object> generalmapOkraOptions;
-    private USSDActionDeterminer ussdActionDeterminer = new USSDActionDeterminerImpl(this);
+    private USSDActionDeterminer ussdActionDeterminer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         context = this;
-
+        ussdActionDeterminer = new USSDActionDeterminerImpl(this);
         final Map<String, Object> mapOkraOptions = (Map<String, Object>) getIntent().getSerializableExtra("okraOptions");
         generalmapOkraOptions = mapOkraOptions;
         if(getIntent().hasExtra("okraOptions")){
@@ -86,6 +83,7 @@ public class OkraWebActivity extends AppCompatActivity {
                 Uri parsedUri = Uri.parse(url);
                 HashMap<String, String> linkData = parseLinkUriData(parsedUri);
                 boolean shouldClose = Boolean.parseBoolean(linkData.get("shouldClose"));
+                System.out.println("I WAS TOLD TO CLOSE");
                 if (shouldClose) {
                     Intent intent = new Intent(OkraWebActivity.this, Okra.baseContext.getClass());
                     intent.putExtra("okraHandler", new OkraHandler());

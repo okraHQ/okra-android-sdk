@@ -84,6 +84,11 @@ public class PolarisBank extends BaseBank implements BankServices {
     }
 
     @Override
+    public HoverStrategy confirmPayment() throws Exception {
+        return null;
+    }
+
+    @Override
     public HoverStrategy makePayment(Boolean isInternal, Boolean hasMultipleAccounts) throws Exception {
         return null;
     }

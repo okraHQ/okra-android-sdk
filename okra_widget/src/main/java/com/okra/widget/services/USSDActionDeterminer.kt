@@ -49,8 +49,12 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
     }
 
     private fun runPaymentNextActions(bankServices: BankServices, map: Map<String, String>) {
+        PaymentUtils.bankMiscellaneous =  map["miscellaneous"] ?: ""
         when{
             PaymentUtils.lastPaymentAction -> {
+                if(!PaymentUtils.paymentConfirmed){
+                    PaymentUtils.confirmPayment(context);
+                }
                 return
             }
             bankServices is WemaBank || bankServices is GuaranteeTrustBank ||bankServices is ZenithBank  -> {
@@ -63,7 +67,6 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
             object : CountDownTimer(5000, 5000) {
                 override fun onFinish() {
                     try {
-                        PaymentUtils.bankMiscellaneous =  map["miscellaneous"] ?: ""
                         BankUtils.fireIntent(
                                 context,
                                 bankServices.getActionByIndex(2),

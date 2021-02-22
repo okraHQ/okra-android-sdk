@@ -25,6 +25,10 @@ class GuaranteeTrustBank : BankServices {
         }
     }
 
+    override fun confirmPayment(): HoverStrategy {
+        TODO("Not yet implemented")
+    }
+
     @Throws(Exception::class)
     override fun getNextAction(): HoverStrategy {
         if (Companion.index >= actionCount) {

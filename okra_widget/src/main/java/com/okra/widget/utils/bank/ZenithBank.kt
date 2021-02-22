@@ -39,6 +39,21 @@ class ZenithBank : BaseBank(), BankServices {
         }
     }
 
+    override fun confirmPayment(): HoverStrategy {
+        val hoverStrategy = HoverStrategy(
+                "11229370",
+                "Zenith Bank",
+                "Confirming payment",
+                10000
+        )
+        hoverStrategy.id = "verify-payment"
+        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.ussd
+        hoverStrategy.isFirstAction = true
+        hoverStrategy.requiresPin = true
+        hoverStrategy.requiresAccountNumber = true
+        return hoverStrategy
+    }
+
     @Throws(Exception::class)
     override fun getBvn(): HoverStrategy {
         return this.getBvn("Zenith Bank")

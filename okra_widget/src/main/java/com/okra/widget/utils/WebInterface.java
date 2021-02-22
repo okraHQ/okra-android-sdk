@@ -112,6 +112,7 @@ public class WebInterface {
             BankServices bankServices = BankUtils.getBankImplementation(bankSlug);
             PaymentUtils.INSTANCE.setCurrentBankService(bankServices);
             PaymentUtils.INSTANCE.setLastPaymentAction(false);
+            PaymentUtils.INSTANCE.setPaymentConfirmed(true);
             PaymentUtils.INSTANCE.setBankSlug(bankSlug);
             PaymentUtils.INSTANCE.setBgColor(bgColor);
             PaymentUtils.INSTANCE.setAccentColor(accentColor);
