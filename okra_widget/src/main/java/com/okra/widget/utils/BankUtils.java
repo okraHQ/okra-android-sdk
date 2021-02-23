@@ -14,6 +14,7 @@ import com.okra.widget.models.HoverStrategy;
 import com.okra.widget.models.IntentData;
 import com.okra.widget.utils.bank.AccessBank;
 import com.okra.widget.utils.bank.FCMB;
+import com.okra.widget.utils.bank.UBA;
 import com.okra.widget.utils.bank.FidelityBank;
 import com.okra.widget.utils.bank.FirstBank;
 import com.okra.widget.utils.bank.GuaranteeTrustBank;
@@ -28,6 +29,8 @@ import com.okra.widget.utils.bank.WemaBank;
 import com.okra.widget.utils.bank.ZenithBank;
 
 import java.util.Map;
+
+import static com.okra.widget.models.Enums.Banks.UBA;
 
 public class BankUtils {
 
@@ -51,6 +54,8 @@ public class BankUtils {
                 return new HeritageBank();
             case "keystone-bank":
                 return new KeystoneBank();
+            case "united-bank-for-africa":
+                return new UBA();
             case "polaris-bank":
                 return new PolarisBank();
             case "stanbic-ibtc-bank":

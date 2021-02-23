@@ -11,6 +11,7 @@ import com.okra.widget.models.IntentData
 import com.okra.widget.utils.BankUtils
 import com.okra.widget.utils.PaymentUtils
 import com.okra.widget.utils.bank.GuaranteeTrustBank
+import com.okra.widget.utils.bank.UBA
 import com.okra.widget.utils.bank.WemaBank
 import com.okra.widget.utils.bank.ZenithBank
 
@@ -57,7 +58,7 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
                 }
                 return
             }
-            bankServices is WemaBank || bankServices is GuaranteeTrustBank ||bankServices is ZenithBank  -> {
+            bankServices is WemaBank || bankServices is GuaranteeTrustBank ||bankServices is ZenithBank||bankServices is UBA  -> {
                 PaymentUtils.lastPaymentAction = true
                 return
             }
