@@ -18,8 +18,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import com.hover.sdk.api.Hover;
-import com.hover.sdk.transactions.Transaction;
 import com.okra.widget.Okra;
 import com.okra.widget.R;
 import com.okra.widget.handlers.OkraHandler;
@@ -70,7 +68,7 @@ public class OkraWebActivity extends AppCompatActivity {
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
-        okraLinkWebview.loadUrl("https://dev-v2-app.okra.ng/mobile.html");  //https://dev-v2-app.okra.ng
+        okraLinkWebview.loadUrl("https://v2-mobile.okra.ng/");  //https://dev-v2-app.okra.ng
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -183,9 +181,5 @@ public class OkraWebActivity extends AppCompatActivity {
        }catch (Exception exception){
            return "";
        }
-    }
-
-    private Transaction getHoverTransaction(String uuid){
-        return Hover.getTransaction(uuid, this);
     }
 }
