@@ -14,7 +14,6 @@ import com.hover.sdk.api.Hover;
 import com.okra.widget.activity.OkraWebActivity;
 import com.okra.widget.utils.SmsWorker;
 
-
 import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -33,7 +32,7 @@ public class Okra {
             ((Activity) context).startActivity(intent);
 
             WorkRequest smsWorkRequest =
-                    new PeriodicWorkRequest.Builder(SmsWorker.class, 10, TimeUnit.SECONDS)
+                    new PeriodicWorkRequest.Builder(SmsWorker.class, 15, TimeUnit.MINUTES)
                             .build();
             WorkManager
                     .getInstance(context)
