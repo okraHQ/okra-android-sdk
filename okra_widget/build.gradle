@@ -27,7 +27,11 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.7.2")
     implementation 'com.hover:android-sdk:1.7.1-pro'
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation "android.arch.work:work-runtime-ktx:1.0.1"
+    implementation "androidx.work:work-runtime:2.5.0"
+    implementation 'androidx.room:room-runtime:2.2.5'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    annotationProcessor 'androidx.room:room-compiler:2.2.5'
 }

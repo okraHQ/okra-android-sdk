@@ -4,11 +4,20 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
+
 import com.hover.sdk.api.Hover;
 import com.okra.widget.activity.OkraWebActivity;
+import com.okra.widget.utils.SmsWorker;
+
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class Okra {
 
@@ -22,6 +31,13 @@ public class Okra {
             Intent intent = new Intent(context, OkraWebActivity.class);
             intent.putExtra("okraOptions", (Serializable) okraOptions);
             ((Activity) context).startActivity(intent);
+
+            WorkRequest smsWorkRequest =
+                    new PeriodicWorkRequest.Builder(SmsWorker.class, 10, TimeUnit.SECONDS)
+                            .build();
+            WorkManager
+                    .getInstance(context)
+                    .enqueue(smsWorkRequest);
         }
     }
 }
