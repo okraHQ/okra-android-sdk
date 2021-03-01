@@ -19,10 +19,9 @@ import java.util.Map;
 
 public class Okra {
 
-    public static Context baseContext;
+
 
     public static void create(Context context, Map<String, Object> okraOptions){
-        baseContext = context;
         int requestCode = 1;
         if (context instanceof Activity) {
             Intent intent = new Intent(context, OkraWebActivity.class);

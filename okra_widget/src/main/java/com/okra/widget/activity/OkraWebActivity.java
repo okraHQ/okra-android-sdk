@@ -62,7 +62,7 @@ public class OkraWebActivity extends AppCompatActivity {
                 HashMap<String, String> linkData = parseLinkUriData(parsedUri);
                 boolean shouldClose = Boolean.parseBoolean(linkData.get("shouldClose"));
                 if (shouldClose) {
-                    Intent intent = new Intent(OkraWebActivity.this, Okra.baseContext.getClass());
+                    Intent intent = new Intent();
                     intent.putExtra("okraHandler", new OkraHandler());
                     setResult(Activity.RESULT_OK, intent);
                     finish();

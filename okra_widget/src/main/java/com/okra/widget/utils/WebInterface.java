@@ -1,5 +1,6 @@
 package com.okra.widget.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.webkit.JavascriptInterface;
@@ -15,11 +16,7 @@ public class WebInterface {
         mContext = c;
     }
 
-    @JavascriptInterface
-    public void exitModal() {
-        Intent intent = new Intent(mContext, Okra.baseContext.getClass());
-        mContext.startActivity(intent);
-    }
+
 
     @JavascriptInterface
     public void onSuccess(String json) {
