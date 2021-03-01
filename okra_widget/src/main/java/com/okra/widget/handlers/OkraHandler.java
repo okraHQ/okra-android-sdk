@@ -1,10 +1,12 @@
 package com.okra.widget.handlers;
 
+import androidx.annotation.Keep;
+
 import com.okra.widget.utils.FormatJson;
 import com.okra.widget.utils.successmodel.OkraResponse;
 
 import java.io.Serializable;
-
+@Keep
 public class OkraHandler implements Serializable {
     public static String data = "";
     public static Boolean isSuccessful = false;

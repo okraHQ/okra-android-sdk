@@ -1,22 +1,18 @@
 package com.okra.widget;
 
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Parcelable;
+
+import androidx.annotation.Keep;
 
 import com.okra.widget.activity.OkraWebActivity;
-import com.okra.widget.utils.OkraOptions;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import java.io.Serializable;
 import java.util.Map;
 
+@Keep
 public class Okra {
 
 
