@@ -7,30 +7,27 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.hover.sdk.api.HoverParameters;
-import com.hover.sdk.api.HoverTemplates;
 import com.hover.sdk.sims.SimInfo;
 import com.okra.widget.interfaces.BankServices;
 import com.okra.widget.models.HoverStrategy;
 import com.okra.widget.models.IntentData;
 import com.okra.widget.utils.bank.AccessBank;
 import com.okra.widget.utils.bank.FCMB;
-import com.okra.widget.utils.bank.UBA;
 import com.okra.widget.utils.bank.FidelityBank;
+import com.okra.widget.utils.bank.PolarisBank;
+import com.okra.widget.utils.bank.SterlingBank;
+import com.okra.widget.utils.bank.UBA;
 import com.okra.widget.utils.bank.FirstBank;
 import com.okra.widget.utils.bank.GuaranteeTrustBank;
 import com.okra.widget.utils.bank.HeritageBank;
 import com.okra.widget.utils.bank.KeystoneBank;
-import com.okra.widget.utils.bank.PolarisBank;
 import com.okra.widget.utils.bank.StanbicBank;
-import com.okra.widget.utils.bank.SterlingBank;
 import com.okra.widget.utils.bank.UnionBank;
 import com.okra.widget.utils.bank.UnityBank;
 import com.okra.widget.utils.bank.WemaBank;
 import com.okra.widget.utils.bank.ZenithBank;
 
 import java.util.Map;
-
-import static com.okra.widget.models.Enums.Banks.UBA;
 
 public class BankUtils {
 
@@ -98,7 +95,6 @@ public class BankUtils {
                     .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
                     .setHeader(String.format("Connecting to %s...", intentData.getBankSlug().replace("-", " ")))
                     .initialProcessingMessage("Verifying your credentials")
-                    .template(HoverTemplates.OKRA)
                     .request(hoverStrategy.getActionId());
             Log.i("the start", "as I suspected");
             if ((!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()) && hoverStrategy.getRequiresPin()) {

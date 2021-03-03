@@ -15,8 +15,9 @@ public class IntentData {
         this.paymentCreditAccount = "";
         this.paymentAmount = "";
         this.paymentCreditBankName = "";
+        this.debitAccountNumber = "";
     }
-    public IntentData(String bankSlug, String recordId, String pin, String nuban, String extra, String bgColor, String accentColor, String buttonColor, String payment, String paymentCreditAccount, String paymentAmount, String paymentCreditBankName, String isSameBank) {
+    public IntentData(String bankSlug, String recordId, String pin, String nuban, String extra, String bgColor, String accentColor, String buttonColor, String payment, String paymentCreditAccount, String paymentAmount, String paymentCreditBankName, String isSameBank, String debitAccountNumber) {
         this.bankSlug = bankSlug;
         this.recordId = recordId;
         this.pin = pin;
@@ -30,6 +31,7 @@ public class IntentData {
         this.paymentAmount = paymentAmount;
         this.paymentCreditBankName = paymentCreditBankName;
         this.isSameBank = isSameBank;
+        this.debitAccountNumber = debitAccountNumber;
     }
 
 
@@ -47,6 +49,7 @@ public class IntentData {
     private String paymentAmount;
     private String paymentCreditBankName;
     private String isSameBank;
+    private String debitAccountNumber;
 
     public String getBankSlug() {
         return bankSlug;
@@ -150,5 +153,13 @@ public class IntentData {
 
     public void setIsSameBank(String isSameBank) {
         this.isSameBank = isSameBank;
+    }
+
+    public String getDebitAccountNumber() {
+        return debitAccountNumber;
+    }
+
+    public void setDebitAccountNumber(String debitAccountNumber) {
+        this.debitAccountNumber = debitAccountNumber;
     }
 }

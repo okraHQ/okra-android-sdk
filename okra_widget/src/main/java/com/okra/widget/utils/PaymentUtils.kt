@@ -8,11 +8,11 @@ import android.os.Handler
 import android.util.Log
 import com.google.gson.Gson
 import com.hover.sdk.api.HoverParameters
-import com.hover.sdk.api.HoverTemplates
 import com.okra.widget.interfaces.BankServices
 import com.okra.widget.models.HoverStrategy
 import com.okra.widget.models.IntentData
 import com.okra.widget.models.payment.PaymentModel
+import com.okra.widget.utils.BankSlugs.*
 
 object PaymentUtils {
 
@@ -47,7 +47,32 @@ object PaymentUtils {
         val creditAccountNumber = paymentModel.clientAccount?.nuban ?: ""
         val amount = paymentModel.amount.toString()
         val creditBankName = paymentModel.creditBankName ?: ""
-        currentBankService?.makePayment(isSameBank,userHasMultipleAccounts)?.let { fireIntent(mContext, it, IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, "true", creditAccountNumber, amount, creditBankName, isSameBank.toString())) }
+        val debitAccountNumber = getDebitAccountNumber(userHasMultipleAccounts,paymentModel.customerAccount?.nuban ?: "",bankSlug)
+        currentBankService?.makePayment(isSameBank,userHasMultipleAccounts)?.let { fireIntent(mContext, it, IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, "true", creditAccountNumber, amount, creditBankName, isSameBank.toString(),debitAccountNumber)) }
+    }
+
+    private fun getDebitAccountNumber(userHasMultipleAccounts: Boolean, customerAccountNumber: String,customerBankSlug:String): String {
+        val bank = customerBankSlug.toBankSlug() ?: return ""
+        if(!userHasMultipleAccounts) return ""
+        if(customerAccountNumber.length != 10) return ""
+       return when(bank){
+           EcoBank -> TODO()
+           FidelityBank -> TODO()
+           FirstBankOfNigeria -> customerAccountNumber.replaceRange(3,7,"XXXX")
+           FirstCityMonumentBank -> TODO()
+           GTB -> TODO()
+           PolarisBank -> TODO()
+           StanbicIBTC -> TODO()
+           StandardCharteredBank -> TODO()
+           SterlingBank -> TODO()
+           UnionBank -> TODO()
+           UBA -> TODO()
+           WemaBank -> TODO()
+           UnityBank -> TODO()
+           Alat -> TODO()
+           AccessBank -> customerAccountNumber.replaceRange(2,6,"XXXX")
+       }
+
     }
 
     fun confirmPayment( mContext: Context){
@@ -78,6 +103,8 @@ object PaymentUtils {
     fun fireIntent(mContext: Context, hoverStrategy: HoverStrategy, intentData: IntentData) {
         try {
             Log.i("partyneverstops", "-------About to start an intent--------")
+            Log.i("partyneverstops", hoverStrategy.actionId)
+            Log.i("partyneverstops", hoverStrategy.actionId)
             val intent: Intent
             val hoverBuilder = HoverParameters.Builder(mContext)
                     .private_extra("id", hoverStrategy.id)
@@ -97,7 +124,6 @@ object PaymentUtils {
                     .setHeader(hoverStrategy.header).initialProcessingMessage(hoverStrategy.processingMessage)
                     .setHeader(String.format("Connecting to %s...", intentData.bankSlug.replace("-", " ")))
                     .initialProcessingMessage("Verifying your credentials")
-                    .template(HoverTemplates.OKRA)
                     .request(hoverStrategy.actionId)
             Log.i("the start", "as I suspected")
             if ((!intentData.pin.isEmpty() || !intentData.pin.trim { it <= ' ' }.isEmpty()) && hoverStrategy.requiresPin) {
@@ -107,7 +133,7 @@ object PaymentUtils {
                 hoverBuilder.setSim(BankUtils.selectedSim.osReportedHni)
             }
             if(intentData.paymentAmount.isNotEmpty()){
-                if(intentData.bankSlug == "access-bank" || intentData.bankSlug == "guaranty-trust-bank") {
+                if(intentData.bankSlug == "access-bank"|| intentData.bankSlug == "polaris-bank" ||intentData.bankSlug  == "fidelity-bank" || intentData.bankSlug == "guaranty-trust-bank") {
                     var amount = intentData.paymentAmount.toDoubleOrNull()?.toInt()
                     Log.i("partyneverstops", "This is the amount: $amount")
                     amount = amount ?: 50
@@ -122,6 +148,9 @@ object PaymentUtils {
             }
             if(intentData.paymentCreditAccount.isNotEmpty()){
                 hoverBuilder.extra("accountNumber",intentData.paymentCreditAccount)
+            }
+            if(intentData.debitAccountNumber.isNotEmpty()){
+                hoverBuilder.extra("debitAccountNumber",intentData.debitAccountNumber)
             }
 
             var creditBankName =  intentData.paymentCreditBankName
@@ -148,3 +177,5 @@ fun delayFor(millseconds:Long,action:() -> Unit ){
         action()
     }, millseconds)
 }
+
+

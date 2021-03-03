@@ -1,12 +1,13 @@
 package com.okra.widget.utils.bank
 
+import android.util.Log
 import com.okra.widget.interfaces.BankServices
 import com.okra.widget.models.Enums
 import com.okra.widget.models.HoverStrategy
 
-class UBA : BankServices {
+class FidelityBank : BankServices {
     override fun getActionCount(): Int {
-        return 1
+        return 2
     }
 
     override fun getIndex(): Int {
@@ -18,27 +19,13 @@ class UBA : BankServices {
         return Companion.index
     }
 
+    @Throws(Exception::class)
     override fun getActionByIndex(index: Int): HoverStrategy {
         return when (index) {
-            1 -> accountBalance
-            else -> accountBalance
+            1 -> accounts
+            2 -> accountBalance
+            else -> accounts
         }
-    }
-
-    override fun confirmPayment(): HoverStrategy {
-        val hoverStrategy = HoverStrategy(
-                "d0bcfd0d",
-                "balance",
-                "UBA",
-                "Fetching account balance",
-                10000
-        )
-        hoverStrategy.id = "verify-payment"
-        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.ussd
-        hoverStrategy.isFirstAction = false
-        hoverStrategy.isLastAction = true
-        hoverStrategy.requiresPin = true
-        return hoverStrategy
     }
 
     @Throws(Exception::class)
@@ -50,7 +37,7 @@ class UBA : BankServices {
     }
 
     override fun hasNext(): Boolean {
-        return Companion.index < actionCount
+        return index < actionCount
     }
 
     @Throws(Exception::class)
@@ -60,21 +47,28 @@ class UBA : BankServices {
 
     @Throws(Exception::class)
     override fun getAccounts(): HoverStrategy {
-        throw Exception("Not implemented")
+        val hoverStrategy = HoverStrategy(
+                "d85c09f7",
+                "Fidelity Bank",
+                "Fetching accounts",
+                0
+        )
+        hoverStrategy.id = "accounts"
+        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.ussd
+        hoverStrategy.isFirstAction = true
+        hoverStrategy.requiresPin = true
+        return hoverStrategy
     }
 
     override fun getAccountBalance(): HoverStrategy {
         val hoverStrategy = HoverStrategy(
-                "d0bcfd0d",
-                "balance",
-                "UBA",
+                "f6ccd22e",
+                "Fidelity Bank",
                 "Fetching account balance",
                 10000
         )
         hoverStrategy.id = "balance"
         hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.ussd
-        hoverStrategy.isFirstAction = true
-        hoverStrategy.isLastAction = true
         hoverStrategy.requiresPin = true
         return hoverStrategy
     }
@@ -85,23 +79,34 @@ class UBA : BankServices {
     }
 
     @Throws(Exception::class)
-    override fun makePayment(isInternal: Boolean, hasMultipleAccounts: Boolean): HoverStrategy {
-        val actionid = if(isInternal) "4e7f8f8d" else "4e7f8f8d"
+    override fun confirmPayment(): HoverStrategy {
         val hoverStrategy = HoverStrategy(
-                actionid,
-                "UBA",
-                "Processing Payment",
-                0
+                "f6ccd22e",
+                "Fidelity Bank",
+                "Verifying Payment",
+                10000
+        )
+        hoverStrategy.id = "verify-payment"
+        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.ussd
+        hoverStrategy.requiresPin = true
+        return hoverStrategy
+    }
+
+    @Throws(Exception::class)
+    override fun makePayment(isInternal: Boolean, hasMultipleAccounts: Boolean): HoverStrategy {
+        val hoverStrategy = HoverStrategy(
+                "68646f9d",
+                "Fidelity Bank",
+                "Fetching account balance",
+                10000
         )
         hoverStrategy.id = "payment"
+        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.ussd
         hoverStrategy.requiresPin = true
-        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.sms
-        hoverStrategy.differentActionForInternal = true
         return hoverStrategy
     }
 
     companion object {
-        var index = 1
+       private var index = 1
     }
-
 }

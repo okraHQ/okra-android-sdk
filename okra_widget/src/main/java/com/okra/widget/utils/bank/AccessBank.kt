@@ -40,7 +40,15 @@ class AccessBank : BaseBank(), BankServices {
     }
 
     override fun confirmPayment(): HoverStrategy {
-        TODO("Not yet implemented")
+        val hoverStrategy = HoverStrategy(
+                "7377a940",
+                "Access Bank",
+                "Fetching your account balance",
+                0
+        )
+        hoverStrategy.id = "verify-payment"
+        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.sms
+        return hoverStrategy
     }
 
     override fun getBvn(): HoverStrategy {
@@ -98,8 +106,9 @@ class AccessBank : BaseBank(), BankServices {
 
     @Throws(Exception::class)
     override fun makePayment(isInternal: Boolean, hasMultipleAccounts: Boolean): HoverStrategy {
+        val actionId = if(hasMultipleAccounts) "9d6dab00" else "a8d6f82c"
         val hoverStrategy = HoverStrategy(
-                "a8d6f82c",
+                actionId,
                 "Access Bank",
                 "Processing Payment",
                 0
@@ -112,6 +121,6 @@ class AccessBank : BaseBank(), BankServices {
     }
 
     companion object {
-        var index = 1
+       private  var index = 1
     }
 }

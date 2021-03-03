@@ -14,8 +14,8 @@ class WemaBank : BaseBank(), BankServices {
     }
 
     override fun setIndex(index: Int): Int {
-        this.index = index
-        return this.index
+        Companion.index = index
+        return Companion.index
     }
 
     @Throws(Exception::class)
@@ -28,7 +28,16 @@ class WemaBank : BaseBank(), BankServices {
     }
 
     override fun confirmPayment(): HoverStrategy {
-        TODO("Not yet implemented")
+        val hoverStrategy = HoverStrategy(
+                "9d5a306b",
+                "Wema Bank",
+                "Verifying transaction",
+                10000
+        )
+        hoverStrategy.id = "verify-payment"
+        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.ussd
+        hoverStrategy.requiresPin = true
+        return hoverStrategy
     }
 
     @Throws(Exception::class)
@@ -89,6 +98,6 @@ class WemaBank : BaseBank(), BankServices {
     }
 
     companion object {
-        private const val index = 1
+       private var index = 1
     }
 }

@@ -19,6 +19,15 @@
         <meta-data
             android:name="com.hover.ApiKey"
             android:value="df50ba77b445fa4b6dd2165686dbb9a8" />
+
+        <receiver
+            android:name=".utils.TransactionReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.okra.widget.example.CONFIRMED_TRANSACTION"/>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
 <!-- prod df50ba77b445fa4b6dd2165686dbb9a8 -->

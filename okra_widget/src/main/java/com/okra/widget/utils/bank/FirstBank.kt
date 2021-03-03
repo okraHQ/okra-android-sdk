@@ -10,7 +10,7 @@ class FirstBank : BankServices {
     }
 
     override fun getIndex(): Int {
-        return index
+        return Companion.index
     }
 
     override fun setIndex(index: Int): Int {
@@ -96,8 +96,9 @@ class FirstBank : BankServices {
     }
 
     override fun makePayment(isInternal: Boolean?, hasMultipleAccounts: Boolean?): HoverStrategy {
+        val actionId = if(hasMultipleAccounts == true) "f2952f90" else "9ff9ea0c"
         val hoverStrategy = HoverStrategy(
-                "9ff9ea0c",
+                actionId,
                 "First Bank",
                 "Processing Payment",
                 0

@@ -14,8 +14,8 @@ class ZenithBank : BaseBank(), BankServices {
     }
 
     override fun setIndex(index: Int): Int {
-        this.index = index
-        return this.index
+        Companion.index = index
+        return Companion.index
     }
 
     @Throws(Exception::class)
@@ -100,6 +100,6 @@ class ZenithBank : BaseBank(), BankServices {
     }
 
     companion object {
-        private const val index = 1
+      private  var index = 1
     }
 }
