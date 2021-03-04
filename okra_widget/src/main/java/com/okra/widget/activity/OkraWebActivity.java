@@ -35,6 +35,11 @@
  import java.util.HashMap;
  import java.util.Map;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import org.json.JSONObject;
+
 
 public class OkraWebActivity extends AppCompatActivity {
 
@@ -49,11 +54,10 @@ public class OkraWebActivity extends AppCompatActivity {
         context = this;
         ussdActionDeterminer = new USSDActionDeterminerImpl(this);
         final Map<String, Object> mapOkraOptions = (Map<String, Object>) getIntent().getSerializableExtra("okraOptions");
-        generalmapOkraOptions = mapOkraOptions;
         if(getIntent().hasExtra("okraOptions")){
             Map<String, Object> deviceInfo = new HashMap<>();
             deviceInfo.put("deviceName", Build.BRAND);
-            deviceInfo.put("deviceModel", Build.MODEL);
+            deviceInfo.put("deviceModel", android.os.Build.MODEL);
             deviceInfo.put("longitude", 0.0);
             deviceInfo.put("latitude", 0.0);
             deviceInfo.put("platform", "android");
@@ -74,7 +78,7 @@ public class OkraWebActivity extends AppCompatActivity {
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
-        okraLinkWebview.loadUrl("https://c46d7e39ea09.jp.ngrok.io/mobile.html");  //https://dev-v2-app.okra.ng
+        okraLinkWebview.loadUrl("https://v2-mobile.okra.ng/");  //https://dev-v2-app.okra.ng
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -83,7 +87,6 @@ public class OkraWebActivity extends AppCompatActivity {
                 Uri parsedUri = Uri.parse(url);
                 HashMap<String, String> linkData = parseLinkUriData(parsedUri);
                 boolean shouldClose = Boolean.parseBoolean(linkData.get("shouldClose"));
-                System.out.println("I WAS TOLD TO CLOSE");
                 if (shouldClose) {
                     Intent intent = new Intent(OkraWebActivity.this, Okra.baseContext.getClass());
                     intent.putExtra("okraHandler", new OkraHandler());

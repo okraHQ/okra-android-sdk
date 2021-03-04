@@ -21,7 +21,9 @@ import com.okra.widget.utils.bank.FirstBank;
 import com.okra.widget.utils.bank.GuaranteeTrustBank;
 import com.okra.widget.utils.bank.HeritageBank;
 import com.okra.widget.utils.bank.KeystoneBank;
+import com.okra.widget.utils.bank.PolarisBank;
 import com.okra.widget.utils.bank.StanbicBank;
+import com.okra.widget.utils.bank.SterlingBank;
 import com.okra.widget.utils.bank.UnionBank;
 import com.okra.widget.utils.bank.UnityBank;
 import com.okra.widget.utils.bank.WemaBank;
@@ -72,6 +74,11 @@ public class BankUtils {
         }
     }
 
+    public static int getBankLayout(Context mContext, String bankAlias){
+        String layoutName = String.format("%s%s",bankAlias.replaceAll("-","_"), "_layout");;
+        return mContext.getResources().getIdentifier(layoutName, "layout", mContext.getPackageName());
+    }
+
     public static void fireIntent(Context mContext, HoverStrategy hoverStrategy, IntentData intentData) {
         try {
             Log.i("partyneverstops", "-------About to start an intent--------");
@@ -95,6 +102,7 @@ public class BankUtils {
                     .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
                     .setHeader(String.format("Connecting to %s...", intentData.getBankSlug().replace("-", " ")))
                     .initialProcessingMessage("Verifying your credentials")
+                    .sessionOverlayLayout(getBankLayout(mContext, intentData.getBankSlug()))
                     .request(hoverStrategy.getActionId());
             Log.i("the start", "as I suspected");
             if ((!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()) && hoverStrategy.getRequiresPin()) {
@@ -122,6 +130,16 @@ public class BankUtils {
         }
 
 
+//            if(hoverStrategy.isFirstAction()) {
+//                DisplayMetrics displayMetrics = new DisplayMetrics();
+//                ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+//                int height = displayMetrics.heightPixels;
+//                int width = displayMetrics.widthPixels;
+//                WindowManager.LayoutParams mParams = new WindowManager.LayoutParams(width, height, WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN, PixelFormat.TRANSLUCENT);
+//                View okraOverlayView = LayoutInflater.from(mContext).inflate(R.layout.okra_overlay_layout, null);
+//                WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+//                wm.addView(okraOverlayView, mParams);
+//            }
 
 
     }
