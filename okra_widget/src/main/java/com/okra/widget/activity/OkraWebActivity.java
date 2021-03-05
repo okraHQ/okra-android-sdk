@@ -54,6 +54,7 @@ public class OkraWebActivity extends AppCompatActivity {
         context = this;
         ussdActionDeterminer = new USSDActionDeterminerImpl(this);
         final Map<String, Object> mapOkraOptions = (Map<String, Object>) getIntent().getSerializableExtra("okraOptions");
+        generalmapOkraOptions = mapOkraOptions;
         if(getIntent().hasExtra("okraOptions")){
             Map<String, Object> deviceInfo = new HashMap<>();
             deviceInfo.put("deviceName", Build.BRAND);
@@ -78,7 +79,7 @@ public class OkraWebActivity extends AppCompatActivity {
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
-        okraLinkWebview.loadUrl("https://v2-mobile.okra.ng/");  //https://dev-v2-app.okra.ng
+        okraLinkWebview.loadUrl("https://dev-v2-mobile.okra.ng/");  //
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override

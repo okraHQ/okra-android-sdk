@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             put("key", "d29f31bd-a935-53d6-bc2d-a9652d7a0d57");
             put("token", "5d9288ea182d3d000cb7c486");
             put("env", "dev-v2");
+            put("isProdSB", true);
             put("clientName", "Chris");
             put("color", "#953ab7");
             put("limit", "24");

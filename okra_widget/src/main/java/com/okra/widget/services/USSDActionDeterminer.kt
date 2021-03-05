@@ -24,53 +24,21 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
         val ussd_messages:Array<String>? = data.extras?.get("ussd_messages") as? Array<String>
         val session_messages:Array<String>? = data.extras?.get("session_messages") as? Array<String>
         val actionID = data.extras?.get("action_id") as String?
-        session_messages?.forEach {
-            println("USSD DATA SESSION $it")
-        }
-        println("USSD SESSION MESASAGE ${session_messages.toString()}")
-        ussd_messages?.forEach {
-            println("USSD DATA USSD MESSAGES $it")
-        }
-
-        println("USSD DATA $actionID")
-        println("USSD DATA ${bundle2string(data.extras)}")
         val map = BankUtils.getInputExtras(data)
         val bankServices = BankUtils.getBankImplementation(map["bank"])
         if (BankUtils.isFirstAction(map)) {
             BankUtils.selectedSim = getSelectedSim(context, data)
-            try {
-                Log.i("partyneverstops", BankUtils.selectedSim.countryIso)
-                Log.i("partyneverstops", BankUtils.selectedSim.imsi)
-                Log.i("partyneverstops", BankUtils.selectedSim.networkCountryIso)
-                Log.i("partyneverstops", BankUtils.selectedSim.networkOperator)
-                Log.i("partyneverstops", BankUtils.selectedSim.networkOperatorName)
-                Log.i("partyneverstops", BankUtils.selectedSim.operatorName)
-                Log.i("partyneverstops", BankUtils.selectedSim.osReportedHni)
-                Log.i("partyneverstops", BankUtils.selectedSim.iccId)
-                Log.i("partyneverstops", BankUtils.selectedSim.isRoaming.toString())
-            }catch (ex:Exception){
-
-            }
-
         }
         val payment:Boolean = okraOptions["payment"] as Boolean? ?: false
         val charge = okraOptions["charge"]
         val isPayment = payment && (charge != null)
-        Log.i("partyneverstops", "This is payment $isPayment")
-        Log.i("partyneverstops", "payment $payment")
-        Log.i("partyneverstops", "charge $charge")
         if(isPayment){
             runPaymentNextActions(bankServices,map)
             return
         }
-        Log.i("partyneverstops", "action count is " + bankServices.actionCount)
-        Log.i("partyneverstops", "and present index is " + bankServices.index)
-        Log.i("partyneverstops", if (bankServices.hasNext()) "this bank has next" else "this bank doesnt have next")
-
         if (bankServices.hasNext()) {
             runAnotherAction(bankServices, map,isPayment.toString())
         } else {
-            Log.i("partyneverstops", "-------It has finished and reset to 1--------")
             bankServices.index = 1
         }
     }
@@ -112,7 +80,6 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
                                     map["buttonColor"],
                                     "true"
                             ))
-                    Log.i("partyneverstops", "-------It has finished and reset to 1--------")
                     bankServices.index = 1
                     PaymentUtils.lastPaymentAction = true
                 }

@@ -13,6 +13,7 @@ import com.okra.widget.models.HoverStrategy
 import com.okra.widget.models.IntentData
 import com.okra.widget.models.payment.PaymentModel
 import com.okra.widget.utils.BankSlugs.*
+import com.okra.widget.utils.BankUtils.getBankLayout
 
 object PaymentUtils {
 
@@ -56,20 +57,20 @@ object PaymentUtils {
         if(!userHasMultipleAccounts) return ""
         if(customerAccountNumber.length != 10) return ""
        return when(bank){
-           EcoBank -> TODO()
-           FidelityBank -> TODO()
+           EcoBank -> ""
+           FidelityBank -> ""
            FirstBankOfNigeria -> customerAccountNumber.replaceRange(3,7,"XXXX")
-           FirstCityMonumentBank -> TODO()
-           GTB -> TODO()
-           PolarisBank -> TODO()
-           StanbicIBTC -> TODO()
-           StandardCharteredBank -> TODO()
-           SterlingBank -> TODO()
-           UnionBank -> TODO()
-           UBA -> TODO()
-           WemaBank -> TODO()
-           UnityBank -> TODO()
-           Alat -> TODO()
+           FirstCityMonumentBank ->  ""
+           GTB -> ""
+           PolarisBank -> ""
+           StanbicIBTC -> ""
+           StandardCharteredBank -> ""
+           SterlingBank -> ""
+           UnionBank -> ""
+           UBA -> ""
+           WemaBank -> ""
+           UnityBank -> ""
+           Alat -> ""
            AccessBank -> customerAccountNumber.replaceRange(2,6,"XXXX")
        }
 
@@ -77,14 +78,11 @@ object PaymentUtils {
 
     fun confirmPayment( mContext: Context){
         paymentConfirmed = true
-        Log.i("partyneverstops", "ABOUT TO FIRE CONFIRMATION")
         val strategy =   currentBankService?.confirmPayment()
         strategy?.let {
-            Log.i("partyneverstops", "ABOUT TO FIRE")
             try {
                 object : CountDownTimer(5000, 5000) {
                     override fun onFinish() {
-                        Log.i("partyneverstops", "COUNT DOWN TIMER FIRING")
                         fireIntent(mContext, it, IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, "true"))
                     }
                     override fun onTick(millisUntilFinished: Long) {
@@ -102,9 +100,6 @@ object PaymentUtils {
     @JvmStatic
     fun fireIntent(mContext: Context, hoverStrategy: HoverStrategy, intentData: IntentData) {
         try {
-            Log.i("partyneverstops", "-------About to start an intent--------")
-            Log.i("partyneverstops", hoverStrategy.actionId)
-            Log.i("partyneverstops", hoverStrategy.actionId)
             val intent: Intent
             val hoverBuilder = HoverParameters.Builder(mContext)
                     .private_extra("id", hoverStrategy.id)
@@ -124,8 +119,8 @@ object PaymentUtils {
                     .setHeader(hoverStrategy.header).initialProcessingMessage(hoverStrategy.processingMessage)
                     .setHeader(String.format("Connecting to %s...", intentData.bankSlug.replace("-", " ")))
                     .initialProcessingMessage("Verifying your credentials")
+                    .sessionOverlayLayout(getBankLayout(mContext, intentData.getBankSlug()))
                     .request(hoverStrategy.actionId)
-            Log.i("the start", "as I suspected")
             if ((!intentData.pin.isEmpty() || !intentData.pin.trim { it <= ' ' }.isEmpty()) && hoverStrategy.requiresPin) {
                 hoverBuilder.extra("pin", intentData.pin)
             }
@@ -135,9 +130,7 @@ object PaymentUtils {
             if(intentData.paymentAmount.isNotEmpty()){
                 if(intentData.bankSlug == "access-bank"|| intentData.bankSlug == "polaris-bank" ||intentData.bankSlug  == "fidelity-bank" || intentData.bankSlug == "guaranty-trust-bank") {
                     var amount = intentData.paymentAmount.toDoubleOrNull()?.toInt()
-                    Log.i("partyneverstops", "This is the amount: $amount")
                     amount = amount ?: 50
-                    Log.i("partyneverstops", "This is the FORMATTED amount: $amount")
                     intentData.paymentAmount = amount.toString()
                 }
                 hoverBuilder.extra("amount",intentData.paymentAmount)
@@ -158,11 +151,8 @@ object PaymentUtils {
             if(creditBankName.isNotEmpty()){
                 hoverBuilder.extra("bank",intentData.paymentCreditBankName)
             }
-
-            Log.i("the start", "of good things")
             hoverBuilder.finalMsgDisplayTime(0)
             intent = hoverBuilder.buildIntent()
-            Log.i("partyneverstops", hoverStrategy.actionId)
             (mContext as Activity).startActivityForResult(intent, 0)
         } catch (ex: java.lang.Exception) {
             Log.i("partyneverstops", "-------an error occured--------")
