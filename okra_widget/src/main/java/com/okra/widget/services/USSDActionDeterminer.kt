@@ -48,7 +48,7 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
         when{
             PaymentUtils.lastPaymentAction -> {
                 if(!PaymentUtils.paymentConfirmed){
-                    if(bankServices is FirstBank){
+                    if(bankServices is FirstBank || bankServices is GuaranteeTrustBank){
                         return
                     }
                     PaymentUtils.confirmPayment(context);
