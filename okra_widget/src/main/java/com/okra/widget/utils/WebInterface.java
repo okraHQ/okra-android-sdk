@@ -102,6 +102,7 @@ public class WebInterface {
             JSONObject jsonObject = new JSONObject(json);
             String  payment = jsonObject.has("payment") ? jsonObject.getString("payment") : "false";
             Log.i("partyneverstops", "OPEN USSD " + payment);
+            String options = jsonObject.has("options") ?jsonObject.getJSONObject("options").toString() : "";
             String bankSlug = jsonObject.getJSONObject("bank").getString("slug");
             String bgColor = jsonObject.getJSONObject("bank").getString("bg");
             String accentColor = jsonObject.getJSONObject("bank").getString("accent");
@@ -116,11 +117,12 @@ public class WebInterface {
             PaymentUtils.INSTANCE.setBankSlug(bankSlug);
             PaymentUtils.INSTANCE.setBgColor(bgColor);
             PaymentUtils.INSTANCE.setAccentColor(accentColor);
+            PaymentUtils.INSTANCE.setOptions(options);
             PaymentUtils.INSTANCE.setButtonColor(buttonColor);
             PaymentUtils.INSTANCE.setPin(pin);
             PaymentUtils.INSTANCE.setNuban(nuban);
             PaymentUtils.INSTANCE.setRecordId(recordId);
-            BankUtils.fireIntent(mContext, bankServices.getActionByIndex(1), new IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, payment));
+            BankUtils.fireIntent(mContext, bankServices.getActionByIndex(1), new IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, payment, options));
         } catch (Exception e) {
             e.printStackTrace();
         }

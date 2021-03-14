@@ -2,7 +2,7 @@ package com.okra.widget.models;
 
 public class IntentData {
 
-    public IntentData(String bankSlug, String recordId, String pin, String nuban, String extra, String bgColor, String accentColor, String buttonColor, String payment) {
+    public IntentData(String bankSlug, String recordId, String pin, String nuban, String extra, String bgColor, String accentColor, String buttonColor, String payment, String options) {
         this.bankSlug = bankSlug;
         this.recordId = recordId;
         this.pin = pin;
@@ -12,12 +12,13 @@ public class IntentData {
         this.accentColor = accentColor;
         this.buttonColor = buttonColor;
         this.payment = payment;
+        this.options = options;
         this.paymentCreditAccount = "";
         this.paymentAmount = "";
         this.paymentCreditBankName = "";
         this.debitAccountNumber = "";
     }
-    public IntentData(String bankSlug, String recordId, String pin, String nuban, String extra, String bgColor, String accentColor, String buttonColor, String payment, String paymentCreditAccount, String paymentAmount, String paymentCreditBankName, String isSameBank, String debitAccountNumber) {
+    public IntentData(String bankSlug, String recordId, String pin, String nuban, String extra, String bgColor, String accentColor, String buttonColor, String payment, String paymentCreditAccount, String paymentAmount, String paymentCreditBankName, String isSameBank, String debitAccountNumber, String options) {
         this.bankSlug = bankSlug;
         this.recordId = recordId;
         this.pin = pin;
@@ -32,6 +33,7 @@ public class IntentData {
         this.paymentCreditBankName = paymentCreditBankName;
         this.isSameBank = isSameBank;
         this.debitAccountNumber = debitAccountNumber;
+        this.options = options;
     }
 
 
@@ -50,6 +52,7 @@ public class IntentData {
     private String paymentCreditBankName;
     private String isSameBank;
     private String debitAccountNumber;
+    private String options;
 
     public String getBankSlug() {
         return bankSlug;
@@ -161,5 +164,13 @@ public class IntentData {
 
     public void setDebitAccountNumber(String debitAccountNumber) {
         this.debitAccountNumber = debitAccountNumber;
+    }
+
+    public String getOptions() {
+        return options;
+    }
+
+    public void setOptions(String options) {
+        this.options = options;
     }
 }

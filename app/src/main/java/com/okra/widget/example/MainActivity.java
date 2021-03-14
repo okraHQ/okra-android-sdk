@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
         charge.put("currency","NGN");
         charge.put("account","5f450b2689a23801307c8b5b");
 
+
+        final Map<String, Object> options = new HashMap<>();
+        options.put("phone", "081888288402");
+
+
         Map<String, Object> dataMap  = new HashMap<String, Object>() {{
             put("products", new String[]{"auth", "balance", "identity", "transactions"});
             put("key", "d29f31bd-a935-53d6-bc2d-a9652d7a0d57");
@@ -72,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             put("color", "#953ab7");
             put("limit", "24");
             put("ussd", true);
+            put("options", options);
             put("corporate", false);
             put("connectMessage", "Which account do you want to connect with?");
             put("callback_url", "");

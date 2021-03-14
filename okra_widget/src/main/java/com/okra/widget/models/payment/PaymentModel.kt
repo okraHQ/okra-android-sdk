@@ -17,7 +17,7 @@ data class PaymentModel(
     val customerAccount: CustomerAccount?,
     val customerBank: CustomerBank?,
     val env: String?,
-    val multipleAccounts: Boolean?,
+    var multipleAccounts: Boolean?,
     val ref: String?,
     val sameBank: Boolean?,
     val send_ref: String?,

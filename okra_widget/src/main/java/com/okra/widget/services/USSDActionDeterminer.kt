@@ -12,6 +12,7 @@ import com.okra.widget.models.IntentData
 import com.okra.widget.utils.BankUtils
 import com.okra.widget.utils.PaymentUtils
 import com.okra.widget.utils.bank.*
+import org.json.JSONArray
 
 
 interface USSDActionDeterminer {
@@ -24,8 +25,15 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
         val ussd_messages:Array<String>? = data.extras?.get("ussd_messages") as? Array<String>
         val session_messages:Array<String>? = data.extras?.get("session_messages") as? Array<String>
         val actionID = data.extras?.get("action_id") as String?
+        val uuid = data.extras?.get("uuid") as String?
+        val category = data.extras?.get("category") as String?
         val map = BankUtils.getInputExtras(data)
         val bankServices = BankUtils.getBankImplementation(map["bank"])
+        val ranSinglePaymentOnMultipleAccount =  category == "single_on_multiple_accounts"
+
+        println("MY CONDITON WAS MET -- ${category} -- ${ranSinglePaymentOnMultipleAccount}")
+
+
         if (BankUtils.isFirstAction(map)) {
             BankUtils.selectedSim = getSelectedSim(context, data)
         }
@@ -33,7 +41,7 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
         val charge = okraOptions["charge"]
         val isPayment = payment && (charge != null)
         if(isPayment){
-            runPaymentNextActions(bankServices,map)
+            runPaymentNextActions(bankServices,map,ranSinglePaymentOnMultipleAccount)
             return
         }
         if (bankServices.hasNext()) {
@@ -43,10 +51,14 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
         }
     }
 
-    private fun runPaymentNextActions(bankServices: BankServices, map: Map<String, String>) {
+    private fun runPaymentNextActions(bankServices: BankServices, map: Map<String, String>,ranSinglePaymentOnMultipleAccount:Boolean = false) {
         PaymentUtils.bankMiscellaneous =  map["miscellaneous"] ?: ""
         when{
             PaymentUtils.lastPaymentAction -> {
+                if(ranSinglePaymentOnMultipleAccount){
+                    PaymentUtils.retryPaymentWithMultipleAccounts(context)
+                    return
+                }
                 if(!PaymentUtils.paymentConfirmed){
                     if(bankServices is FirstBank){
                         return
@@ -55,7 +67,6 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
                 }
                 return
             }
-
             bankServices is WemaBank || bankServices is GuaranteeTrustBank ||bankServices is ZenithBank
                     ||bankServices is UBA ||bankServices is FCMB||bankServices is PolarisBank  -> {
                 PaymentUtils.lastPaymentAction = true
@@ -78,7 +89,8 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
                                     map["bgColor"],
                                     map["accentColor"],
                                     map["buttonColor"],
-                                    "true"
+                                    "true",
+                                    map["options"]
                             ))
                     bankServices.index = 1
                     PaymentUtils.lastPaymentAction = true
@@ -112,7 +124,8 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
                                         map["bgColor"],
                                         map["accentColor"],
                                         map["buttonColor"],
-                                        isPayment
+                                        isPayment,
+                                        map["options"]
                                 ))
                         bankServices.index = bankServices.index + 1
                     } catch (e: Exception) {
@@ -155,3 +168,4 @@ fun bundle2string(bundle: Bundle?): String? {
     string += " }Bundle"
     return string
 }
+fun JSONArray.toMutableList(): MutableList<Any> = MutableList(length(), this::get)

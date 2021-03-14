@@ -29,6 +29,14 @@ object PaymentUtils {
     var lastPaymentAction = false
     var paymentConfirmed = true
     var bankMiscellaneous = ""
+    var lastPaymentModel:PaymentModel? = null
+    var lastJsonString:String = ""
+    var options = ""
+
+    fun retryPaymentWithMultipleAccounts(context: Context){
+        lastPaymentModel?.multipleAccounts = true
+        lastPaymentModel?.let { startPaymentAction(it,context, lastJsonString) }
+    }
 
     @JvmStatic
     fun startPayment(json: String, mContext: Context){
@@ -41,15 +49,21 @@ object PaymentUtils {
             println("ERROR")
             return
         }
-
+        lastPaymentModel = paymentModel
+        lastJsonString = json
         paymentConfirmed = false
+        startPaymentAction(paymentModel, mContext, json)
+    }
+
+    private fun startPaymentAction(paymentModel: PaymentModel, mContext: Context, json: String) {
         val isSameBank = paymentModel.sameBank ?: false
         val userHasMultipleAccounts = paymentModel.multipleAccounts ?: false
         val creditAccountNumber = paymentModel.clientAccount?.nuban ?: ""
         val amount = paymentModel.amount.toString()
         val creditBankName = paymentModel.creditBankName ?: ""
-        val debitAccountNumber = getDebitAccountNumber(userHasMultipleAccounts,paymentModel.customerAccount?.nuban ?: "",bankSlug)
-        currentBankService?.makePayment(isSameBank,userHasMultipleAccounts)?.let { fireIntent(mContext, it, IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, "true", creditAccountNumber, amount, creditBankName, isSameBank.toString(),debitAccountNumber)) }
+        val debitAccountNumber = getDebitAccountNumber(userHasMultipleAccounts, paymentModel.customerAccount?.nuban
+                ?: "", bankSlug)
+        currentBankService?.makePayment(isSameBank, userHasMultipleAccounts)?.let { fireIntent(mContext, it, IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, "true", creditAccountNumber, amount, creditBankName, isSameBank.toString(), debitAccountNumber, options)) }
     }
 
     private fun getDebitAccountNumber(userHasMultipleAccounts: Boolean, customerAccountNumber: String,customerBankSlug:String): String {
@@ -83,7 +97,7 @@ object PaymentUtils {
             try {
                 object : CountDownTimer(5000, 5000) {
                     override fun onFinish() {
-                        fireIntent(mContext, it, IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, "true"))
+                        fireIntent(mContext, it, IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, "true", options))
                     }
                     override fun onTick(millisUntilFinished: Long) {
 
@@ -111,11 +125,11 @@ object PaymentUtils {
                     .private_extra("miscellaneous", bankMiscellaneous)
                     .private_extra("bgColor", intentData.bgColor)
                     .private_extra("accentColor", intentData.accentColor)
+                    .private_extra("options",intentData.getOptions())
                     .private_extra("buttonColor", intentData.buttonColor)
                     .private_extra("payment", intentData.payment)
                     .private_extra("authPin", intentData.pin)
                     .private_extra("nuban", intentData.nuban)
-                    .private_extra("apiKey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDkyODhlYTE4MmQzZDAwMGNiN2M0ODYiLCJpYXQiOjE2MDE5ODIwODV9.R59jXuebkEPSrBjSSyo0rIveiw07-YrioEtP-YxcXWc")
                     .setHeader(hoverStrategy.header).initialProcessingMessage(hoverStrategy.processingMessage)
                     .setHeader(String.format("Connecting to %s...", intentData.bankSlug.replace("-", " ")))
                     .initialProcessingMessage("Verifying your credentials")
