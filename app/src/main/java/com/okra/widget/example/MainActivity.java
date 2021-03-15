@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Map<String, Object> charge = new HashMap<>();
         charge.put("type", "one-time");
-        charge.put("amount","5000");
+        charge.put("amount","10000");
         charge.put("note","");
         charge.put("currency","NGN");
         charge.put("account","5f450b2689a23801307c8b5b");
