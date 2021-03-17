@@ -35,8 +35,6 @@ class UBA : BankServices {
         )
         hoverStrategy.id = "verify-payment"
         hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.ussd
-        hoverStrategy.isFirstAction = false
-        hoverStrategy.isLastAction = true
         hoverStrategy.requiresPin = true
         return hoverStrategy
     }
@@ -86,7 +84,8 @@ class UBA : BankServices {
 
     @Throws(Exception::class)
     override fun makePayment(isInternal: Boolean, hasMultipleAccounts: Boolean): HoverStrategy {
-        val actionid = if(isInternal) "4e7f8f8d" else "4e7f8f8d"
+        //val actionid = if(isInternal) "4e7f8f8d" else "4e7f8f8d"
+        val actionid = if(hasMultipleAccounts) "89e73a88" else "4e7f8f8d"
         val hoverStrategy = HoverStrategy(
                 actionid,
                 "UBA",

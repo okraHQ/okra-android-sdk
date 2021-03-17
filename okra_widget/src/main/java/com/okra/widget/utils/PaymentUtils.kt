@@ -34,8 +34,21 @@ object PaymentUtils {
     var options = ""
 
     fun retryPaymentWithMultipleAccounts(context: Context){
-        lastPaymentModel?.multipleAccounts = true
-        lastPaymentModel?.let { startPaymentAction(it,context, lastJsonString) }
+        try {
+            object : CountDownTimer(5000, 5000) {
+                override fun onFinish() {
+                    lastPaymentModel?.multipleAccounts = true
+                    lastPaymentModel?.let { startPaymentAction(it,context, lastJsonString) }
+                }
+                override fun onTick(millisUntilFinished: Long) {
+
+                }
+            }.start()
+
+        }catch (ex:Exception){
+            Log.i("partyneverstops", ex.message)
+        }
+
     }
 
     @JvmStatic
@@ -46,7 +59,6 @@ object PaymentUtils {
             null
         }
         if(paymentModel == null) {
-            println("ERROR")
             return
         }
         lastPaymentModel = paymentModel
@@ -61,11 +73,16 @@ object PaymentUtils {
         val creditAccountNumber = paymentModel.clientAccount?.nuban ?: ""
         val amount = paymentModel.amount.toString()
         val creditBankName = paymentModel.creditBankName ?: ""
-        val debitAccountNumber = getDebitAccountNumber(userHasMultipleAccounts, paymentModel.customerAccount?.nuban
-                ?: "", bankSlug)
-        Log.i("partyneverstops", "PAYMENT MODEL ${paymentModel}")
+        val debitAccountNumber = getDebitAccountNumber(userHasMultipleAccounts, paymentModel.customerAccount?.hashedNuban ?: "")
         currentBankService?.makePayment(isSameBank, userHasMultipleAccounts)?.let { fireIntent(mContext, it, IntentData(bankSlug, recordId, pin, nuban, json, bgColor, accentColor, buttonColor, "true", creditAccountNumber, amount, creditBankName, isSameBank.toString(), debitAccountNumber, options)) }
     }
+
+    private fun getDebitAccountNumber(userHasMultipleAccounts: Boolean, hashedNuban: String): String {
+      //  if(!userHasMultipleAccounts) return ""
+        return hashedNuban
+        }
+
+
 
     private fun getDebitAccountNumber(userHasMultipleAccounts: Boolean, customerAccountNumber: String,customerBankSlug:String): String {
         val bank = customerBankSlug.toBankSlug() ?: return ""
@@ -137,42 +154,35 @@ object PaymentUtils {
                     .sessionOverlayLayout(getBankLayout(mContext, intentData.getBankSlug()))
                     .request(hoverStrategy.actionId)
             if ((!intentData.pin.isEmpty() || !intentData.pin.trim { it <= ' ' }.isEmpty()) && hoverStrategy.requiresPin) {
-                Log.i("partyneverstops", "PIN ADDED")
                 hoverBuilder.extra("pin", intentData.pin)
             }
             if (!hoverStrategy.isFirstAction) {
                 hoverBuilder.setSim(BankUtils.selectedSim.osReportedHni)
             }
             if(intentData.paymentAmount.isNotEmpty()){
-                if(intentData.bankSlug == "access-bank"|| intentData.bankSlug == "polaris-bank" ||intentData.bankSlug  == "fidelity-bank" || intentData.bankSlug == "guaranty-trust-bank") {
+                if(intentData.bankSlug == "access-bank"|| intentData.bankSlug == "unity-bank" ||intentData.bankSlug == "polaris-bank" ||intentData.bankSlug  == "fidelity-bank" || intentData.bankSlug == "guaranty-trust-bank") {
                     var amount = intentData.paymentAmount.toDoubleOrNull()?.toInt()
                     amount = amount ?: 50
                     intentData.paymentAmount = amount.toString()
                 }
-                Log.i("partyneverstops", "AMOUNT ADDED ${intentData.paymentAmount}")
                 hoverBuilder.extra("amount",intentData.paymentAmount)
             }
 
             if ((!intentData.nuban.isEmpty() || !intentData.nuban.trim { it <= ' ' }.isEmpty()) && hoverStrategy.requiresAccountNumber) {
-                Log.i("partyneverstops", "ACCOUNT NUMBER ADDED ${intentData.nuban}")
                 hoverBuilder.extra("accountNumber", intentData.nuban)
             }
             if(intentData.paymentCreditAccount.isNotEmpty()){
-                Log.i("partyneverstops", "CREDIT ACCOUNT NUMBER ADDED ${intentData.paymentCreditAccount}")
                 hoverBuilder.extra("accountNumber",intentData.paymentCreditAccount)
             }
             if(intentData.debitAccountNumber.isNotEmpty()){
-                Log.i("partyneverstops", "DEBIT ACCOUNT NUMBER ADDED ${intentData.debitAccountNumber}")
                 hoverBuilder.extra("debitAccountNumber",intentData.debitAccountNumber)
             }
 
             var creditBankName =  intentData.paymentCreditBankName
             if(hoverStrategy.differentActionForInternal && intentData.isSameBank == "true") creditBankName = ""
             if(creditBankName.isNotEmpty()){
-                Log.i("partyneverstops", "BANK ADDED ${intentData.paymentCreditBankName}")
                 hoverBuilder.extra("bank",intentData.paymentCreditBankName)
             }
-            Log.i("partyneverstops", "BUILDING REQUEST")
             hoverBuilder.finalMsgDisplayTime(0)
             intent = hoverBuilder.buildIntent()
             (mContext as Activity).startActivityForResult(intent, 0)

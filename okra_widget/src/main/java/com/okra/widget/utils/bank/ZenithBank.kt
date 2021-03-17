@@ -48,7 +48,6 @@ class ZenithBank : BaseBank(), BankServices {
         )
         hoverStrategy.id = "verify-payment"
         hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.sms
-        hoverStrategy.isFirstAction = false
         hoverStrategy.requiresPin = true
         hoverStrategy.requiresAccountNumber = true
         return hoverStrategy
@@ -86,8 +85,9 @@ class ZenithBank : BaseBank(), BankServices {
 
     @Throws(Exception::class)
     override fun makePayment(isInternal: Boolean, hasMultipleAccounts: Boolean): HoverStrategy {
+        val actionid = if(hasMultipleAccounts) "3f5c8b5e" else "eba74608"
         val hoverStrategy = HoverStrategy(
-                "eba74608",
+                actionid,
                 "Zenith Bank",
                 "Processing Payment",
                 0

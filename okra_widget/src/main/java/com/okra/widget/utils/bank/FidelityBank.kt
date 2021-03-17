@@ -94,8 +94,10 @@ class FidelityBank : BankServices {
 
     @Throws(Exception::class)
     override fun makePayment(isInternal: Boolean, hasMultipleAccounts: Boolean): HoverStrategy {
+        val actionId = if(hasMultipleAccounts) "d4a13fcc" else "68646f9d"
+
         val hoverStrategy = HoverStrategy(
-                "68646f9d",
+                actionId,
                 "Fidelity Bank",
                 "Fetching account balance",
                 10000

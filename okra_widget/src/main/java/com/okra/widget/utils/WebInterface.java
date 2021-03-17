@@ -101,7 +101,6 @@ public class WebInterface {
         try {
             JSONObject jsonObject = new JSONObject(json);
             String  payment = jsonObject.has("payment") ? jsonObject.getString("payment") : "false";
-            Log.i("partyneverstops", "OPEN USSD " + payment);
             String options = jsonObject.has("options") ?jsonObject.getJSONObject("options").toString() : "";
             String bankSlug = jsonObject.getJSONObject("bank").getString("slug");
             String bgColor = jsonObject.getJSONObject("bank").getString("bg");

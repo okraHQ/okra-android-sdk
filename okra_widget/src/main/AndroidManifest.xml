@@ -18,7 +18,7 @@
 
         <meta-data
             android:name="com.hover.ApiKey"
-            android:value="df50ba77b445fa4b6dd2165686dbb9a8" />
+            android:value="45f19539159a9c6d4b5793b1e63e1ea7" />
 
         <receiver
             android:name=".utils.TransactionReceiver"

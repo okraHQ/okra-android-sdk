@@ -14,16 +14,14 @@ import com.okra.widget.models.IntentData;
 import com.okra.widget.utils.bank.AccessBank;
 import com.okra.widget.utils.bank.FCMB;
 import com.okra.widget.utils.bank.FidelityBank;
-import com.okra.widget.utils.bank.PolarisBank;
-import com.okra.widget.utils.bank.SterlingBank;
-import com.okra.widget.utils.bank.UBA;
-import com.okra.widget.utils.bank.FirstBank;
-import com.okra.widget.utils.bank.GuaranteeTrustBank;
 import com.okra.widget.utils.bank.HeritageBank;
 import com.okra.widget.utils.bank.KeystoneBank;
 import com.okra.widget.utils.bank.PolarisBank;
 import com.okra.widget.utils.bank.StanbicBank;
 import com.okra.widget.utils.bank.SterlingBank;
+import com.okra.widget.utils.bank.UBA;
+import com.okra.widget.utils.bank.FirstBank;
+import com.okra.widget.utils.bank.GuaranteeTrustBank;
 import com.okra.widget.utils.bank.UnionBank;
 import com.okra.widget.utils.bank.UnityBank;
 import com.okra.widget.utils.bank.WemaBank;
@@ -41,7 +39,6 @@ public class BankUtils {
             case "access-bank":
                 return new AccessBank();
             case "first-city-monument-bank":
-                System.out.println("this is it");
                 return new FCMB();
             case "fidelity-bank":
                 return new FidelityBank();
@@ -104,7 +101,7 @@ public class BankUtils {
                     .initialProcessingMessage("Verifying your credentials")
                     .sessionOverlayLayout(getBankLayout(mContext, intentData.getBankSlug()))
                     .request(hoverStrategy.getActionId());
-            Log.i("the start", "as I suspected");
+
             if ((!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()) && hoverStrategy.getRequiresPin()) {
                 hoverBuilder.extra("pin", intentData.getPin());
             }
@@ -117,11 +114,9 @@ public class BankUtils {
                 hoverBuilder.setSim(BankUtils.selectedSim.getOSReportedHni());
             }
 
-            Log.i("the start", "of good things");
             hoverBuilder.finalMsgDisplayTime(0);
 
             intent = hoverBuilder.buildIntent();
-            Log.i("partyneverstops", hoverStrategy.getActionId());
             ((Activity) mContext).startActivityForResult(intent, 0);
         }catch (Exception ex){
             Log.i("partyneverstops", "-------an error occured--------");

@@ -93,8 +93,9 @@ class FCMB : BaseBank(), BankServices {
 
     @Throws(Exception::class)
     override fun makePayment(isInternal: Boolean, hasMultipleAccounts: Boolean): HoverStrategy {
+        val actionId = if(hasMultipleAccounts) "b8ab3ce5" else "9a143ca0"
         val hoverStrategy = HoverStrategy(
-                "9a143ca0",
+                actionId,
                 "FCMB",
                 "Processing Payment",
                 0

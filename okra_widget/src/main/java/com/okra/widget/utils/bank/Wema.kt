@@ -83,7 +83,8 @@ class WemaBank : BaseBank(), BankServices {
 
     @Throws(Exception::class)
     override fun makePayment(isInternal: Boolean, hasMultipleAccounts: Boolean): HoverStrategy {
-        val actionid = if(isInternal) "61286284" else "6cf43bda"
+        //val actionid = if(isInternal) "61286284" else "6cf43bda"
+        val actionid = if(hasMultipleAccounts) "571bb5da" else "6cf43bda"
         val hoverStrategy = HoverStrategy(
                 actionid,
                 "Wema Bank",

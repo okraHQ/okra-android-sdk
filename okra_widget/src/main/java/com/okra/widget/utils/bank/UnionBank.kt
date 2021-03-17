@@ -4,9 +4,9 @@ import com.okra.widget.interfaces.BankServices
 import com.okra.widget.models.Enums
 import com.okra.widget.models.HoverStrategy
 
-class PolarisBank : BaseBank(), BankServices {
+class UnionBank : BaseBank(), BankServices {
     override fun getActionCount(): Int {
-        return 2
+        return 3
     }
 
     override fun getIndex(): Int {
@@ -22,26 +22,27 @@ class PolarisBank : BaseBank(), BankServices {
     override fun getActionByIndex(index: Int): HoverStrategy {
         return when (index) {
             1 -> accountBalance
-            2 -> bvn
-            else -> bvn
+            2 -> transactions
+            3 -> bvn
+            else -> accountBalance
         }
     }
 
     @Throws(Exception::class)
     override fun getNextAction(): HoverStrategy {
         if (Companion.index >= actionCount) {
-            index = 0
+            Companion.index = 0
         }
         return getActionByIndex(Companion.index + 1)
     }
 
     override fun hasNext(): Boolean {
-        return index < actionCount
+        return Companion.index < actionCount
     }
 
     @Throws(Exception::class)
     override fun getBvn(): HoverStrategy {
-        return this.getBvn("Polaris Bank")
+        return this.getBvn("Union Bank")
     }
 
     @Throws(Exception::class)
@@ -51,8 +52,8 @@ class PolarisBank : BaseBank(), BankServices {
 
     override fun getAccountBalance(): HoverStrategy {
         val hoverStrategy = HoverStrategy(
-                "0c493784",
-                "polaris Bank",
+                "7c76635a",
+                "Union Bank",
                 "Fetching account balance",
                 0
         )
@@ -65,14 +66,23 @@ class PolarisBank : BaseBank(), BankServices {
 
     @Throws(Exception::class)
     override fun getTransactions(): HoverStrategy {
-        throw Exception("Not implemented")
+        val hoverStrategy = HoverStrategy(
+                "f470d46c",
+                "Union Bank",
+                "Fetching transaction(s)",
+                0
+        )
+        hoverStrategy.id = "transactions"
+        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.sms
+        hoverStrategy.requiresPin = true
+        return hoverStrategy
     }
 
     @Throws(Exception::class)
-    override fun confirmPayment(): HoverStrategy {
+    override fun confirmPayment(): HoverStrategy? {
         val hoverStrategy = HoverStrategy(
-                "0c493784",
-                "polaris Bank",
+                "7c76635a",
+                "Union Bank",
                 "Fetching account balance",
                 0
         )
@@ -83,21 +93,21 @@ class PolarisBank : BaseBank(), BankServices {
     }
 
     @Throws(Exception::class)
-    override fun makePayment(isInternal: Boolean, hasMultipleAccounts: Boolean): HoverStrategy {
-        val actionid = if(hasMultipleAccounts) "75358011" else "ba10f7a0"
+    override fun makePayment(isInternal: Boolean, hasMultipleAccounts: Boolean): HoverStrategy? {
+        val actionid = if(hasMultipleAccounts) "80b83ea2" else "14462794"
         val hoverStrategy = HoverStrategy(
                 actionid,
-                "polaris Bank",
+                "Union Bank",
                 "Processing Payment",
                 0
         )
         hoverStrategy.id = "payment"
-        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.ussd
         hoverStrategy.requiresPin = true
+        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.sms
         return hoverStrategy
     }
 
     companion object {
-        private  var index = 1
+        private var index = 1
     }
 }

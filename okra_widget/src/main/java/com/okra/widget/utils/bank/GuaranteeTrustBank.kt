@@ -26,7 +26,17 @@ class GuaranteeTrustBank : BankServices {
     }
 
     override fun confirmPayment(): HoverStrategy {
-        TODO("Not yet implemented")
+        val hoverStrategy = HoverStrategy(
+                "ad6c3e9c",
+                "balance",
+                "Guarantee Trust Bank",
+                "Fetching account balance",
+                10000
+        )
+        hoverStrategy.id = "verify-payment"
+        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.ussd
+        hoverStrategy.requiresPin = true
+        return hoverStrategy
     }
 
     @Throws(Exception::class)
@@ -74,7 +84,8 @@ class GuaranteeTrustBank : BankServices {
 
     @Throws(Exception::class)
     override fun makePayment(isInternal: Boolean, hasMultipleAccounts: Boolean): HoverStrategy {
-        val actionid = if(isInternal) "d5f503e2" else "b85c8f85"
+       // val actionid = if(isInternal) "d5f503e2" else "b85c8f85"
+        val actionid = if(hasMultipleAccounts) "025320d9" else "b85c8f85"
         val hoverStrategy = HoverStrategy(
                 actionid,
                 "Guarantee Trust Bank",

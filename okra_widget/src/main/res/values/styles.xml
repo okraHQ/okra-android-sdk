@@ -17,12 +17,18 @@
         <item name="colorAccent">#DFAC0F</item>
     </style>
 
+
+
     <style name="progressBarFidelityBank" parent="@style/Theme.AppCompat">
         <item name="colorAccent">#4DC247</item>
     </style>
 
     <style name="progressBarFCMB" parent="@style/Theme.AppCompat">
         <item name="colorAccent">#5C2682</item>
+    </style>
+
+    <style name="progressBarUBA" parent="@style/Theme.AppCompat">
+        <item name="colorAccent">#F0443C</item>
     </style>
 
     <style name="progressBarGTB" parent="@style/Theme.AppCompat">

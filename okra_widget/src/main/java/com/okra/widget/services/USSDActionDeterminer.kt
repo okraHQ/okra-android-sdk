@@ -22,17 +22,10 @@ interface USSDActionDeterminer {
 class USSDActionDeterminerImpl(private val context: Context):USSDActionDeterminer{
 
     override fun onUSDDResultReceived(data: Intent, okraOptions: MutableMap<String, Any>) {
-        val ussd_messages:Array<String>? = data.extras?.get("ussd_messages") as? Array<String>
-        val session_messages:Array<String>? = data.extras?.get("session_messages") as? Array<String>
-        val actionID = data.extras?.get("action_id") as String?
-        val uuid = data.extras?.get("uuid") as String?
         val category = data.extras?.get("category") as String?
         val map = BankUtils.getInputExtras(data)
         val bankServices = BankUtils.getBankImplementation(map["bank"])
         val ranSinglePaymentOnMultipleAccount =  category == "single_on_multiple_accounts"
-
-        println("MY CONDITON WAS MET -- ${category} -- ${ranSinglePaymentOnMultipleAccount}")
-
 
         if (BankUtils.isFirstAction(map)) {
             BankUtils.selectedSim = getSelectedSim(context, data)
@@ -154,18 +147,3 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
 
 }
 
-fun bundle2string(bundle: Bundle?): String? {
-    if (bundle == null) {
-        return null
-    }
-    var string = "Bundle{"
-    for (key in bundle.keySet()) {
-        if(key != "input_extras"){
-            string += " " + key + " => " + bundle[key] + ";"
-        }
-
-    }
-    string += " }Bundle"
-    return string
-}
-fun JSONArray.toMutableList(): MutableList<Any> = MutableList(length(), this::get)

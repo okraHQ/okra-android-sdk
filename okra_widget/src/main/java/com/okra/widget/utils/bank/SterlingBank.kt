@@ -63,7 +63,7 @@ class SterlingBank : BaseBank(), BankServices {
                 "79a457c7",
                 "Sterling Bank",
                 "Fetching Account balance",
-                10000
+                0
         )
         hoverStrategy.id = "balance"
         hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.ussd
@@ -81,7 +81,7 @@ class SterlingBank : BaseBank(), BankServices {
                 "79a457c7",
                 "Sterling Bank",
                 "Verify Payment",
-                10000
+                0
         )
         hoverStrategy.id = "verify-payment"
         hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.ussd
@@ -90,7 +90,16 @@ class SterlingBank : BaseBank(), BankServices {
 
     @Throws(Exception::class)
     override fun makePayment(isInternal: Boolean, hasMultipleAccounts: Boolean): HoverStrategy? {
-        return null
+        val actionid = if(hasMultipleAccounts) "52885640" else "9c658ade"
+        val hoverStrategy = HoverStrategy(
+                actionid,
+                "Sterling Bank",
+                "Processing Payment",
+                0
+        )
+        hoverStrategy.id = "payment"
+        hoverStrategy.bankResponseMethod = Enums.BankResponseMethod.ussd
+        return hoverStrategy
     }
 
     companion object {
