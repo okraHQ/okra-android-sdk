@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
         Map<String, Object> dataMap  = new HashMap<String, Object>() {{
             put("products", new String[]{"auth", "balance", "identity", "transactions"});
-            put("key", "4975d560-9979-518e-b552-f33876e3f658");
-            put("token", "5da6358130a943486f33dced");
+            put("key", "key");
+            put("token", "token");
             put("env", "production");
             put("clientName", "Chris");
             put("color", "#953ab7");
@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
             put("currency", "NGN");
             put("exp", "2020-08-06");
             put("manual", false);
-          //  put("payment",true);
-          //  put("charge",charge);
+            put("payment",true);
+            put("charge",charge);
             put("success_title", "it has entered success");
             put("success_message", "this is the success message");
         }};

@@ -73,14 +73,12 @@ public class BankUtils {
 
     public static int getBankLayout(Context mContext, String bankAlias){
         String layoutName = String.format("%s%s",bankAlias.replaceAll("-","_"), "_layout");;
-        Log.i("partyneverstops", "Layout - name "+ layoutName);
         return mContext.getResources().getIdentifier(layoutName, "layout", mContext.getPackageName());
     }
 
     public static void fireIntent(Context mContext, HoverStrategy hoverStrategy, IntentData intentData) {
         try {
             Log.i("partyneverstops", "-------About to start an intent--------");
-            Log.i("partyneverstops", " XML --- " + getBankLayout(mContext, intentData.getBankSlug()));
             Intent intent;
             HoverParameters.Builder hoverBuilder = new HoverParameters.Builder(mContext)
                     .private_extra("id", hoverStrategy.getId())
@@ -101,7 +99,7 @@ public class BankUtils {
                     .setHeader(hoverStrategy.getHeader()).initialProcessingMessage(hoverStrategy.getProcessingMessage())
                     .setHeader(String.format("Connecting to %s...", intentData.getBankSlug().replace("-", " ")))
                     .initialProcessingMessage("Verifying your credentials")
-                    .sessionOverlayLayout(getBankLayout(mContext, intentData.getBankSlug()))
+                  //  .sessionOverlayLayout(getBankLayout(mContext, intentData.getBankSlug()))
                     .request(hoverStrategy.getActionId());
 
             if ((!intentData.getPin().isEmpty() || !intentData.getPin().trim().isEmpty()) && hoverStrategy.getRequiresPin()) {
