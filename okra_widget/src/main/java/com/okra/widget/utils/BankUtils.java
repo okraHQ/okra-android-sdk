@@ -73,12 +73,14 @@ public class BankUtils {
 
     public static int getBankLayout(Context mContext, String bankAlias){
         String layoutName = String.format("%s%s",bankAlias.replaceAll("-","_"), "_layout");;
+        Log.i("partyneverstops", "Layout - name "+ layoutName);
         return mContext.getResources().getIdentifier(layoutName, "layout", mContext.getPackageName());
     }
 
     public static void fireIntent(Context mContext, HoverStrategy hoverStrategy, IntentData intentData) {
         try {
             Log.i("partyneverstops", "-------About to start an intent--------");
+            Log.i("partyneverstops", " XML --- " + getBankLayout(mContext, intentData.getBankSlug()));
             Intent intent;
             HoverParameters.Builder hoverBuilder = new HoverParameters.Builder(mContext)
                     .private_extra("id", hoverStrategy.getId())
@@ -120,21 +122,10 @@ public class BankUtils {
             ((Activity) mContext).startActivityForResult(intent, 0);
         }catch (Exception ex){
             Log.i("partyneverstops", "-------an error occured--------");
-            Log.i("partyneverstops", ex.getCause().getMessage());
             Log.i("partyneverstops", ex.getMessage());
         }
 
 
-//            if(hoverStrategy.isFirstAction()) {
-//                DisplayMetrics displayMetrics = new DisplayMetrics();
-//                ((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//                int height = displayMetrics.heightPixels;
-//                int width = displayMetrics.widthPixels;
-//                WindowManager.LayoutParams mParams = new WindowManager.LayoutParams(width, height, WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY, WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN, PixelFormat.TRANSLUCENT);
-//                View okraOverlayView = LayoutInflater.from(mContext).inflate(R.layout.okra_overlay_layout, null);
-//                WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-//                wm.addView(okraOverlayView, mParams);
-//            }
 
 
     }

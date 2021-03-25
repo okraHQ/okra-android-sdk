@@ -1,6 +1,6 @@
 package com.okra.widget.utils;
 
-import com.okra.widget.models.OkraOptions;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,15 +15,15 @@ import okhttp3.ResponseBody;
 public class NetworkUtils {
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    private OkraOptions okraOptions;
+    private com.okra.widget.utils.OkraOptions okraOptions;
 
-    public NetworkUtils(OkraOptions okraOptions) {
+    public NetworkUtils(com.okra.widget.utils.OkraOptions okraOptions) {
         this.okraOptions = okraOptions;
     }
 
-    public static Map<String, String> getAuthorizationHeader(OkraOptions okraOptions){
+    public static Map<String, String> getAuthorizationHeader(com.okra.widget.utils.OkraOptions okraOptions){
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", okraOptions.getPrivateKey());
+       // headers.put("Authorization", okraOptions.getPrivateKey());
         return headers;
     }
 
@@ -31,7 +31,7 @@ public class NetworkUtils {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)
-                .addHeader("Authorization",okraOptions.getPrivateKey())
+             //   .addHeader("Authorization",okraOptions.getPrivateKey())
                 .build();
         try{
             Response response = client.newCall(request).execute();
