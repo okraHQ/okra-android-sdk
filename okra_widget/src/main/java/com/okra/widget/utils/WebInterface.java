@@ -101,7 +101,12 @@ public class WebInterface {
         try {
             JSONObject jsonObject = new JSONObject(json);
             String  payment = jsonObject.has("payment") ? jsonObject.getString("payment") : "false";
-            String options = jsonObject.has("options") ?jsonObject.getJSONObject("options").toString() : "";
+            String options = "";
+            try{
+                 options = jsonObject.has("options") ? jsonObject.getJSONObject("options").toString() : "";
+            }catch (Exception ex){
+                options = "";
+            }
             String bankSlug = jsonObject.getJSONObject("bank").getString("slug");
             String bgColor = jsonObject.getJSONObject("bank").getString("bg");
             String accentColor = jsonObject.getJSONObject("bank").getString("accent");
