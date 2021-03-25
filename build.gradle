@@ -25,8 +25,8 @@ allprojects {
             maven {
                 url 'https://pro.maven.usehover.com/releases'
                 credentials {
-                    username "ussd@okra.ng"
-                    password "9UQ7n>Mm"
+                    username project.HoverUsername
+                    password project.HoverPassword
                 }
                 authentication { basic(BasicAuthentication) }
                 content { includeGroup "com.hover" }
