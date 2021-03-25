@@ -35,11 +35,6 @@
  import java.util.HashMap;
  import java.util.Map;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import org.json.JSONObject;
-
 
 public class OkraWebActivity extends AppCompatActivity {
 
