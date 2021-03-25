@@ -1,4 +1,4 @@
- package com.okra.widget.activity;
+package com.okra.widget.activity;
 
 
  import android.Manifest;
@@ -36,7 +36,7 @@
  import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import org.json.JSONObject;
 
 import org.json.JSONObject;
 
@@ -89,7 +89,7 @@ public class OkraWebActivity extends AppCompatActivity {
                 HashMap<String, String> linkData = parseLinkUriData(parsedUri);
                 boolean shouldClose = Boolean.parseBoolean(linkData.get("shouldClose"));
                 if (shouldClose) {
-                    Intent intent = new Intent(OkraWebActivity.this, Okra.baseContext.getClass());
+                    Intent intent = new Intent();
                     intent.putExtra("okraHandler", new OkraHandler());
                     setResult(Activity.RESULT_OK, intent);
                     finish();
@@ -107,6 +107,7 @@ public class OkraWebActivity extends AppCompatActivity {
                 } else {
                     okraLinkWebview.loadUrl("openOkraWidget("+"'"+new JSONObject(mapOkraOptions).toString()+"'"+");");
                 }
+
             }
         });
     }
@@ -130,6 +131,7 @@ public class OkraWebActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     public String getIMEI(Activity activity) {

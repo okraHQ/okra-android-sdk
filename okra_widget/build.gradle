@@ -15,11 +15,17 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
+
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -29,6 +35,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.7.2")
     implementation 'com.hover:android-sdk:1.7.2-pro'
     implementation 'com.google.code.gson:gson:2.8.6'
+    //implementation 'com.android.support:appcompat-v7:29.+'
     testImplementation 'junit:junit:4.12'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

@@ -20,6 +20,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        OkraHandler okraHandler = (OkraHandler) getIntent().getSerializableExtra("okraHandler");
+//        String okraData = "";
+//        if(okraHandler != null){
+//            if(okraHandler.getIsDone() && (okraHandler.getIsSuccessful() || okraHandler.getHasError()) ) {
+//                okraData = okraHandler.getData();
+//            }
+//        }
         button = findViewById(R.id.okra_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
                 OkraHandler okraHandler = (OkraHandler) data.getSerializableExtra("okraHandler");
-                System.out.println("data is here " + okraHandler.getData());
-                //Log.i("okra result ", okraHandler != null ? okraHandler.getData() : "nothing");
+                String rr = okraHandler.getData();
+                Log.i("okra okraHandler ", okraHandler != null ? okraHandler.getData() : "nothing");
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result

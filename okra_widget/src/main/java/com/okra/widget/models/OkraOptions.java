@@ -1,4 +1,8 @@
-package com.okra.widget.models;
+package com.okra.widget.utils;
+
+import com.okra.widget.models.Enums;
+import com.okra.widget.models.Filter;
+import com.okra.widget.models.Guarantor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,8 +12,7 @@ OkraOptions implements Serializable {
 
     public OkraOptions(){}
 
-    public OkraOptions(boolean isWebview, String key, String token, ArrayList<Enums.Product> products, String environment, String clientName){
-      this.isWebview = isWebview;
+    public OkraOptions(String key, String token, ArrayList<Enums.Product> products, String environment, String clientName){
       this.key = key;
       this.token = token;
       this.products = products;
@@ -17,8 +20,7 @@ OkraOptions implements Serializable {
       this.clientName = clientName;
     }
 
-    public OkraOptions(boolean isWebview, String key, String token, ArrayList<Enums.Product> products, String environment, String clientName, String webhook){
-        this.isWebview = isWebview;
+    public OkraOptions(String key, String token, ArrayList<Enums.Product> products, String environment, String clientName, String webhook){
         this.key = key;
         this.token = token;
         this.products = products;
@@ -27,13 +29,9 @@ OkraOptions implements Serializable {
         this.webhook = webhook;
     }
 
-    private boolean isWebview;
-    /*
-     * Okra's public key
-     */
+    private boolean isWebview = true;
     private String key;
     private String token;
-    private String privateKey;
     private ArrayList<Enums.Product> products = new ArrayList<>();
     private String env;
     private String clientName;
@@ -48,6 +46,7 @@ OkraOptions implements Serializable {
     private String redirect_url;
     private String logo;
     private Filter filter;
+    private boolean manual;
     private String widget_success;
     private String widget_failed;
     private String currency;
@@ -55,6 +54,8 @@ OkraOptions implements Serializable {
     private String success_title;
     private String success_message;
     private String imei;
+    private String uuid;
+    private DeviceInfo deviceInfo = new DeviceInfo();
 
     public boolean isWebview() {
         return isWebview;
@@ -272,12 +273,29 @@ OkraOptions implements Serializable {
         return this;
     }
 
-    public String getPrivateKey() {
-        return privateKey;
+    public String getUuid() {
+        return uuid;
     }
 
-    public OkraOptions setPrivateKey(String privateKey) {
-        this.privateKey = privateKey;
+    public OkraOptions setUuid(String uuid) {
+        this.uuid = uuid;
+        return this;
+    }
+
+    public DeviceInfo getDeviceInfo() {
+        return deviceInfo;
+    }
+
+    public void setDeviceInfo(DeviceInfo deviceInfo) {
+        this.deviceInfo = deviceInfo;
+    }
+
+    public boolean isManual() {
+        return manual;
+    }
+
+    public OkraOptions setManual(boolean manual) {
+        this.manual = manual;
         return this;
     }
 }

@@ -4,24 +4,26 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.annotation.Keep;
+
 import com.hover.sdk.api.Hover;
 import com.okra.widget.activity.OkraWebActivity;
 
 import java.io.Serializable;
 import java.util.Map;
-
+@Keep
 public class Okra {
 
-    @SuppressLint("StaticFieldLeak")
-    public static Context baseContext;
+
 
     public static void create(Context context, Map<String, Object> okraOptions){
-        baseContext = context;
+        int requestCode = 1;
         if (context instanceof Activity) {
             Hover.initialize(context);
             Intent intent = new Intent(context, OkraWebActivity.class);
             intent.putExtra("okraOptions", (Serializable) okraOptions);
-            ((Activity) context).startActivity(intent);
+            ((Activity) context).startActivityForResult(intent, requestCode);
         }
     }
 }
