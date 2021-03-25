@@ -20,14 +20,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        OkraHandler okraHandler = (OkraHandler) getIntent().getSerializableExtra("okraHandler");
-//        String okraData = "";
-//        if(okraHandler != null){
-//            if(okraHandler.getIsDone() && (okraHandler.getIsSuccessful() || okraHandler.getHasError()) ) {
-//                okraData = okraHandler.getData();
-//            }
-//        }
-
         button = findViewById(R.id.okra_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

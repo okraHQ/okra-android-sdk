@@ -17,6 +17,8 @@ import com.okra.widget.utils.BankUtils.getBankLayout
 
 object PaymentUtils {
 
+
+
     var  currentBankService:BankServices? = null
     var bankSlug = ""
     var recordId = ""
@@ -38,6 +40,7 @@ object PaymentUtils {
             object : CountDownTimer(5000, 5000) {
                 override fun onFinish() {
                     lastPaymentModel?.multipleAccounts = true
+                    lastPaymentModel?.customerAccount?.hashedNuban = if(lastPaymentModel?.customerAccount?.hashedNuban.isNullOrEmpty()) getDebitAccountNumber(true, lastPaymentModel?.customerAccount?.nuban ?: "", bankSlug) else lastPaymentModel?.customerAccount?.hashedNuban
                     lastPaymentModel?.let { startPaymentAction(it,context, lastJsonString) }
                 }
                 override fun onTick(millisUntilFinished: Long) {
@@ -46,21 +49,19 @@ object PaymentUtils {
             }.start()
 
         }catch (ex:Exception){
-            Log.i("partyneverstops", ex.message)
+            Log.i("partyneverstops", ex.message ?: "")
         }
 
     }
 
     @JvmStatic
     fun startPayment(json: String, mContext: Context){
-        val paymentModel:PaymentModel? = try {
+        val paymentModel: PaymentModel = try {
             Gson().fromJson(json,PaymentModel::class.java)
         }catch (ex:Exception){
             null
         }
-        if(paymentModel == null) {
-            return
-        }
+                ?: return
         lastPaymentModel = paymentModel
         lastJsonString = json
         paymentConfirmed = false
@@ -68,6 +69,7 @@ object PaymentUtils {
     }
 
     private fun startPaymentAction(paymentModel: PaymentModel, mContext: Context, json: String) {
+        Log.i("partyneverstops", "PAYMENT MODEL -- ${paymentModel}" )
         val isSameBank = paymentModel.sameBank ?: false
         val userHasMultipleAccounts = paymentModel.multipleAccounts ?: false
         val creditAccountNumber = paymentModel.clientAccount?.nuban ?: ""
@@ -78,7 +80,6 @@ object PaymentUtils {
     }
 
     private fun getDebitAccountNumber(userHasMultipleAccounts: Boolean, hashedNuban: String): String {
-      //  if(!userHasMultipleAccounts) return ""
         return hashedNuban
         }
 
@@ -123,7 +124,7 @@ object PaymentUtils {
                 }.start()
 
             }catch (ex:Exception){
-                Log.i("partyneverstops", ex.message)
+                Log.i("partyneverstops", ex.message ?: "")
             }
 
         }
@@ -153,6 +154,8 @@ object PaymentUtils {
                     .initialProcessingMessage("Verifying your credentials")
                     .sessionOverlayLayout(getBankLayout(mContext, intentData.getBankSlug()))
                     .request(hoverStrategy.actionId)
+
+
             if ((!intentData.pin.isEmpty() || !intentData.pin.trim { it <= ' ' }.isEmpty()) && hoverStrategy.requiresPin) {
                 hoverBuilder.extra("pin", intentData.pin)
             }
@@ -188,8 +191,7 @@ object PaymentUtils {
             (mContext as Activity).startActivityForResult(intent, 0)
         } catch (ex: java.lang.Exception) {
             Log.i("partyneverstops", "-------an error occured--------")
-            Log.i("partyneverstops", ex.cause!!.message)
-            Log.i("partyneverstops", ex.message)
+            Log.i("partyneverstops", ex.message ?: "")
         }
     }
 }

@@ -95,7 +95,6 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
             }.start()
         } catch (ignored: Exception) {
             val c = ignored.message
-            val v = ignored.cause!!.message
             Log.i("partyneverstops", "-------ERROR $c")
         }
     }
@@ -132,7 +131,6 @@ class USSDActionDeterminerImpl(private val context: Context):USSDActionDetermine
             }.start()
         } catch (ignored: Exception) {
             val c = ignored.message
-            val v = ignored.cause!!.message
         }
     }
 

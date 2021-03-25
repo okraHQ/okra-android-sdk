@@ -6,5 +6,6 @@ data class CustomerAccount(
     val bank: String?,
     val name: String?,
     val nuban: String?,
-    val hashedNuban: String?
+    var hashedNuban: String?,
+    val hashedNubanFallback: String?
 )

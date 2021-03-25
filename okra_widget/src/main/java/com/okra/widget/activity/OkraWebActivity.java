@@ -79,7 +79,7 @@ public class OkraWebActivity extends AppCompatActivity {
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
 
-        okraLinkWebview.loadUrl("https://v2-mobile.okra.ng/");  //
+        okraLinkWebview.loadUrl("https://mobile.okra.ng/");
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
