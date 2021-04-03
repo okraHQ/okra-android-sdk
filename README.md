@@ -1,7 +1,22 @@
-# okra-android-sdk
-This is an android library for implementing okra widget
+# Okra Widget Android SDK
+![alt text](https://files.readme.io/cc79369-android-black.svg)
+
+Android SDK for implementing the Okra widget - Okra is a safe and secure web drop-in module and this library provides a front-end web (also available in [iOS](https://github.com/okraHQ/okra-ios-sdk) and [JavaScript](https://github.com/okraHQ/okra-js)) SDK for [account authentication](https://docs.okra.ng/docs/widget-properties) and [payment initiation](https://docs.okra.ng/docs/creating-a-charge) for each bank that Okra [supports](https://docs.okra.ng/docs/bank-coverage). 
+
+## Try the demo
+Checkout the [widget flow](https://okra.ng/) to view how the Okra Widget works. *Click "See How it Works"*
+
+## Before getting started
+- Checkout our [get started guide](https://docs.okra.ng/docs/get-started-with-okra) to create your developer account and retrieve your Client Token, API Keys, and Private Keys.
+- Create a [sandbox customer](https://docs.okra.ng/docs/creating-sandbox-customers), so you can get connecting immediately. 
+
+*Bonus Points*
+- Setup [Slack Notifications](https://docs.okra.ng/docs/slack-integration) so you can see your API call statuses and re-run calls in real-time!
+- 
 ### Get Started
-This library would help you add Okra widget to you native android app in no time. All you need to do is ...
+This library would help you add the Okra Widget to you native android app in no time. All you need to do is ...
+
+
 ### Install
 ##### gradle
 
@@ -77,9 +92,13 @@ final Map<String, Object> guarantor = new HashMap<>();
 |  `key `               | `String`       | true                |  undefined          | Your public key from Okra.
 |  `token`              | `String`       | true                |  undefined          | Your client token from okra.
 |  `products`           | `ArrayList<Enums.Product>`| true     |  undefined          | The Okra products you want to use with the widget.
+|  `payment`            | `Booelan`      | false               |                     | Whether you want to initiate a payment (https://docs.okra.ng/docs/payments)
+|  `charge `            | `Object`       | false               |                     | Payment charge opject (https://docs.okra.ng/docs/creating-a-charge)
 |  `env`                | `Enums.Environment`| true            |  undefined          | 
 |  `clientName`         | `String`       | true                |  undefined          | Name of the customer using the widget on the application
 |  `webhook`            | `String`       | true                |  undefined          | The Url that Okra send the client's data to.
+
+View a complete list of customizable options [here](https://docs.okra.ng/docs/widget-properties)
 
 ### Getting the okra onSuccess and onError response.
 Okra gives provision to access the response data on the mobile device. Okra wraps the response in the `OkraHandler` object and passes it back to the View which called it. 
@@ -205,3 +224,9 @@ Field | Required | Description
 **actions**<br>`Array of String` | **Yes** | Actions mentioned within the desc
 **subject**<br>`Array of String` | **Yes** | Subject of the desc
 **preposition**<br>`Array of String` | **Yes** | Prepositions within desc to understand intent
+
+## Done connecting?
+Checkout our [API Overiview](https://docs.okra.ng/docs/api-overview) and see how to use the data you've received and [other products](https://docs.okra.ng/docs/selfie-verification) you can use to create more personalized experiences for your customers!
+
+## Not a developer? 
+Get started without writing a single line of code, Try our App Builder! [Click here to get started] (https://dash.okra.ng/link-builder)
