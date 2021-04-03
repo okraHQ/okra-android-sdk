@@ -91,6 +91,7 @@ final Map<String, Object> guarantor = new HashMap<>();
 |  `isWebview `         | `boolean`      | true                |  true               | 
 |  `key `               | `String`       | true                |  undefined          | Your public key from Okra.
 |  `token`              | `String`       | true                |  undefined          | Your client token from okra.
+|  `ussd`               | `String`       | false               |  undefined          | Allow customer's to connect via USSD (https://docs.okra.ng/docs/ussd-beta)
 |  `products`           | `ArrayList<Enums.Product>`| true     |  undefined          | The Okra products you want to use with the widget.
 |  `payment`            | `Booelan`      | false               |                     | Whether you want to initiate a payment (https://docs.okra.ng/docs/payments)
 |  `charge `            | `Object`       | false               |                     | Payment charge opject (https://docs.okra.ng/docs/creating-a-charge)
