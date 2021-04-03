@@ -229,4 +229,4 @@ Field | Required | Description
 Checkout our [API Overiview](https://docs.okra.ng/docs/api-overview) and see how to use the data you've received and [other products](https://docs.okra.ng/docs/selfie-verification) you can use to create more personalized experiences for your customers!
 
 ## Not a developer? 
-Get started without writing a single line of code, Try our App Builder! [Click here to get started] (https://dash.okra.ng/link-builder)
+Get started without writing a single line of code, Try our App Builder! [Click here to get started](https://dash.okra.ng/link-builder)
