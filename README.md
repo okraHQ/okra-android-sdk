@@ -12,7 +12,7 @@ Checkout the [widget flow](https://okra.ng/) to view how the Okra Widget works. 
 
 *Bonus Points*
 - Setup [Slack Notifications](https://docs.okra.ng/docs/slack-integration) so you can see your API call statuses and re-run calls in real-time!
-- 
+
 ### Get Started
 This library would help you add the Okra Widget to you native android app in no time. All you need to do is ...
 
