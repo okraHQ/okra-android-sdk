@@ -36,8 +36,7 @@ allprojects {
 
 ```
 dependencies {
-  implementation 'com.github.okraHQ:okra-android-sdk:Tag'
-  //e.g implementation 'com.github.okraHQ:okra-android-sdk:v0.6-alpha'
+  implementation 'com.github.okraHQ:okra-android-sdk:v2.57'
  }
 ```
 
