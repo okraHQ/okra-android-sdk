@@ -104,15 +104,18 @@ View a complete list of customizable options [here](https://docs.okra.ng/docs/wi
 Okra gives provision to access the response data on the mobile device. Okra wraps the response in the `OkraHandler` object and passes it back to the View which called it. 
 
 ``` java
-@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        OkraHandler okraHandler = (OkraHandler) getIntent().getSerializableExtra("okraHandler");
-        String okraData = "";
-        if(okraHandler != null){
-            if(okraHandler.getIsDone() && (okraHandler.getIsSuccessful() || okraHandler.getHasError()) ) {
-                okraData = okraHandler.getData();
+  @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                OkraHandler okraHandler = (OkraHandler) data.getSerializableExtra("okraHandler");
+                String rr = okraHandler.getData();
+                Log.i("okra okraHandler ", okraHandler != null ? okraHandler.getData() : "nothing");
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
             }
         }
     }
