@@ -51,8 +51,17 @@ public class OkraWebActivity extends AppCompatActivity {
         webSettings.setDomStorageEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         okraLinkWebview.addJavascriptInterface(new WebInterface(this), "Android");
+        try {
+            Boolean beta = (Boolean) mapOkraOptions.get("beta");
+            if(beta){
+                okraLinkWebview.loadUrl("https://v3-mobile.okra.ng/mobile.html");
+            }else{
+                okraLinkWebview.loadUrl("https://mobile.okra.ng/mobile.html");
+            }
+        }catch (Exception ex){
+            okraLinkWebview.loadUrl("https://mobile.okra.ng/mobile.html");
+        }
 
-        okraLinkWebview.loadUrl("https://v3-mobile.okra.ng/mobile.html");
 
         okraLinkWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -76,8 +85,10 @@ public class OkraWebActivity extends AppCompatActivity {
                 String convertedJson = new JSONObject(mapOkraOptions).toString().replace("'", "\\'");
                 progressBar.setVisibility(View.GONE);
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                    System.out.println("HERE");
                     okraLinkWebview.evaluateJavascript("openOkraWidget("+"'"+convertedJson+"'"+");", null);
                 } else {
+                    System.out.println("HERE");
                     okraLinkWebview.loadUrl("openOkraWidget("+"'"+convertedJson+"'"+");");
                 }
             }

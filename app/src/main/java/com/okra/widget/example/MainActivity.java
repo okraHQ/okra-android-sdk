@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             put("limit", "24");
             put("corporate", false);
             put("connectMessage", "Which account do you want to connect with?");
-            put("callback_url", "");
+            put("beta", true);
             put("redirect_url", "");
             put("logo", "https://cdn.okra.ng/images/icon.svg");
             //put("filter", new Filter(Enums.IndustryType.all.toString(), banks));
