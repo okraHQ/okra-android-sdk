@@ -36,7 +36,7 @@ allprojects {
 
 ```
 dependencies {
-  implementation 'com.github.okraHQ:okra-android-sdk:v2.57'
+  implementation 'com.github.okraHQ:okra-android-sdk:v3-beta'
  }
 ```
 
